@@ -17,7 +17,7 @@ function el(tagName) {
       children = arguments[1];
       opts = arguments[2] || {};
     } else if (Array.isArray(arguments[2])) {
-      children = arguments[2];
+      children = arguments[2] || [];
       opts = arguments[1] || {};
     } else if (typeof arguments[1] === 'object') {
       if (isElement(arguments[1])) {

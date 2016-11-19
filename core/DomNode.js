@@ -20,12 +20,16 @@ class DomNode {
     this.children = children;
   }
 
-  append() {
+  append(array) {
     if (typeof this.children === 'undefined') {
       this.children = [];
     }
 
-    [].push.apply(this.children, Array.from(arguments));
+    if (arguments.length === 1 && Array.isArray(array)) {
+      [].push.apply(this.children, array);
+    } else {
+      throw new Error('flatman: Invalid arguement for \'.append\', only a single array is allowed');
+    }
 
     return this;
   }
