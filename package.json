@@ -1,0 +1,14 @@
+{
+  "name": "flatman",
+  "description": "A JavaScript factory for animating numeric based properties",
+  "version": "0.5.1",
+  "scripts": {
+    "test": "test.js"
+  },
+  "main": "flatman.js",
+  "devDependencies": {},
+  "dependencies": {
+    "colors": "^1.1.2",
+    "grunt": "^1.0.0"
+  }
+}
