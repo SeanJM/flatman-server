@@ -7,8 +7,12 @@ function Component() {
   };
 }
 
+Component.prototype.append = function (array) {
+  this.node.document.append(array);
+};
+
 page('test.html').body([
   el('div', { class : 'test' }, [
-    el(Component)
+    el(Component, 'text')
   ])
 ]).write();

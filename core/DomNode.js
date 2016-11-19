@@ -1,7 +1,4 @@
 const _ = require('lodash');
-const predicates = require('../predicates/');
-const isComponent = predicates.isComponent;
-const isElement = predicates.isElement;
 const setAttributes = require('../tools/setAttributes');
 
 class DomNode {
@@ -125,11 +122,19 @@ class DomNode {
   }
 
   text(value) {
-    this.children.push(value);
+    if (typeof value === 'string' || typeof value === 'number') {
+      this.children = [value.toString()];
+    } else {
+      throw 'Invalid type of argument for \'.text\'';
+    }
   }
 
   html(value) {
-    this.children = [value];
+    if (typeof value === 'string' || typeof value === 'number') {
+      this.children = [value.toString()];
+    } else {
+      throw 'Invalid type of argument for \'.html\'';
+    }
   }
 
   name(value) {
