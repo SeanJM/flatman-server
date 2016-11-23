@@ -4,19 +4,52 @@ const isElement = predicates.isElement;
 
 const DomNode = require('./core/DomNode');
 const Component = require('./core/Component');
-const report = require('./tools/report');
+
+function mapType(a) {
+  if (typeof a === 'object') {
+    if (isElement(a)) {
+      return 'element';
+    } else if (isComponent(a)) {
+      return 'component';
+    } else if (Array.isArray(a)) {
+      return 'array';
+    }
+  }
+  return typeof a;
+}
 
 function el(tagName) {
   let opts = {};
   let children = [];
-  let types = Array.from(arguments).map(a => typeof a);
+  let args = [];
+  let types = [];
 
-  if (types.indexOf('string') !== -1) {
-    throw 'Invalid argument \'' + types[types.indexOf('string')] + '\' (' + types.indexOf('string') + ') for ' + tagName + ', strings are not allowed as arguments. Children must be wrapped in an array.';
+  let i = 0;
+  let n = arguments.length;
+
+  for (; i < n; i++) {
+    args.push(arguments[i]);
+    types.push(mapType(arguments[i]));
+  }
+
+  let stringName = typeof tagName === 'string'
+    ? tagName
+    : typeof tagName === 'function' && typeof tagName.name === 'string'
+      ? tagName.name
+      : 'Anonymous';
+
+  if (types.slice(1).indexOf('string') !== -1) {
+    throw new Error('Invalid argument \"' + args[types.slice(1).indexOf('string') + 1].substr(0, 20) + '\" (' + (types.slice(1).indexOf('string') + 1) + ') for \"' + stringName + '\", strings are not allowed as args. Children must be wrapped in an array.');
   } else if (types.indexOf('number') !== -1) {
-    throw 'Invalid argument \'' + types[types.indexOf('number')] + '\' (' + types.indexOf('number') + ') for ' + tagName + ', numbers are not allowed as arguments. Children must be wrapped in an array.';
+    throw new Error('Invalid argument \"' + args[types.indexOf('number')] + '\" (' + types.indexOf('number') + ') for \"' + stringName + '\", numbers are not allowed as args. Children must be wrapped in an array.');
   } else if (types.indexOf('undefined') !== -1) {
-    throw 'Invalid argument \'undefined\' (' + types.indexOf('undefined') + ') for ' + tagName + '.';
+    throw new Error('Invalid argument \"undefined\" (' + types.indexOf('undefined') + ') for ' + stringName + '.');
+  } else if (types.indexOf('element') !== -1) {
+    throw new Error('Invalid argument \"' + args[types.indexOf('element')].tagName + '\" (' + types.indexOf('element') + ') for \"' + stringName + '\", elements are not allowed as args. Children must be wrapped in an array.');
+  } else if (types.indexOf('component') !== -1) {
+    throw new Error('Invalid argument \"' + args[types.indexOf('component')].tagName + '\" (' + types.indexOf('component') + ') for \"' + stringName + '\", components are not allowed as args. Children must be wrapped in an array.');
+  } else if (args.length > 3) {
+    throw new Error('Invalid number of args (' + args.length + ') for \"' + stringName + '\".');
   }
 
   if (Array.isArray(arguments[1])) {
@@ -26,31 +59,34 @@ function el(tagName) {
     children = arguments[2] || [];
     opts = arguments[1] || {};
   } else if (typeof arguments[1] === 'object') {
-    if (isElement(arguments[1])) {
-      throw new Error('Invalid argument, you passed an element into the \'el\' function. Elements must be put in an array.');
-    } else if (isComponent(arguments[1])) {
-      throw new Error('Invalid argument, you passed a component into the \'el\' function. Components must be put in an array.');
-    }
     opts = arguments[1];
   }
 
-  children.forEach(function (child) {
-    if (Array.isArray(child)) {
-      throw new Error('Invalid type \'Array\' in el, valid children are elements.');
-    } else if (!isElement(child) && !isComponent(child) && typeof child !== 'string' && typeof child !== 'number') {
-      throw new Error('Invalid child of type ' + typeof a);
-    }
-  });
-
-  try {
-    if (typeof tagName === 'function') {
-      return new Component(tagName, opts, children);
+  if (children && children.length) {
+    if (children.length > 1) {
+      children = children.reduce(function (a, b) {
+        if (Array.isArray(a)) {
+          return a.concat(b);
+        } else {
+          return [a].concat(b);
+        }
+      });
     }
 
-    return new DomNode(tagName, opts, children);
-  } catch (e) {
-    report.error(e);
+    children.forEach(function (child, i) {
+      if (Array.isArray(child)) {
+        throw new Error('Invalid type \"Array\" in el, valid children are elements.');
+      } else if (!isElement(child) && !isComponent(child) && typeof child !== 'string' && typeof child !== 'number') {
+        throw new Error('Cannot append child to \"' + stringName + '\", child (' + i + ') is of type ' + typeof a);
+      }
+    });
   }
+
+  if (typeof tagName === 'function') {
+    return new Component(tagName, opts, children);
+  }
+
+  return new DomNode(tagName, opts, children);
 }
 
 el.isComponent = isComponent;

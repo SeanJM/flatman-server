@@ -37,7 +37,7 @@ class Page {
     if (Array.isArray(elements)) {
       elements.forEach(a => this.document.content.push(a));
     } else {
-      throw 'Invalid arguments for flatman.page.body, expected argument is an Array, provided argument is type: ' + typeof elements;
+      throw new Error('Invalid arguments for flatman.page.body, expected argument is an Array, provided argument is type: ' + typeof elements);
     }
 
     return this;
@@ -136,7 +136,7 @@ class Page {
 
   title(title) {
     this.document.title = [
-      el('title', title)
+      el('title', [title])
     ];
     return this;
   }

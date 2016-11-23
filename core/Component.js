@@ -53,7 +53,7 @@ class Component {
 
     if (text.length) {
       if (typeof instance.text === 'function') {
-        instance.text(text);
+        instance.text.apply(instance, text);
       } else {
         throw new Error('invalid component \'' + name + '\', the constructor must have a \'text\' method.');
       }

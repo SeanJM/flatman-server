@@ -9,21 +9,21 @@ class DomNode {
     if (typeof tagName === 'string' && tagName.indexOf(' ') === -1) {
       this.tagName = tagName;
     } else if (typeof tagName === 'string') {
-      throw 'Invalid tagName: \'' + tagName + '\'.';
+      throw new Error('Invalid tagName: \'' + tagName + '\'.');
     } else {
-      throw 'Invalid type for tagName: \'' + typeof tagName + '\'.';
+      throw new Error('Invalid type for tagName: \'' + typeof tagName + '\'.');
     }
 
     this.children = children;
   }
 
-  append(array) {
+  append(children) {
     if (typeof this.children === 'undefined') {
       this.children = [];
     }
 
-    if (arguments.length === 1 && Array.isArray(array)) {
-      [].push.apply(this.children, array);
+    if (arguments.length === 1 && Array.isArray(children)) {
+      [].push.apply(this.children, children);
     } else {
       throw new Error('flatman: Invalid arguement for \'.append\', only a single array is allowed');
     }
@@ -98,6 +98,29 @@ class DomNode {
     return this;
   }
 
+  find(selector) {
+    const tagName = selector.match(/^[a-z\-]+/);
+    const className = selector.match(/\.[a-zA-Z0-9\_\-]+/g);
+    function hasClass(node, b) {
+      var i = 0;
+      var n = b.length;
+      var a = node.attr.className.split(' ');
+      for (; i < n; i++) {
+        if (a.indexOf(b[i]) === -1) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return this.children.filter(function (node) {
+      if (tagName && className) {
+        return node.tagName === tagName[0] && hasClass(node, className);
+      } else if (tagName) {
+        return node.tagName === tagName[0];
+      }
+    });
+  }
+
   disable() {
     this.attributes.disabled = 'disabled';
   }
@@ -125,7 +148,7 @@ class DomNode {
     if (typeof value === 'string' || typeof value === 'number') {
       this.children = [value.toString()];
     } else {
-      throw 'Invalid type of argument for \'.text\'';
+      throw new Error('Invalid type of argument "' + typeof value + '" for \'.text\'');
     }
   }
 
@@ -133,7 +156,7 @@ class DomNode {
     if (typeof value === 'string' || typeof value === 'number') {
       this.children = [value.toString()];
     } else {
-      throw 'Invalid type of argument for \'.html\'';
+      throw new Error('Invalid type of argument for \'.html\'');
     }
   }
 
