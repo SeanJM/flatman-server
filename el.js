@@ -39,15 +39,15 @@ function el(tagName) {
       : 'Anonymous';
 
   if (types.slice(1).indexOf('string') !== -1) {
-    throw new Error('Invalid argument \"' + args[types.slice(1).indexOf('string') + 1].substr(0, 20) + '\" (' + (types.slice(1).indexOf('string') + 1) + ') for \"' + stringName + '\", strings are not allowed as args. Children must be wrapped in an array.');
+    throw new Error('Invalid argument \"' + args[types.slice(1).indexOf('string') + 1].substr(0, 20) + '\" (' + (types.slice(1).indexOf('string') + 1) + ') for \"' + stringName + '\", strings are not allowed as arguments. Children must be wrapped in an array.');
   } else if (types.indexOf('number') !== -1) {
-    throw new Error('Invalid argument \"' + args[types.indexOf('number')] + '\" (' + types.indexOf('number') + ') for \"' + stringName + '\", numbers are not allowed as args. Children must be wrapped in an array.');
+    throw new Error('Invalid argument \"' + args[types.indexOf('number')] + '\" (' + types.indexOf('number') + ') for \"' + stringName + '\", numbers are not allowed as arguments. Children must be wrapped in an array.');
   } else if (types.indexOf('undefined') !== -1) {
     throw new Error('Invalid argument \"undefined\" (' + types.indexOf('undefined') + ') for ' + stringName + '.');
   } else if (types.indexOf('element') !== -1) {
-    throw new Error('Invalid argument \"' + args[types.indexOf('element')].tagName + '\" (' + types.indexOf('element') + ') for \"' + stringName + '\", elements are not allowed as args. Children must be wrapped in an array.');
+    throw new Error('Invalid argument \"' + args[types.indexOf('element')].tagName + '\" (' + types.indexOf('element') + ') for \"' + stringName + '\", elements are not allowed as arguments. Children must be wrapped in an array.');
   } else if (types.indexOf('component') !== -1) {
-    throw new Error('Invalid argument \"' + args[types.indexOf('component')].tagName + '\" (' + types.indexOf('component') + ') for \"' + stringName + '\", components are not allowed as args. Children must be wrapped in an array.');
+    throw new Error('Invalid argument \"' + args[types.indexOf('component')].tagName + '\" (' + types.indexOf('component') + ') for \"' + stringName + '\", components are not allowed as arguments. Children must be wrapped in an array.');
   } else if (args.length > 3) {
     throw new Error('Invalid number of args (' + args.length + ') for \"' + stringName + '\".');
   }
@@ -77,7 +77,7 @@ function el(tagName) {
       if (Array.isArray(child)) {
         throw new Error('Invalid type \"Array\" in el, valid children are elements.');
       } else if (!isElement(child) && !isComponent(child) && typeof child !== 'string' && typeof child !== 'number') {
-        throw new Error('Cannot append child to \"' + stringName + '\", child (' + i + ') is of type ' + typeof a);
+        throw new Error('Cannot append child to ' + stringName + ', child (' + i + ') is of type ' + typeof a);
       }
     });
   }

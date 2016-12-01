@@ -11,8 +11,12 @@ Component.prototype.append = function (array) {
   this.node.document.append(array);
 };
 
+Component.prototype.text = function (text) {
+  this.node.document.text(text[0]);
+};
+
 page('test.html').body([
   el('div', { class : 'test' }, [
-    el(Component, 'text')
+    el(Component, ['text'])
   ])
 ]).write();

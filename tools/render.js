@@ -1,8 +1,31 @@
 const predicates = require('../predicates/');
 const isComponent = predicates.isComponent;
 const isElement = predicates.isElement;
+const _ = require('lodash');
 
 const OPEN = [ 'img', 'meta', 'hr', 'link' ];
+
+const ATTR_LIST = [
+  'id',
+  'class',
+  'name',
+  'title',
+  'style'
+];
+
+function sortAttributes(a, b) {
+  const aI = ATTR_LIST.indexOf(a);
+  const bI = ATTR_LIST.indexOf(b);
+
+  if (aI > -1 && bI > -1) {
+    return aI - bI;
+  } else if (aI > -1) {
+    return -1;
+  } else if (bI > -1) {
+    return 1;
+  }
+  return 0;
+}
 
 function renderDispatch(self, tab, depth, e) {
   if (typeof e.trigger === 'function') {
@@ -38,17 +61,52 @@ function renderText(self, depth, string) {
   return string.trim();
 }
 
-function renderElement(self, tab, depth, e) {
-  let s = `<${e.tagName}`;
-  let a;
-  for (var k in e.attributes) {
-    a = typeof e.attributes[k] !== 'undefined'
-      ? e.attributes[k].toString().trim()
-      : '';
-    if (a.length) {
-      s += ` ${k}="${a}"`;
-    }
+function renderStyle(value) {
+  var styles = [];
+  for (var k in value) {
+    styles.push(k + ': ' + value[k]);
   }
+  return styles.join(';');
+}
+
+function renderAttribute(name, value) {
+  if (name === 'style') {
+   if (typeof value === 'object' && Object.keys(value).length) {
+      return `${name}="${renderStyle(value)}"`;
+    }
+    return '';
+  } else if (name === 'class') {
+    if (value.length) {
+      return `${name}="${value}"`;
+    }
+    return '';
+  } else if (name === 'tabindex') {
+    return `tabIndex="${value}"`;
+  } else if (name.substr(0, 4) === 'data') {
+    return `${_.kebabCase(name)}="${value}"`;
+  }
+  return `${name}="${value}"`;
+}
+
+function renderElement(self, tab, depth, e) {
+  const attributes = Object.keys(e.attributes).sort(sortAttributes);
+
+  let s = `<${e.tagName}`;
+  let a = [];
+
+  attributes.forEach(function (attribute) {
+    if (typeof e.attributes[attribute] !== 'undefined') {
+      a.push(
+        renderAttribute(attribute, e.attributes[attribute])
+      );
+    }
+
+    a = a.filter(a => a.length);
+
+    if (a.length) {
+      s += ' ' + a.join(' ');
+    }
+  });
 
   s += '>';
 

@@ -1,9 +1,17 @@
 const _ = require('lodash');
-const setAttributes = require('../tools/setAttributes');
 
 class DomNode {
-  constructor(tagName, opts, children) {
-    this.attributes = Object.assign({ class : '' }, setAttributes(opts));
+  constructor(tagName, opt, children) {
+    var attributes = {
+      style : {},
+      class : ''
+    };
+
+    if (typeof opt.style === 'string') {
+      throw new Error('Invalid value of "' + opt.style.substr(0, 30) + '", style must be passed an object as an argument and not a string.');
+    }
+
+    this.attributes = Object.assign(attributes, opt);
     this.subscribers = { render : [] };
 
     if (typeof tagName === 'string' && tagName.indexOf(' ') === -1) {
@@ -28,6 +36,11 @@ class DomNode {
       throw new Error('flatman: Invalid arguement for \'.append\', only a single array is allowed');
     }
 
+    return this;
+  }
+
+  appendTo(parent) {
+    parent.children.push(this);
     return this;
   }
 
@@ -144,6 +157,46 @@ class DomNode {
     return this;
   }
 
+  style(a, b) {
+    var self = this;
+
+    var TO_PIXEL = [
+      'margin-left',
+      'margin-right',
+      'margin-top',
+      'margin-bottom',
+      'padding-left',
+      'padding-right',
+      'padding-top',
+      'padding-bottom',
+      'left',
+      'right',
+      'top',
+      'bottom',
+    ];
+
+    function setStyle(a, b) {
+      var name = _.kebabCase(a);
+      if (TO_PIXEL.includes(name) && typeof b === 'number') {
+        self.attributes.style[name] = b + 'px';
+      } else {
+        self.attributes.style[name] = b;
+      }
+    }
+
+    if (typeof a === 'string' && typeof b !== 'undefined') {
+      setStyle(a, b);
+    } else if (typeof a === 'object') {
+      for (var k in a) {
+        setStyle(k, a[k]);
+      }
+    } else {
+      throw new Error('Invalid values for "style"');
+    }
+
+    return this;
+  }
+
   text(value) {
     if (typeof value === 'string' || typeof value === 'number') {
       this.children = [value.toString()];
@@ -163,6 +216,7 @@ class DomNode {
   name(value) {
     if (typeof value !== 'undefined') {
       this.attributes.name = value;
+      return this;
     } else {
       return this.attributes.name;
     }
