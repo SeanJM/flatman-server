@@ -1,8 +1,8 @@
-function isElement(x) {
+function isDomNode(x) {
   return x &&
     typeof x.tagName === 'string' &&
     typeof x.attributes === 'object' &&
-    Array.isArray(x.children);
+    Array.isArray(x.childNodes);
 }
 
-module.exports = isElement;
+module.exports = isDomNode;
