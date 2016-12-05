@@ -1,118 +1,41 @@
-function toType(value) {
-  return value === 'true'
-    ? true
-    : value === 'false'
-      ? false
-      : /^[\d]+$/.test(value)
-        ? Number(value)
-        : value;
-}
+module.exports = function getSelectorObject(selector) {
+  let classes = selector.match(/\.[a-zA-Z0-9\-\_]+/g);
+  let id = selector.match(/\#[a-zA-Z0-9\-\_]+/);
+  let attr = selector.match(/\[[^\]]+?\]/g);
+  let tagName = selector.match(/^[a-zA-Z0-9\-\_]+/);
 
-function getSelectorObject(selector) {
-  let i = 0;
-  let n = selector ? selector.length : 0;
-  let key = '';
-  let value = '';
-  let tagName = '';
-  let attrChar = ['.', '#', '[', ']'];
-  let attributes = {
-    class : [],
-    id : [],
+  let self = {
+    tagName : tagName ? tagName : false,
+    attributes : {}
   };
 
-  function capture(delimiter) {
-    while (selector[i] !== delimiter && selector[i - 1] !== '\\' && selector[i] !== ']' && i < n) {
-      value += selector[i];
-      i++;
-    }
-
-    attributes[key.trim()] = toType(value);
-    key = '';
-    value = '';
+  if (classes) {
+    self.attributes.className = classes.map(a => a.slice(1));
   }
 
-  function setAttr() {
-    i++; // Pass the open ([) brace
-    while (selector[i] !== ']' && i < n) {
-      while (selector[i] !== '=' && selector[i] !== ']' && i < n) {
-        key += selector[i];
-        i++;
+  if (id) {
+    self.attributes.id = id;
+  }
+
+  if (attr) {
+    attr.forEach(function (string) {
+      let value = string.match(/\[([a-zA-Z0-9\-\_]+)(\*|\^|\$|)=([^\]]+?)\]/);
+      value[1] = value[1] === 'class' ? 'className' : value[1];
+      value[3] = value[3].slice(1, -1);
+
+      if (value[2]) {
+        if (value[2] === '*') {
+          self.attributes[value[1]] = new RegExp(value[3]);
+        } else if (value[2] === '^') {
+          self.attributes[value[1]] = new RegExp('^' + value[3]);
+        } else if (value[2] === '$') {
+          self.attributes[value[1]] = new RegExp(value[3] + '$');
+        }
+      } else {
+        self.attributes[value[1]] = new RegExp('^' + value[3] + '$');
       }
-
-      i++; // Pass the equal sign
-
-      if (selector[i] === '\'' || selector[i] === '\"') {
-        i++;
-        capture(selector[i - 1]);
-      } else if (i < n) {
-        // No delimiter
-        capture(' ');
-      } else if (key.length) {
-        attributes[key.trim()] = true;
-      }
-
-      i++;
-    }
+    });
   }
 
-  function captureClass() {
-    i++;
-    attributes.class.push('');
-
-    while (attrChar.indexOf(selector[i]) === -1 && i < n) {
-      if (!/\s/.test(selector[i])) {
-        attributes.class[attributes.class.length - 1] += selector[i];
-      }
-      i++;
-    }
-
-    if (selector[i] === '.') {
-      captureClass();
-    }
-  }
-
-  function captureId() {
-    i++;
-    attributes.id.push('');
-
-    while (attrChar.indexOf(selector[i]) === -1 && i < n) {
-      attributes.id[attributes.id.length - 1] += selector[i];
-      i++;
-    }
-
-    if (selector[i] === '#') {
-      captureId();
-    }
-  }
-
-  while (n && /^[\w]/.test(selector[i]) && i < n) {
-    tagName += selector[i];
-    i++;
-  }
-
-  while (i < n) {
-    if (selector[i] === '.') {
-      captureClass();
-    }
-
-    if (selector[i] === '#') {
-      captureId();
-    }
-
-    if (selector[i] === '[') {
-      setAttr();
-    }
-
-    i++;
-  }
-
-  attributes.class = attributes.class.sort().join(' ');
-  attributes.id = attributes.id.sort().join('-');
-
-  return {
-    tagName : tagName.length ? tagName : false,
-    attributes : attributes
-  };
-}
-
-module.exports = getSelectorObject;
+  return self;
+};
