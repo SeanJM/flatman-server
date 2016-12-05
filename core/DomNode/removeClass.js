@@ -1,9 +1,9 @@
 module.exports = function removeClass(className) {
-  var split = this.attributes.class.split(' ').map(a => a.trim());
+  var split = this.attributes.className.split(' ').map(a => a.trim());
 
   split.splice(split.indexOf(className), 1);
 
-  this.attributes.class = split.sort().join(' ');
+  this.attributes.className = split.sort().join(' ');
 
   return this;
 };
