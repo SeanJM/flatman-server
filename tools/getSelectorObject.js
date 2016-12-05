@@ -8,18 +8,17 @@ function toType(value) {
         : value;
 }
 
-function getSelectorAttributes(selector) {
+function getSelectorObject(selector) {
   let i = 0;
   let n = selector ? selector.length : 0;
   let key = '';
   let value = '';
-  let tag = '';
+  let tagName = '';
   let attrChar = ['.', '#', '[', ']'];
   let attributes = {
     class : [],
     id : [],
   };
-
 
   function capture(delimiter) {
     while (selector[i] !== delimiter && selector[i - 1] !== '\\' && selector[i] !== ']' && i < n) {
@@ -87,7 +86,7 @@ function getSelectorAttributes(selector) {
   }
 
   while (n && /^[\w]/.test(selector[i]) && i < n) {
-    tag += selector[i];
+    tagName += selector[i];
     i++;
   }
 
@@ -111,11 +110,9 @@ function getSelectorAttributes(selector) {
   attributes.id = attributes.id.sort().join('-');
 
   return {
-    tag : tag.length
-      ? tag
-      : 'div',
+    tagName : tagName.length ? tagName : false,
     attributes : attributes
   };
 }
 
-module.exports = getSelectorAttributes;
+module.exports = getSelectorObject;
