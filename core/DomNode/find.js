@@ -1,16 +1,20 @@
+const _ = require('lodash');
 const isComponent = require('../../predicates/isComponent');
 const isDomNode = require('../../predicates/isDomNode');
 const getSelectorObject = require('../../tools/getSelectorObject');
 
-module.exports = function find(selector) {
-  const selectorObject = getSelectorObject(selector);
-  let found = [];
-
-  function hasClass(elementClass, selectorClass) {
-    const elementSplit = elementClass.split(' ');
-    const selectorSplit = selectorClass.split(' ');
-    return selectorSplit.length === _.intersection(elementSplit, selectorSplit).length;
+function hasClass(elementClass, selectorClass) {
+  console.log(elementClass, selectorClass);
+  if (Array.isArray(selectorClass)) {
+    return _.intersection(elementClass.split(' '), selectorClass).length;
+  } else if (selectorClass) {
+    return selectorClass.test(elementClass);
   }
+}
+
+module.exports = function find(selector) {
+  let selectorObject = getSelectorObject(selector);
+  let found = [];
 
   function matches(element) {
     if (selectorObject.tagName) {
@@ -20,15 +24,15 @@ module.exports = function find(selector) {
     }
 
     for (var k in selectorObject.attributes) {
-      if (selectorObject.attributes[k].length) {
-        if (k === 'class') {
-          if (!hasClass(element.attributes[k], selectorObject.attributes[k])) {
-            return;
-          }
-        } else {
-          if (selectorObject.attributes[k] !== element.attributes[k]) {
-            return;
-          }
+      if (k === 'className') {
+        if (!hasClass(element.attributes[k], selectorObject.attributes[k])) {
+          return;
+        }
+      } else {
+        if (typeof selectorObject.attributes[k] === 'string' && selectorObject.attributes[k] !== element.attributes[k]) {
+          return;
+        } else if (!selectorObject.attributes[k].test(element.attributes[k])) {
+          return;
         }
       }
     }
