@@ -7,7 +7,7 @@ const OPEN = [ 'img', 'meta', 'hr', 'link' ];
 
 const ATTR_LIST = [
   'id',
-  'class',
+  'className',
   'name',
   'title',
   'style'
@@ -75,9 +75,9 @@ function renderAttribute(name, value) {
       return `${name}="${renderStyle(value)}"`;
     }
     return '';
-  } else if (name === 'class') {
+  } else if (name === 'className') {
     if (value.length) {
-      return `${name}="${value}"`;
+      return `class="${value}"`;
     }
     return '';
   } else if (name === 'tabindex') {
