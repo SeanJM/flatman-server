@@ -1,6 +1,6 @@
 const predicates = require('../predicates/');
 const isComponent = predicates.isComponent;
-const isElement = predicates.isElement;
+const isDomNode = predicates.isDomNode;
 const _ = require('lodash');
 
 const OPEN = [ 'img', 'meta', 'hr', 'link' ];
@@ -31,7 +31,7 @@ function renderDispatch(self, tab, depth, e) {
   if (typeof e.trigger === 'function') {
     e.trigger('render');
   }
-  if (isElement(e)) {
+  if (isDomNode(e)) {
     return renderElement(self, tab, depth, e);
   } else if (isComponent(e)) {
     return renderComponent(self, tab, depth, e);
@@ -85,7 +85,10 @@ function renderAttribute(name, value) {
   } else if (name.substr(0, 4) === 'data') {
     return `${_.kebabCase(name)}="${value}"`;
   }
-  return `${name}="${value}"`;
+  if (value.length) {
+    return `${name}="${value}"`;
+  }
+  return '';
 }
 
 function renderElement(self, tab, depth, e) {
@@ -100,29 +103,28 @@ function renderElement(self, tab, depth, e) {
         renderAttribute(attribute, e.attributes[attribute])
       );
     }
-
-    a = a.filter(a => a.length);
-
-    if (a.length) {
-      s += ' ' + a.join(' ');
-    }
   });
+
+  a = a.filter(a => a.length);
+  if (a.length) {
+    s += ' ' + a.join(' ');
+  }
 
   s += '>';
 
   if (
-    e.children.length === 1 && (
-      typeof e.children[0] === 'string' || typeof e.children[0] === 'number'
+    e.childNodes.length === 1 && (
+      typeof e.childNodes[0] === 'string' || typeof e.childNodes[0] === 'number'
     )
   ) {
-    s += `${renderText(self, depth, e.children[0].toString())}</${e.tagName}>`;
+    s += `${renderText(self, depth, e.childNodes[0].toString())}</${e.tagName}>`;
   } else {
-    if (e.children.length) {
-      s += `\n${render(self, e.children, depth + 1)}`;
+    if (e.childNodes.length) {
+      s += `\n${render(self, e.childNodes, depth + 1)}`;
     }
 
     if (OPEN.indexOf(e.tagName) === -1) {
-      if (e.children.length) {
+      if (e.childNodes.length) {
         s += `\n${tab}`;
       }
       s += `</${e.tagName}>`;
