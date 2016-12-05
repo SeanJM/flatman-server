@@ -1,4 +1,4 @@
-const isElement = require('./isElement');
+const isDomNode = require('./isDomNode');
 
 function isComponent(x) {
   if (typeof x === 'function' ) {
