@@ -1,13 +1,13 @@
-const predicates = require('./predicates/');
+const predicates = require('../predicates/');
 const isComponent = predicates.isComponent;
-const isElement = predicates.isElement;
+const isDomNode = predicates.isDomNode;
 
-const DomNode = require('./core/DomNode');
-const Component = require('./core/Component');
+const DomNode = require('../core/DomNode');
+const Component = require('../core/Component');
 
 function mapType(a) {
   if (typeof a === 'object') {
-    if (isElement(a)) {
+    if (isDomNode(a)) {
       return 'element';
     } else if (isComponent(a)) {
       return 'component';
@@ -20,7 +20,7 @@ function mapType(a) {
 
 function el(tagName) {
   let opts = {};
-  let children = [];
+  let childNodes = [];
   let args = [];
   let types = [];
 
@@ -53,18 +53,18 @@ function el(tagName) {
   }
 
   if (Array.isArray(arguments[1])) {
-    children = arguments[1];
+    childNodes = arguments[1];
     opts = arguments[2] || {};
   } else if (Array.isArray(arguments[2])) {
-    children = arguments[2] || [];
+    childNodes = arguments[2] || [];
     opts = arguments[1] || {};
   } else if (typeof arguments[1] === 'object') {
     opts = arguments[1];
   }
 
-  if (children && children.length) {
-    if (children.length > 1) {
-      children = children.reduce(function (a, b) {
+  if (childNodes && childNodes.length) {
+    if (childNodes.length > 1) {
+      childNodes = childNodes.reduce(function (a, b) {
         if (Array.isArray(a)) {
           return a.concat(b);
         } else {
@@ -73,20 +73,20 @@ function el(tagName) {
       });
     }
 
-    children.forEach(function (child, i) {
+    childNodes.forEach(function (child, i) {
       if (Array.isArray(child)) {
         throw new Error('Invalid type \"Array\" in el, valid children are elements.');
-      } else if (!isElement(child) && !isComponent(child) && typeof child !== 'string' && typeof child !== 'number') {
+      } else if (!isDomNode(child) && !isComponent(child) && typeof child !== 'string' && typeof child !== 'number') {
         throw new Error('Cannot append child to ' + stringName + ', child (' + i + ') is of type ' + typeof a);
       }
     });
   }
 
   if (typeof tagName === 'function') {
-    return new Component(tagName, opts, children);
+    return new Component(tagName, opts, childNodes);
   }
 
-  return new DomNode(tagName, opts, children);
+  return new DomNode(tagName, opts, childNodes);
 }
 
 el.isComponent = isComponent;
