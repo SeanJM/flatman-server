@@ -5,7 +5,7 @@ class Component {
   constructor(Constructor, opts, arr) {
     let instance = new Constructor(opts);
     let name = Constructor.name || 'Anonymous Component';
-    let children = [];
+    let childNodes = [];
     let text = [];
 
     if (!isComponent(instance)) {
@@ -39,13 +39,13 @@ class Component {
       if (typeof a === 'string' || typeof a === 'number') {
         text.push(a);
       } else {
-        children.push(a);
+        childNodes.push(a);
       }
     });
 
-    if (children.length) {
+    if (childNodes.length) {
       if (typeof instance.append === 'function') {
-        instance.append(children);
+        instance.append(childNodes);
       } else {
         throw new Error('invalid component \'' + name + '\', the constructor must have an \'append\' method.');
       }
