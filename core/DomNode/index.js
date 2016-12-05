@@ -14,12 +14,13 @@ const style = require('./style');
 const text = require('./text');
 const html = require('./html');
 const name = require('./name');
+const render = require('./render');
 
 class DomNode {
   constructor(tagName, opt, childNodes) {
     var attributes = {
       style : {},
-      class : ''
+      className : ''
     };
 
     if (typeof opt.style === 'string') {
@@ -86,6 +87,10 @@ class DomNode {
 
   removeClass(className) {
     return removeClass.call(this, className);
+  }
+
+  render() {
+    return render.call(this);
   }
 
   style(property, value) {
