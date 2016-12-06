@@ -90,7 +90,7 @@ module.exports = function render() {
 
   let s = [`<${this.tagName}`];
 
-  if (this.isBlockElement || this.parentNode.isBlockElement) {
+  if (this.isBlockElement() || this.parentNode.isBlockElement()) {
     if (depth) {
       s.unshift('\n', tab);
     } else {
@@ -109,7 +109,7 @@ module.exports = function render() {
     }
 
     if (OPEN.indexOf(this.tagName) === -1) {
-      if (this.isBlockElement && this.childNodes.length) {
+      if (this.isBlockElement() && this.childNodes.length) {
         s.push(`\n${tab}`);
       }
       s.push(`</${this.tagName}>`);

@@ -15,6 +15,18 @@ const text = require('./text');
 const html = require('./html');
 const name = require('./name');
 const render = require('./render');
+const parents = require('./parents');
+
+const INLINE = [
+  'a',
+  'span',
+  'li',
+  'u',
+  'b',
+  'i',
+  'strong',
+  'em'
+];
 
 class DomNode {
   constructor(tagName, opt, childNodes) {
@@ -38,7 +50,11 @@ class DomNode {
       throw new Error('Invalid type for tagName: \'' + typeof tagName + '\'.');
     }
 
-    this.childNodes = childNodes;
+    this.append(childNodes);
+  }
+
+  isBlockElement() {
+    return INLINE.indexOf(this.tagName) === -1;
   }
 
   append(childNodes) {
@@ -75,6 +91,10 @@ class DomNode {
 
   find(selector) {
     return find.call(this, selector);
+  }
+
+  parents() {
+    return parents.call(this);
   }
 
   disable() {
