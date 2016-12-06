@@ -1,7 +1,13 @@
 module.exports = function append(childNodes) {
+  const self = this;
+
   if (typeof this.childNodes === 'undefined') {
     this.childNodes = [];
   }
+
+  childNodes.forEach(function (child) {
+    child.parentNode = self;
+  });
 
   if (arguments.length === 1 && Array.isArray(childNodes)) {
     [].push.apply(this.childNodes, childNodes);
