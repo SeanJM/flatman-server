@@ -4,7 +4,6 @@ const isDomNode = require('../../predicates/isDomNode');
 const getSelectorObject = require('../../tools/getSelectorObject');
 
 function hasClass(elementClass, selectorClass) {
-  console.log(elementClass, selectorClass);
   if (Array.isArray(selectorClass)) {
     return _.intersection(elementClass.split(' '), selectorClass).length;
   } else if (selectorClass) {
@@ -28,9 +27,11 @@ module.exports = function find(selector) {
         if (!hasClass(element.attributes[k], selectorObject.attributes[k])) {
           return;
         }
-      } else {
-        if (typeof selectorObject.attributes[k] === 'string' && selectorObject.attributes[k] !== element.attributes[k]) {
-          return;
+      } else if (selectorObject.attributes[k]) {
+        if (typeof selectorObject.attributes[k] === 'string') {
+          if (selectorObject.attributes[k] !== element.attributes[k]) {
+            return;
+          }
         } else if (!selectorObject.attributes[k].test(element.attributes[k])) {
           return;
         }
