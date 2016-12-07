@@ -5,7 +5,7 @@ module.exports = function getSelectorObject(selector) {
   let tagName = selector.match(/^[a-zA-Z0-9\-\_]+/);
 
   let self = {
-    tagName : tagName ? tagName : false,
+    tagName : tagName ? tagName[0] : false,
     attributes : {}
   };
 
@@ -14,7 +14,7 @@ module.exports = function getSelectorObject(selector) {
   }
 
   if (id) {
-    self.attributes.id = id;
+    self.attributes.id = id[0].slice(1);
   }
 
   if (attr) {
