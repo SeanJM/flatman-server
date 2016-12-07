@@ -21,7 +21,7 @@ class Component {
 
     for (var k in opts) {
       if (
-        k === 'class'
+        k === 'className'
         && typeof instance.addClass === 'function'
       ) {
         instance.addClass(opts[k]);
