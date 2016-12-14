@@ -1,11 +1,5 @@
-module.exports = function addClass(className) {
-  var split = this.attributes.className.split(' ').map(a => a.trim());
-
-  if (!split.includes(className)) {
-    split.push(className);
-  }
-
-  this.attributes.className = split.sort().join(' ');
-
+const addClass = require('../../tools/addClass');
+module.exports = function (className) {
+  addClass(this, className);
   return this;
 };
