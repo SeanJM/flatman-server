@@ -11,7 +11,7 @@ function hasClass(elementClass, selectorClass) {
   }
 }
 
-module.exports = function find(selector) {
+function findStringSelector(selector) {
   let selectorObject = getSelectorObject(selector);
   let found = [];
 
@@ -55,4 +55,31 @@ module.exports = function find(selector) {
 
   find(this.childNodes);
   return found;
+}
+
+function findObjectSelector(selector) {
+  let found = [];
+  function find(childNodes) {
+    childNodes.forEach(function (element) {
+      if (element instanceof selector) {
+        found.push(element);
+      }
+      if (isComponent(element)) {
+        find(element.node.document.childNodes);
+      } else if (isDomNode(element)) {
+        find(element.childNodes);
+      }
+    });
+  }
+  find(this.childNodes);
+  return found;
+}
+
+module.exports = function find(selector) {
+  if (typeof selector === 'string') {
+    return findStringSelector.call(this, selector);
+  } else if (typeof selector === 'object') {
+    return findObjectSelector.call(this, selector);
+  }
+  throw new Error('Invalid selector for \'find\'');
 };
