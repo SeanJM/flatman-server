@@ -1,11 +1,23 @@
 const himalaya = require('himalaya');
 const el = require('./el');
+const _ = require('lodash');
+
+function attributeCase(attr) {
+  return attr.split(':').map(_.kebabCase).join(':');
+}
 
 function formatElement(element) {
+  let attributes = {};
+
   if (element.type === 'Text') {
     return element.content.trim();
   }
-  return el(element.tagName, element.attributes, format(element.children));
+
+  for (var k in element.attributes) {
+    attributes[attributeCase(k)] = element.attributes[k];
+  }
+
+  return el(element.tagName, attributes, format(element.children));
 }
 
 function format(arr) {
@@ -15,11 +27,11 @@ function format(arr) {
 }
 
 module.exports = function parse(string) {
-  var doc = el('document');
+  const parsed = format(himalaya.parse(string));
 
-  doc.append(
-    format(himalaya.parse(string))
-  );
+  if (parsed.length > 1) {
+    return el('root', parsed);
+  }
 
-  return doc;
+  return parsed[0];
 };
