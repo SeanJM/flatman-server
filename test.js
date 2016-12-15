@@ -20,6 +20,7 @@ function About() {
     document : el('div', { className : 'about' })
   };
   this.node.document.on('render', function () {
+    console.log(this.render());
     this.addClass('tender');
   });
 }
@@ -34,5 +35,11 @@ page('test.html').body([
     el(Component, ['text'])
   ]),
   el('div', { style : { display : 'none' } }),
-  el(About, [ el('div', { className : 'test' }) ])
+  el(About, [
+    el('div', { className : 'test' }),
+    el('div', { className : 'test' }, [
+      el('div'),
+      el('a', [ el('span', ['text']) ])
+    ]),
+  ])
 ]).write();
