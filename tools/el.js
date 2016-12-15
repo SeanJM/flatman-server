@@ -1,9 +1,12 @@
 const predicates = require('../predicates/');
 const isComponent = predicates.isComponent;
 const isDomNode = predicates.isDomNode;
+const r = require('require-resolver');
 
-const DomNode = require('../core/DomNode');
-const Component = require('../core/Component');
+const DomNode = r('components/DomNode');
+const Component = r('components/Component');
+const Comment = r('components/Comment');
+const addClass = r('tools/addClass');
 
 function mapType(a) {
   if (typeof a === 'object') {
@@ -82,6 +85,10 @@ function el(tagName) {
     });
   }
 
+  if (typeof tagName === 'string' && tagName.substr(0, 2) === '//') {
+    return new Comment(tagName.substr(2).trim());
+  }
+
   if (typeof tagName === 'function') {
     return new Component(tagName, opts, childNodes);
   }
@@ -90,5 +97,6 @@ function el(tagName) {
 }
 
 el.isComponent = isComponent;
+el.addClass = addClass;
 
 module.exports = el;
