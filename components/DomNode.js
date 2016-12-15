@@ -1,21 +1,28 @@
-const append = require('./append');
-const appendTo = require('./appendTo');
-const on = require('./on');
-const off = require('./off');
-const trigger = require('./trigger');
-const addClass = require('./addClass');
-const hasClass = require('./hasClass');
-const attr = require('./attr');
-const find = require('./find');
-const disable = require('./disable');
-const enable = require('./enable');
-const removeClass = require('./removeClass');
-const style = require('./style');
-const text = require('./text');
-const html = require('./html');
-const name = require('./name');
-const render = require('./render');
-const parents = require('./parents');
+const r = require('require-resolver');
+const methods = r('components/methods/');
+const addClass = methods('addClass');
+const append = methods('append');
+const after = methods('after');
+const before = methods('before');
+const appendTo = methods('appendTo');
+const attr = methods('attr');
+const disable = methods('disable');
+const enable = methods('enable');
+const find = methods('find');
+const hasClass = methods('hasClass');
+const html = methods('html');
+const name = methods('name');
+const off = methods('off');
+const on = methods('on');
+const parents = methods('parents');
+const prepend = methods('prepend');
+const removeClass = methods('removeClass');
+const replaceWith = methods('replaceWith');
+const render = methods('render');
+const renderTo = methods('renderTo');
+const style = methods('style');
+const text = methods('text');
+const trigger = methods('trigger');
 
 const INLINE = [
   'a',
@@ -30,17 +37,16 @@ const INLINE = [
 
 class DomNode {
   constructor(tagName, opt, childNodes) {
-    var attributes = {
+    this.attributes = {
       style : {},
       className : ''
     };
 
-    if (typeof opt.style === 'string') {
-      throw new Error('Invalid value of "' + opt.style.substr(0, 30) + '", style must be passed an object as an argument and not a string.');
-    }
-
-    this.attributes = Object.assign(attributes, opt);
     this.subscribers = { render : [] };
+
+    for (var k in opt) {
+      this.attr(k, opt[k]);
+    }
 
     if (typeof tagName === 'string' && tagName.indexOf(' ') === -1) {
       this.tagName = tagName;
@@ -61,8 +67,16 @@ class DomNode {
     return append.call(this, childNodes);
   }
 
+  after(maybeNode) {
+    return after.call(this, maybeNode);
+  }
+
   appendTo(parent) {
     return appendTo.call(this, parent);
+  }
+
+  before(maybeNode) {
+    return before.call(this, maybeNode);
   }
 
   on(event, callback) {
@@ -97,6 +111,10 @@ class DomNode {
     return parents.call(this);
   }
 
+  prepend(childNodes) {
+    return prepend.call(this, childNodes);
+  }
+
   disable() {
     return disable.call(this);
   }
@@ -111,6 +129,14 @@ class DomNode {
 
   render() {
     return render.call(this);
+  }
+
+  renderTo(filename) {
+    return renderTo.call(this, filename);
+  }
+
+  replaceWith(node) {
+    return replaceWith.call(this, node);
   }
 
   style(property, value) {

@@ -1,18 +1,24 @@
 const _ = require('lodash');
 
 const TO_PIXEL = [
+  'bottom',
+  'height',
+  'left',
+  'margin-bottom',
   'margin-left',
   'margin-right',
   'margin-top',
-  'margin-bottom',
+  'max-height',
+  'max-width',
+  'min-height',
+  'min-width',
+  'padding-bottom',
   'padding-left',
   'padding-right',
   'padding-top',
-  'padding-bottom',
-  'left',
   'right',
   'top',
-  'bottom',
+  'width',
 ];
 
 function setStyle(property, value) {

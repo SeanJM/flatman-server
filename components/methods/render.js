@@ -29,7 +29,19 @@ function sortAttributes(a, b) {
   return 0;
 }
 
+function renderStyle(value) {
+  var styles = [];
+  for (var k in value) {
+    styles.push(k + ': ' + value[k]);
+  }
+  return styles.join(';');
+}
+
 function renderAttribute(name, value) {
+  if (typeof value === 'string') {
+    value = value.trim();
+  }
+
   if (name === 'style') {
    if (typeof value === 'object' && Object.keys(value).length) {
       return `${name}="${renderStyle(value)}"`;
@@ -37,6 +49,7 @@ function renderAttribute(name, value) {
     return '';
   } else if (name === 'className') {
     if (value.length) {
+      value = value.split(' ').sort().join(' ');
       return `class="${value}"`;
     }
     return '';
