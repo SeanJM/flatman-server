@@ -28,7 +28,6 @@ function format(arr) {
 
 module.exports = function parse(string) {
   const parsed = format(himalaya.parse(string));
-
   if (parsed.length > 1) {
     return el('root', parsed);
   }
