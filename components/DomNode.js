@@ -1,28 +1,26 @@
-const r = require('require-resolver');
-const methods = r('components/methods/');
-const addClass = methods('addClass');
-const append = methods('append');
-const after = methods('after');
-const before = methods('before');
-const appendTo = methods('appendTo');
-const attr = methods('attr');
-const disable = methods('disable');
-const enable = methods('enable');
-const find = methods('find');
-const hasClass = methods('hasClass');
-const html = methods('html');
-const name = methods('name');
-const off = methods('off');
-const on = methods('on');
-const parents = methods('parents');
-const prepend = methods('prepend');
-const removeClass = methods('removeClass');
-const replaceWith = methods('replaceWith');
-const render = methods('render');
-const renderTo = methods('renderTo');
-const style = methods('style');
-const text = methods('text');
-const trigger = methods('trigger');
+const addClass = require('./methods/addClass');
+const append = require('./methods/append');
+const after = require('./methods/after');
+const before = require('./methods/before');
+const appendTo = require('./methods/appendTo');
+const attr = require('./methods/attr');
+const disable = require('./methods/disable');
+const enable = require('./methods/enable');
+const find = require('./methods/find');
+const hasClass = require('./methods/hasClass');
+const html = require('./methods/html');
+const name = require('./methods/name');
+const off = require('./methods/off');
+const on = require('./methods/on');
+const parents = require('./methods/parents');
+const prepend = require('./methods/prepend');
+const removeClass = require('./methods/removeClass');
+const replaceWith = require('./methods/replaceWith');
+const render = require('./methods/render');
+const renderTo = require('./methods/renderTo');
+const style = require('./methods/style');
+const text = require('./methods/text');
+const trigger = require('./methods/trigger');
 
 const INLINE = [
   'a',
@@ -35,7 +33,7 @@ const INLINE = [
   'em'
 ];
 
-class DomNode {
+module.exports = class DomNode {
   constructor(tagName, opt, childNodes) {
     this.attributes = {
       style : {},
@@ -155,5 +153,3 @@ class DomNode {
     return name.call(this, value);
   }
 }
-
-module.exports = DomNode;

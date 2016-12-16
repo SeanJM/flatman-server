@@ -1,12 +1,11 @@
 const predicates = require('../predicates/');
 const isComponent = predicates.isComponent;
 const isDomNode = predicates.isDomNode;
-const r = require('require-resolver');
 
-const DomNode = r('components/DomNode');
-const Component = r('components/Component');
-const Comment = r('components/Comment');
-const addClass = r('tools/addClass');
+const DomNode = require('../components/DomNode');
+const Component = require('../components/Component');
+const Comment = require('../components/Comment');
+const addClass = require('./addClass');
 
 function mapType(a) {
   if (typeof a === 'object') {
