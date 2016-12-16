@@ -1,8 +1,5 @@
 function isDomNode(x) {
-  return x &&
-    typeof x.tagName === 'string' &&
-    typeof x.attributes === 'object' &&
-    Array.isArray(x.childNodes);
+  return x && typeof x.constructor && x.constructor.name === 'DomNode';
 }
 
 module.exports = isDomNode;
