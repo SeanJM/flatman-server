@@ -16,6 +16,8 @@ class Component {
     for (var k in opts) {
       if (typeof instance[k] === 'undefined') {
         instance[k] = opts[k];
+      } else if (k === 'dict') {
+        Object.assign(instance[k], opts[k]);
       }
     }
 

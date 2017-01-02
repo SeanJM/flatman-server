@@ -1,5 +1,6 @@
-const el = require('./flatman').el;
-const page = require('./flatman').page;
+const flatman = require('./flatman');
+const el = flatman.el;
+const page = flatman.page;
 
 function Component() {
   this.node = {
@@ -20,7 +21,6 @@ function About() {
     document : el('div', { className : 'about' })
   };
   this.node.document.on('render', function () {
-    console.log(this.render());
     this.addClass('tender');
   });
 }
@@ -29,6 +29,8 @@ About.prototype.append = function (children) {
   this.node.document.append(children);
   return this;
 };
+
+console.log(el('div').constructor.name);
 
 page('test.html').body([
   el('div', { id : 'test', dataId : 'sdkajfhadksjfh', className : 'test' }, [
