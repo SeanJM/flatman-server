@@ -1,8 +1,9 @@
 module.exports = {
-  page : require('./tools/page'),
+  Component : require('./components/Component'),
+  css : require('./tools/css'),
   el : require('./tools/el'),
-  script : require('./tools/script'),
+  page : require('./tools/page'),
   parse : require('./tools/parse'),
   read : require('./tools/read'),
-  css : require('./tools/css')
+  script : require('./tools/script'),
 };

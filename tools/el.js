@@ -3,7 +3,7 @@ const isComponent = predicates.isComponent;
 const isDomNode = predicates.isDomNode;
 
 const DomNode = require('../components/DomNode');
-const Component = require('../components/Component');
+const createComponent = require('./createComponent');
 const Comment = require('../components/Comment');
 const addClass = require('./addClass');
 
@@ -89,7 +89,7 @@ function el(tagName) {
   }
 
   if (typeof tagName === 'function') {
-    return new Component(tagName, opts, childNodes);
+    return createComponent(tagName, opts, childNodes);
   }
 
   return new DomNode(tagName, opts, childNodes);
