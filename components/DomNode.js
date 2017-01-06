@@ -152,4 +152,4 @@ module.exports = class DomNode {
   name(value) {
     return name.call(this, value);
   }
-}
+};
