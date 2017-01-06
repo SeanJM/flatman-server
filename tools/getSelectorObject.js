@@ -19,9 +19,9 @@ module.exports = function getSelectorObject(selector) {
 
   if (attr) {
     attr.forEach(function (string) {
-      let value = string.match(/\[([a-zA-Z0-9\-\_]+)(\*|\^|\$|)=([^\]]+?)\]/);
+      let value = string.match(/\[([a-zA-Z0-9\-\_]+)(?:(\*|\^|\$|)=([^\]]+?)\]|)/);
       value[1] = value[1] === 'class' ? 'className' : value[1];
-      value[3] = value[3].slice(1, -1);
+      value[3] = value[3] ? value[3].slice(1, -1) : false;
 
       if (value[2]) {
         if (value[2] === '*') {
@@ -31,8 +31,10 @@ module.exports = function getSelectorObject(selector) {
         } else if (value[2] === '$') {
           self.attributes[value[1]] = new RegExp(value[3] + '$');
         }
-      } else {
+      } else if (value[3]) {
         self.attributes[value[1]] = new RegExp('^' + value[3] + '$');
+      } else {
+        self.attributes[value[1]] = new RegExp('.+');
       }
     });
   }
