@@ -1,3 +1,6 @@
+const isDomNode = require('../predicates/isDomNode');
+const isComponent = require('../predicates/isComponent');
+
 module.exports = function createComponent(Constructor, opt, arr) {
   let component = new Constructor(opt);
   let name = Constructor.name || 'Anonymous Component';
@@ -12,20 +15,25 @@ module.exports = function createComponent(Constructor, opt, arr) {
   };
 
   function getNames(node) {
-    node.childNodes.forEach(function (child) {
-      var name = isDomNode(child) ? child.name() : child.dict.name;
-      if (name) {
-        if (component.node[name]) {
-          throw 'Invalid name \'' + name + '\', this name is already taken.';
+    if (node.childNodes) {
+      node.childNodes.forEach(function (child) {
+        var name = isDomNode(child)
+          ? child.name()
+          : child.dict && child.dict.name;
+
+        if (name) {
+          component.node[name] = child;
         }
-        component.node[name] = child;
-      }
-      getNames(child);
-    });
+
+        getNames(child);
+      });
+    }
   }
 
   component.dict = component.dict || {};
   component.childNodes = component.childNodes || [];
+  component.subscribers = component.subscribers || {};
+  component.node = component.node || {};
 
   if (typeof component.render === 'function') {
     for (k in opt) {
@@ -48,9 +56,7 @@ module.exports = function createComponent(Constructor, opt, arr) {
       }
     }
 
-    component.node = {
-      document : component.render(opt)
-    };
+    component.node.document = component.render(opt);
 
     if (component.node.document) {
       getNames(component.node.document);
@@ -72,7 +78,9 @@ module.exports = function createComponent(Constructor, opt, arr) {
       } else {
         component.node.document.addClass(afterRender.className);
       }
-    } else if (afterRender.id) {
+    }
+
+    if (afterRender.id) {
       if (component.attr) {
         component.attr('id', afterRender.id);
       } else {
