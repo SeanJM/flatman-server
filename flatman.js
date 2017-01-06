@@ -1,5 +1,12 @@
+const DomNode = require('./components/DomNode');
+const Component = require('flatman-component');
+
+Component.facade(
+  Object.getOwnPropertyNames(DomNode.prototype).filter(a => a !== 'render')
+);
+
 module.exports = {
-  Component : require('./components/Component'),
+  Component : Component,
   css : require('./tools/css'),
   el : require('./tools/el'),
   page : require('./tools/page'),

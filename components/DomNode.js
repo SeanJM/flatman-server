@@ -57,6 +57,10 @@ module.exports = class DomNode {
     this.append(childNodes);
   }
 
+  toString() {
+    return '[object HTML' + this.tagName[0].toUpperCase() + this.tagName.slice(1) + 'Element]';
+  }
+
   isBlockElement() {
     return INLINE.indexOf(this.tagName) === -1;
   }
