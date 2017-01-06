@@ -1,15 +1,17 @@
 const getDomNode = require('../../tools/getDomNode');
 
-module.exports = function after(MaybeNode) {
-  const index = this.parentNode.childNodes.indexOf(this);
+module.exports = function after(maybeNode) {
+  const parentNode = this.parentNode;
+  const index = parentNode.childNodes.indexOf(this);
 
-  if (Array.isArray(MaybeNode)) {
-    throw new Error('Invalid argument for \'.after\', method takes a valid Node or Component and not an Array.');
-  } else if (typeof MaybeNode === 'undefined') {
-    return this.parentNode.childNodes[index + 1];
+  if (Array.isArray(maybeNode)) {
+    maybeNode.forEach(a => after.call(this, a));
+  } else if (typeof maybeNode === 'undefined') {
+    return parentNode.childNodes[index + 1];
+  } else {
+    parentNode.childNodes.splice(index + 1, 0, maybeNode);
+    getDomNode(maybeNode).parentNode = parentNode;
   }
 
-  this.parentNode.childNodes.splice(index + 1, 0, MaybeNode);
-  getDomNode(MaybeNode).parentNode = this.parentNode;
   return this;
 };
