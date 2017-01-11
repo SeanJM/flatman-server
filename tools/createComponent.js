@@ -1,7 +1,7 @@
 const isDomNode = require('../predicates/isDomNode');
 const isComponent = require('../predicates/isComponent');
 
-module.exports = function createComponent(Constructor, opt, arr) {
+module.exports = function createComponent(Constructor, opt, children) {
   let component = new Constructor(opt);
   let name = Constructor.name || 'Anonymous Component';
   let childNodes = [];
@@ -113,7 +113,7 @@ module.exports = function createComponent(Constructor, opt, arr) {
     }
   }
 
-  arr.forEach(function (a) {
+  children.forEach(function (a) {
     if (typeof a === 'string' || typeof a === 'number') {
       text.push(a);
     } else {
@@ -127,7 +127,6 @@ module.exports = function createComponent(Constructor, opt, arr) {
     } else {
       component.node.document.append(childNodes);
     }
-    [].push.apply(component.childNodes, childNodes);
   }
 
   if (text.length) {
