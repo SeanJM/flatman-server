@@ -24,7 +24,7 @@ function findStringSelector(selector) {
 
     for (var k in selectorObject.attributes) {
       if (k === 'className') {
-        if (!hasClass(element.attributes[k], selectorObject.attributes[k])) {
+        if (!hasClass(element.attr('class'), selectorObject.attributes[k])) {
           return;
         }
       } else if (selectorObject.attributes[k]) {
@@ -57,18 +57,14 @@ function findStringSelector(selector) {
   return found;
 }
 
-function findObjectSelector(selector) {
+function findComponentSelector(selector) {
   let found = [];
   function find(childNodes) {
     childNodes.forEach(function (element) {
       if (element instanceof selector) {
         found.push(element);
       }
-      if (isComponent(element)) {
-        find(element.node.document.childNodes);
-      } else if (isDomNode(element)) {
-        find(element.childNodes);
-      }
+      find(element.childNodes);
     });
   }
   find(this.childNodes);
@@ -78,8 +74,8 @@ function findObjectSelector(selector) {
 module.exports = function find(selector) {
   if (typeof selector === 'string') {
     return findStringSelector.call(this, selector);
-  } else if (typeof selector === 'object') {
-    return findObjectSelector.call(this, selector);
+  } else if (typeof selector === 'function') {
+    return findComponentSelector.call(this, selector);
   }
   throw new Error('Invalid selector for \'find\'');
 };
