@@ -16,8 +16,8 @@ const parents = require('./methods/parents');
 const prepend = require('./methods/prepend');
 const removeClass = require('./methods/removeClass');
 const replaceWith = require('./methods/replaceWith');
-const render = require('./methods/render');
-const renderTo = require('./methods/renderTo');
+const toHtml = require('./methods/toHtml');
+const toFile = require('./methods/toFile');
 const style = require('./methods/style');
 const text = require('./methods/text');
 const trigger = require('./methods/trigger');
@@ -35,6 +35,10 @@ const INLINE = [
 
 module.exports = class DomNode {
   constructor(tagName, opt, childNodes) {
+    var once = [];
+    var on = [];
+    var attr = [];
+
     this.attributes = {
       style : {},
       className : ''
@@ -43,8 +47,27 @@ module.exports = class DomNode {
     this.subscribers = { render : [] };
 
     for (var k in opt) {
-      this.attr(k, opt[k]);
+      if (k.substr(0, 4) === 'once') {
+        once.push({
+          name : k.substr(4).toLowerCase(),
+          value : opt[k]
+        });
+      } else if (k.substr(0, 2) === 'on') {
+        on.push({
+          name : k.substr(2).toLowerCase(),
+          value : opt[k]
+        });
+      } else {
+        attr.push({
+          name : k,
+          value : opt[k]
+        });
+      }
     }
+
+    attr.forEach(element => this.attr(element.name, element.value));
+    once.forEach(element => this.once(element.name, element.value));
+    on.forEach(element => this.on(element.name, element.value));
 
     if (typeof tagName === 'string' && tagName.indexOf(' ') === -1) {
       this.tagName = tagName;
@@ -129,12 +152,12 @@ module.exports = class DomNode {
     return removeClass.call(this, className);
   }
 
-  render() {
-    return render.call(this);
+  toHtml() {
+    return toFile.call(this);
   }
 
-  renderTo(filename) {
-    return renderTo.call(this, filename);
+  toFile(filename) {
+    return toFile.call(this, filename);
   }
 
   replaceWith(node) {
