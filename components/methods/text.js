@@ -14,13 +14,21 @@ function cleanText(string) {
 }
 
 module.exports = function text(value) {
-  if (typeof value === 'string' || typeof value === 'number') {
-    this.childNodes = [value.toString()];
-  } else {
-    return cleanText(
-      this.childNodes
-        .filter(a => typeof a === 'string')
-        .join('\n')
-    );
+  var text = [];
+
+  function getText(element) {
+    if (typeof element === 'string') {
+      text.push(cleanText(element));
+    } else {
+      element.childNodes.forEach(getText);
+    }
   }
+
+  if (typeof value === 'string' || typeof value === 'number') {
+    this.childNodes = [ value.toString() ];
+    return this;
+  }
+
+  getText(this);
+  return text.join('\n');
 };
