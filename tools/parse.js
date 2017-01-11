@@ -11,26 +11,30 @@ function formatElement(element) {
 
   if (element.type === 'Text') {
     return element.content.trim();
+  } else if (element.type === 'Comment') {
+    return false;
   }
 
   for (var k in element.attributes) {
     attributes[attributeCase(k)] = element.attributes[k];
   }
 
-  return el(element.tagName, attributes, format(element.children));
+  if (element.children) {
+    return el(element.tagName, attributes, format(element.children));
+  }
+
+  return el(element.tagName, attributes);
 }
 
 function format(arr) {
   return arr.map(formatElement).filter(function (a) {
-    return (typeof a === 'string' && a.length) || (typeof a.tagName === 'string');
+    var isTag = a && typeof a.tagName === 'string';
+    var hasLength = typeof a === 'string' && a.length;
+    return a && (hasLength || isTag);
   });
 }
 
 module.exports = function parse(string) {
   const parsed = format(himalaya.parse(string));
-  if (parsed.length > 1) {
-    return el('root', parsed);
-  }
-
-  return parsed[0];
+  return el('root', parsed);
 };
