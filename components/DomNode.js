@@ -152,6 +152,10 @@ module.exports = class DomNode {
     return removeClass.call(this, className);
   }
 
+  removeChild(node) {
+    return this.childNodes.splice(this.childNodes.indexOf(node), 1);
+  }
+
   toHtml() {
     return toFile.call(this);
   }
