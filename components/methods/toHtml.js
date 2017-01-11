@@ -1,4 +1,5 @@
 const isText = require('../../predicates/isText');
+const _ = require('lodash');
 
 const OPEN = [
   'img',
@@ -29,7 +30,7 @@ function sortAttributes(a, b) {
   return 0;
 }
 
-function renderStyle(value) {
+function toHtmlStyle(value) {
   var styles = [];
   for (var k in value) {
     styles.push(k + ': ' + value[k]);
@@ -37,14 +38,14 @@ function renderStyle(value) {
   return styles.join(';');
 }
 
-function renderAttribute(name, value) {
+function toHtmlAttribute(name, value) {
   if (typeof value === 'string') {
     value = value.trim();
   }
 
   if (name === 'style') {
    if (typeof value === 'object' && Object.keys(value).length) {
-      return `${name}="${renderStyle(value)}"`;
+      return `${name}="${toHtmlStyle(value)}"`;
     }
     return '';
   } else if (name === 'className') {
@@ -64,7 +65,7 @@ function renderAttribute(name, value) {
   return '';
 }
 
-function renderText(self, depth, string) {
+function toHtmlText(self, depth, string) {
   var EOL = string.match(/\n/g);
   var tab = new Array(depth + 2).join('  ');
 
@@ -82,7 +83,7 @@ function getAttributes(attributes) {
   list.forEach(function (attribute) {
     if (typeof attributes[attribute] !== 'undefined') {
       a.push(
-        renderAttribute(attribute, attributes[attribute])
+        toHtmlAttribute(attribute, attributes[attribute])
       );
     }
   });
@@ -96,14 +97,14 @@ function getAttributes(attributes) {
   return '';
 }
 
-module.exports = function render() {
+module.exports = function toHtml() {
   const depth = this.parents().length;
   const tab = new Array(depth + 1).join('  ');
   const self = this;
 
   let s = [`<${this.tagName}`];
 
-  if (this.isBlockElement() || this.parentNode.isBlockElement()) {
+  if (this.isBlockElement() || (this.parentNode && this.parentNode.isBlockElement())) {
     if (depth) {
       s.unshift('\n', tab);
     } else {
@@ -114,11 +115,11 @@ module.exports = function render() {
   s.push(getAttributes(this.attributes), '>');
 
   if (this.childNodes.length === 1 && isText(this.childNodes[0])) {
-    s.push(renderText(self, depth, this.childNodes[0].toString()));
+    s.push(toHtmlText(self, depth, this.childNodes[0].toString()));
     s.push(`</${this.tagName}>`);
   } else {
     if (this.childNodes.length) {
-      s.push(`${this.childNodes.map(a => a.render()).join('')}`);
+      s.push(`${this.childNodes.filter(a => a.toHtml).map(a => a.toHtml()).join('')}`);
     }
 
     if (OPEN.indexOf(this.tagName) === -1) {
