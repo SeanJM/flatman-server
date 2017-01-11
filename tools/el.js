@@ -6,6 +6,7 @@ const DomNode = require('../components/DomNode');
 const createComponent = require('./createComponent');
 const Comment = require('../components/Comment');
 const addClass = require('./addClass');
+const Component = require('flatman-component');
 
 function mapType(a) {
   if (typeof a === 'object') {
@@ -90,6 +91,10 @@ function el(tagName) {
 
   if (typeof tagName === 'function') {
     return createComponent(tagName, opts, childNodes);
+  }
+
+  if (typeof tagName === 'string' && Component.lib[tagName]) {
+    return createComponent(Component.lib[tagName], opts, childNodes);
   }
 
   return new DomNode(tagName, opts, childNodes);
