@@ -90,7 +90,7 @@ function renderAttribute(name, value) {
   } else if (name.substr(0, 4) === 'data') {
     return `${_.kebabCase(name)}="${value}"`;
   }
-  if (value.length) {
+  if (value && value.length) {
     return `${name}="${value}"`;
   }
   return '';
