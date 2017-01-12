@@ -4,17 +4,17 @@ module.exports = function getSelectorObject(selector) {
   let attr = selector.match(/\[[^\]]+?\]/g);
   let tagName = selector.match(/^[a-zA-Z0-9\-\_]+/);
 
-  let self = {
+  let selectorObject = {
     tagName : tagName ? tagName[0] : false,
     attributes : {}
   };
 
   if (classes) {
-    self.attributes.className = classes.map(a => a.slice(1));
+    selectorObject.attributes.className = classes.map(a => a.slice(1));
   }
 
   if (id) {
-    self.attributes.id = id[0].slice(1);
+    selectorObject.attributes.id = id[0].slice(1);
   }
 
   if (attr) {
@@ -25,19 +25,19 @@ module.exports = function getSelectorObject(selector) {
 
       if (value[2]) {
         if (value[2] === '*') {
-          self.attributes[value[1]] = new RegExp(value[3]);
+          selectorObject.attributes[value[1]] = new RegExp(value[3]);
         } else if (value[2] === '^') {
-          self.attributes[value[1]] = new RegExp('^' + value[3]);
+          selectorObject.attributes[value[1]] = new RegExp('^' + value[3]);
         } else if (value[2] === '$') {
-          self.attributes[value[1]] = new RegExp(value[3] + '$');
+          selectorObject.attributes[value[1]] = new RegExp(value[3] + '$');
         }
       } else if (value[3]) {
-        self.attributes[value[1]] = new RegExp('^' + value[3] + '$');
+        selectorObject.attributes[value[1]] = new RegExp('^' + value[3] + '$');
       } else {
-        self.attributes[value[1]] = new RegExp('.+');
+        selectorObject.attributes[value[1]] = new RegExp('.+');
       }
     });
   }
 
-  return self;
+  return selectorObject;
 };
