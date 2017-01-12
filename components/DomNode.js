@@ -5,6 +5,7 @@ const before = require('./methods/before');
 const appendTo = require('./methods/appendTo');
 const attr = require('./methods/attr');
 const disable = require('./methods/disable');
+const closest = require('./methods/closest');
 const enable = require('./methods/enable');
 const is = require('./methods/is');
 const find = require('./methods/find');
