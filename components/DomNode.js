@@ -6,6 +6,7 @@ const appendTo = require('./methods/appendTo');
 const attr = require('./methods/attr');
 const disable = require('./methods/disable');
 const enable = require('./methods/enable');
+const is = require('./methods/is');
 const find = require('./methods/find');
 const hasClass = require('./methods/hasClass');
 const html = require('./methods/html');
@@ -103,6 +104,14 @@ module.exports = class DomNode {
 
   before(maybeNode) {
     return before.call(this, maybeNode);
+  }
+
+  closest(selector) {
+    return closest.call(this, selector);
+  }
+
+  is(selector) {
+    return is.call(this, selector);
   }
 
   on(event, callback) {
