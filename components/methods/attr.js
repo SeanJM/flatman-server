@@ -1,6 +1,10 @@
 const _ = require('lodash');
 
 module.exports = function attr(property, value) {
+  if (typeof value === 'string' && value === '') {
+    value = null;
+  }
+
   if (typeof value === 'undefined') {
     if (property === 'class') {
       return this.attributes.className;
