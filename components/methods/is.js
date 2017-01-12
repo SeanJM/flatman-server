@@ -1,5 +1,5 @@
 const path = require('path');
-const getSelectorObject = require(path.resolve('tools/getSelectorObject'));
+const getSelectorObject = require('../../tools/getSelectorObject');
 
 module.exports = function is(selector) {
   const selectorObject = getSelectorObject(selector);
