@@ -1,6 +1,22 @@
 const isDomNode = require('../predicates/isDomNode');
 const isComponent = require('../predicates/isComponent');
 
+function getNames(component, node) {
+  if (node.childNodes) {
+    node.childNodes.forEach(function (child) {
+      var name = isDomNode(child)
+        ? child.name()
+        : child.dict && child.dict.name;
+
+      if (name) {
+        component.node[name] = child;
+      }
+
+      getNames(component, child);
+    });
+  }
+}
+
 module.exports = function createComponent(Constructor, opt, children) {
   let component = new Constructor(opt);
   let name = Constructor.name || 'Anonymous Component';
@@ -13,22 +29,6 @@ module.exports = function createComponent(Constructor, opt, children) {
     id : false,
     className : false
   };
-
-  function getNames(node) {
-    if (node.childNodes) {
-      node.childNodes.forEach(function (child) {
-        var name = isDomNode(child)
-          ? child.name()
-          : child.dict && child.dict.name;
-
-        if (name) {
-          component.node[name] = child;
-        }
-
-        getNames(child);
-      });
-    }
-  }
 
   component.dict = component.dict || {};
   component.childNodes = component.childNodes || [];
@@ -59,7 +59,7 @@ module.exports = function createComponent(Constructor, opt, children) {
     component.node.document = component.render(opt);
 
     if (component.node.document) {
-      getNames(component.node.document);
+      getNames(component, component.node.document);
     } else {
       throw new Error('Invalid component, component must return a node in the render function.');
     }
