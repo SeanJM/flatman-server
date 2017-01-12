@@ -1,4 +1,4 @@
 module.exports = function enable() {
-  this.attributes.disabled = '';
+  this.attributes.disabled = null;
   return this;
 };
