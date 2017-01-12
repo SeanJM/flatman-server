@@ -1,40 +1,40 @@
 const flatman = require('./flatman');
 const el = flatman.el;
 const page = flatman.page;
+const Component = flatman.Component;
 
-function Component() {
-  this.node = {
-    document : el('div', { className : 'component' }, ['test'])
-  };
+class C extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  text(value) {
+    this.node.document.text(value);
+  }
+
+  render() {
+    return el('div', { className : 'component' }, ['test']);
+  }
 }
 
-Component.prototype.append = function (array) {
-  this.node.document.append(array);
-};
+class About extends Component {
+  constructor(props) {
+    super(props);
+    this.onRender = this.onRender.bind(this);
+  }
 
-Component.prototype.text = function (text) {
-  this.node.document.text(text);
-};
+  onRender() {
+    console.log('render');
+  }
 
-function About() {
-  this.node = {
-    document : el('div', { className : 'about' })
-  };
-  this.node.document.on('render', function () {
-    this.addClass('tender');
-  });
+  render() {
+    return el('div', { onRender : this.onRender, className : 'about' });
+  }
 }
-
-About.prototype.append = function (children) {
-  this.node.document.append(children);
-  return this;
-};
-
-console.log(el('div').constructor.name);
 
 page('test.html').body([
   el('div', { id : 'test', dataId : 'sdkajfhadksjfh', className : 'test' }, [
-    el(Component, ['text'])
+    el(C, ['text'])
   ]),
   el('div', { style : { display : 'none' } }),
   el(About, [
