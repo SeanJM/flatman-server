@@ -41,7 +41,8 @@ module.exports = class DomNode {
 
     this.attributes = {
       style : {},
-      className : ''
+      className : '',
+      disabled : null
     };
 
     this.subscribers = { render : [] };
@@ -157,7 +158,7 @@ module.exports = class DomNode {
   }
 
   toHtml() {
-    return toFile.call(this);
+    return toHtml.call(this);
   }
 
   toFile(filename) {
