@@ -5,7 +5,6 @@ const isDomNode = predicates.isDomNode;
 const DomNode = require('../components/DomNode');
 const createComponent = require('./createComponent');
 const Comment = require('../components/Comment');
-const addClass = require('./addClass');
 const Component = require('flatman-component');
 
 function mapType(a) {
@@ -99,8 +98,5 @@ function el(tagName) {
 
   return new DomNode(tagName, opts, childNodes);
 }
-
-el.isComponent = isComponent;
-el.addClass = addClass;
 
 module.exports = el;

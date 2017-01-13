@@ -43,7 +43,7 @@ module.exports = class DomNode {
 
     this.attributes = {
       style : {},
-      className : '',
+      className : [],
       disabled : null
     };
 
