@@ -4,41 +4,48 @@ const TO_PIXEL = [
   'bottom',
   'height',
   'left',
-  'margin-bottom',
-  'margin-left',
-  'margin-right',
-  'margin-top',
-  'max-height',
-  'max-width',
-  'min-height',
-  'min-width',
-  'padding-bottom',
-  'padding-left',
-  'padding-right',
-  'padding-top',
+  'marginBottom',
+  'marginLeft',
+  'marginRight',
+  'marginTop',
+  'maxHeight',
+  'maxWidth',
+  'minHeight',
+  'minWidth',
+  'paddingBottom',
+  'paddingLeft',
+  'paddingRight',
+  'paddingTop',
   'right',
   'top',
   'width',
 ];
 
 function setStyle(property, value) {
-  var name = _.kebabCase(property);
-  if (TO_PIXEL.includes(name) && typeof value === 'number') {
-    this.attributes.style[name] = value + 'px';
+  if (property.indexOf('-') > -1) {
+    throw 'Invalid name: ' + property + ' please use the JavaScript name for the style of \"' + _.camelCase(property) + '\"';
+  }
+  if (TO_PIXEL.includes(property) && typeof value === 'number') {
+    this.attributes.style[property] = value + 'px';
   } else {
-    this.attributes.style[name] = value;
+    this.attributes.style[property] = value;
   }
 }
 
 module.exports = function style(property, value) {
-  if (typeof property === 'string' && typeof value !== 'undefined') {
-    setStyle.call(this, property, value);
+  if (typeof property === 'string') {
+    if (typeof value !== 'undefined') {
+      setStyle.call(this, property, value);
+      return this;
+    } else {
+      return this.attributes.style[property];
+    }
   } else if (typeof property === 'object') {
     for (var name in property) {
       setStyle.call(this, name, property[name]);
     }
   } else {
-    throw new Error('Invalid values for "style"');
+    return this.attributes.style;
   }
 
   return this;
