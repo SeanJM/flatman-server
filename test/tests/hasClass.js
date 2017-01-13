@@ -6,7 +6,8 @@ module.exports = {
     var a = el('div');
 
     a.addClass('test');
-    return a.hasClass('test') && a.attributes.className === 'test';
+
+    return a.hasClass('test') && a.attributes.className.includes('test');
   },
   isEqual() {
     return true;
