@@ -64,7 +64,7 @@ function renderText(self, depth, string) {
 function renderStyle(value) {
   var styles = [];
   for (var k in value) {
-    styles.push(k + ': ' + value[k]);
+    styles.push(_.kebabCase(k) + ': ' + value[k]);
   }
   return styles.join(';');
 }
