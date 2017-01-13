@@ -5,9 +5,9 @@ module.exports = {
   this() {
     var a = el('div');
     a.attr('test', '1');
-    return [ a.attr('test') ];
+    return a.attr('test');
   },
-  equal() {
-    return [ '1' ];
+  isEqual() {
+    return '1';
   }
 };

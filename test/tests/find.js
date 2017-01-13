@@ -10,7 +10,7 @@ module.exports = {
   this() {
     return a.find('.test')[0] === b;
   },
-  equal() {
+  isEqual() {
     return true;
   }
 };

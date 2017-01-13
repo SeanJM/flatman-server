@@ -16,7 +16,7 @@ module.exports = {
   this() {
     return result;
   },
-  equal() {
+  isDeepEqual() {
     return [ true ];
   }
 };

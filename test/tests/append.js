@@ -9,7 +9,7 @@ module.exports = {
     a.append([b, c]);
     return a.childNodes.length;
   },
-  equal() {
+  isEqual() {
     return 2;
   }
 };

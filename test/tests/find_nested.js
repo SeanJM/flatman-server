@@ -13,7 +13,7 @@ module.exports = {
   this() {
     return a.find('.test .test-2')[0] === c;
   },
-  equal() {
+  isEqual() {
     return true;
   }
 };

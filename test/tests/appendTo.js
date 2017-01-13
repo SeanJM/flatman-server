@@ -8,7 +8,7 @@ module.exports = {
     b.appendTo(a);
     return [ a.childNodes.length, a.childNodes[0] === b ];
   },
-  equal() {
+  isDeepEqual() {
     return [ 1, true ];
   }
 };

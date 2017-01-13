@@ -12,7 +12,7 @@ module.exports = {
   this() {
     return d.closest('.test') === c;
   },
-  equal() {
+  isEqual() {
     return true;
   }
 };
