@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const getSelectorGroup = require('../../tools/getSelectorGroup');
 const getDomNode = require('../../tools/getDomNode');
 
