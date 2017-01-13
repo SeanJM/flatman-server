@@ -7,7 +7,7 @@ module.exports = {
     a.addClass('test');
     return a.hasClass('test');
   },
-  equal() {
+  isEqual() {
     return true;
   }
-}
+};
