@@ -16,7 +16,7 @@ module.exports = {
     a.trigger('click');
     result.push(toggle);
 
-    return toggle;
+    return result;
   },
   isDeepEqual() {
     return [ true ];
