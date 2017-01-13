@@ -1,8 +1,8 @@
 var el = require('../../flatman').el;
 
 var a = el('div');
-var b = el ('div', { className : 'test' });
-var c = el ('div', { className : 'test-2' });
+var b = el('div', { className : 'test' });
+var c = el('div', { className : 'test-2' });
 
 a.append([
   b.append([ c ])
