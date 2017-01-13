@@ -33,7 +33,7 @@ function sortAttributes(a, b) {
 function toHtmlStyle(value) {
   var styles = [];
   for (var k in value) {
-    styles.push(k + ': ' + value[k]);
+    styles.push(_.kebabCase(k) + ': ' + value[k]);
   }
   return styles.join(';');
 }
@@ -59,7 +59,7 @@ function toHtmlAttribute(name, value) {
   } else if (name.substr(0, 4) === 'data') {
     return `${_.kebabCase(name)}="${value}"`;
   }
-  if (value.length) {
+  if (value && value.length) {
     return `${name}="${value}"`;
   }
   return '';
@@ -98,11 +98,13 @@ function getAttributes(attributes) {
 }
 
 module.exports = function toHtml() {
-  const depth = this.parents().length;
+  const depth = this.parents().filter(a => a.isRendering).length;
   const tab = new Array(depth + 1).join('  ');
   const self = this;
 
   let s = [`<${this.tagName}`];
+
+  this.isRendering = true;
 
   if (this.isBlockElement() || (this.parentNode && this.parentNode.isBlockElement())) {
     if (depth) {
@@ -129,6 +131,8 @@ module.exports = function toHtml() {
       s.push(`</${this.tagName}>`);
     }
   }
+
+  this.isRendering = false;
 
   return s.join('');
 };
