@@ -50,7 +50,7 @@ function toHtmlAttribute(name, value) {
     return '';
   } else if (name === 'className') {
     if (value.length) {
-      value = value.split(' ').sort().join(' ');
+      value = value.sort().join(' ');
       return `class="${value}"`;
     }
     return '';
@@ -102,7 +102,7 @@ module.exports = function toHtml() {
   const tab = new Array(depth + 1).join('  ');
   const self = this;
 
-  let s = [`<${this.tagName}`];
+  let s = [ `<${this.tagName}` ];
 
   this.isRendering = true;
 
