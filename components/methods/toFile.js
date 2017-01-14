@@ -1,3 +1,7 @@
+const fs = require('fs');
+
 module.exports = function toFile(filename) {
-  fs.writeFileSync(filename, this.toHtml());
+  const value = this.toHtml();
+  fs.writeFileSync(filename, value);
+  return value;
 };
