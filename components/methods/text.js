@@ -30,5 +30,5 @@ module.exports = function text(value) {
   }
 
   getText(this);
-  return text.join('\n');
+  return text.join(' ');
 };
