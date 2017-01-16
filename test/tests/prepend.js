@@ -1,4 +1,4 @@
-var el = require('../../flatman').el;
+const el = require('../../index').el;
 
 module.exports = {
   name : 'prepend()',

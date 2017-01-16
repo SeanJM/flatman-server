@@ -1,4 +1,4 @@
-const el = require('../../flatman').el;
+const el = require('../../index').el;
 const fs = require('fs');
 const path = require('path');
 

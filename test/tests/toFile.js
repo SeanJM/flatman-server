@@ -1,9 +1,9 @@
-const el = require('../../flatman').el;
+const el = require('../../index').el;
 const fs = require('fs');
 const path = require('path');
 
 module.exports = {
-  name : 'toHtml()',
+  name : 'toFile()',
   this() {
     var a = el('div', [
       el('div', { className : 'div-1' }, [

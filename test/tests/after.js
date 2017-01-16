@@ -1,4 +1,4 @@
-var el = require('../../flatman').el;
+const el = require('../../index').el;
 
 var a = el('div', { className : 'parent' });
 var b = el('div');
