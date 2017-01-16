@@ -60,7 +60,7 @@ function toHtmlAttribute(name, value) {
     return `${_.kebabCase(name)}="${value}"`;
   }
   if (value && value.length) {
-    return `${name}="${value}"`;
+    return `${_.kebabCase(name)}="${value}"`;
   }
   return '';
 }
@@ -101,6 +101,8 @@ module.exports = function toHtml() {
   const depth = this.parents().filter(a => a.isRendering).length;
   const tab = new Array(depth + 1).join('  ');
   const self = this;
+
+  this.trigger('html');
 
   let s = [ `<${this.tagName}` ];
 
