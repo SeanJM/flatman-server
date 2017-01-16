@@ -5,6 +5,8 @@ Component.facade(
   Object.getOwnPropertyNames(DomNode.prototype).filter(a => a !== 'render')
 );
 
+require('./components/HTML');
+
 module.exports = {
   Component : Component,
   css : require('./tools/css'),

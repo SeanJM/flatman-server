@@ -5,7 +5,7 @@
   "scripts": {
     "test": "test.js"
   },
-  "main": "flatman.js",
+  "main": "index.js",
   "devDependencies": {},
   "dependencies": {
     "colors": "^1.1.2",
