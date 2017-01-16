@@ -16,7 +16,11 @@ function formatElement(element) {
   }
 
   for (var k in element.attributes) {
-    attributes[attributeCase(k)] = element.attributes[k];
+    if (k === 'className') {
+      attributes.className = element.attributes[k].join(' ');
+    } else {
+      attributes[attributeCase(k)] = element.attributes[k];
+    }
   }
 
   if (element.children) {
