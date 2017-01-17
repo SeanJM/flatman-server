@@ -5,15 +5,11 @@ function findNodes(node, selector) {
   let found = [];
 
   function find(childNodes) {
-    childNodes.forEach(function (element) {
-      var node = getDomNode(element);
-
-      if (node) {
-        if (node.is(selector)) {
-          found.push(element);
-        }
-        find(node.childNodes);
+    childNodes.forEach(function (node) {
+      if (node.is(selector)) {
+        found.push(node);
       }
+      find(node.childNodes);
     });
   }
 

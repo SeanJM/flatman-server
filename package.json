@@ -10,7 +10,6 @@
   "dependencies": {
     "colors": "^1.1.2",
     "eslint": "^3.13.1",
-    "flatman-component": "^0.8.0",
     "grunt": "^1.0.0",
     "himalaya": "^0.2.2",
     "lodash": "^4.17.2",

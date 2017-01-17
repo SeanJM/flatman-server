@@ -93,6 +93,8 @@ module.exports = function createComponent(tagName, opt, children) {
         component.node.document.attr('id', afterRender.className);
       }
     }
+
+    component.attributes = component.node.document.attributes;
   } else {
     // Code block to be gradually phased out
     if (!isComponent(component)) {
