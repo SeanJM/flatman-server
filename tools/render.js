@@ -81,7 +81,7 @@ function renderAttribute(name, value) {
     return '';
   } else if (name === 'className') {
     if (value.length) {
-      value = value.split(' ').sort().join(' ');
+      value = value.sort().join(' ');
       return `class="${value}"`;
     }
     return '';

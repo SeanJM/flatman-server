@@ -1,5 +1,6 @@
 const isDomNode = require('../predicates/isDomNode');
 const isComponent = require('../predicates/isComponent');
+const Component = require('flatman-component');
 
 function getNames(component, node) {
   if (node.childNodes) {
@@ -17,7 +18,8 @@ function getNames(component, node) {
   }
 }
 
-module.exports = function createComponent(Constructor, opt, children) {
+module.exports = function createComponent(tagName, opt, children) {
+  let Constructor = Component.lib[tagName] || tagName;
   let component = new Constructor(opt);
   let name = Constructor.name || 'Anonymous Component';
   let childNodes = [];
@@ -34,6 +36,10 @@ module.exports = function createComponent(Constructor, opt, children) {
   component.childNodes = component.childNodes || [];
   component.subscribers = component.subscribers || {};
   component.node = component.node || {};
+
+  component.tagName = typeof tagName === 'string'
+    ? tagName
+    : undefined;
 
   if (typeof component.render === 'function') {
     for (k in opt) {

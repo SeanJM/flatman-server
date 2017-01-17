@@ -88,12 +88,8 @@ function el(tagName) {
     return new Comment(tagName.substr(2).trim());
   }
 
-  if (typeof tagName === 'function') {
+  if (typeof tagName === 'function' || Component.lib[tagName]) {
     return createComponent(tagName, opts, childNodes);
-  }
-
-  if (typeof tagName === 'string' && Component.lib[tagName]) {
-    return createComponent(Component.lib[tagName], opts, childNodes);
   }
 
   return new DomNode(tagName, opts, childNodes);

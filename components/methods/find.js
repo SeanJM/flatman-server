@@ -8,11 +8,12 @@ function findNodes(node, selector) {
     childNodes.forEach(function (element) {
       var node = getDomNode(element);
 
-      if (node.is(selector)) {
-        found.push(element);
+      if (node) {
+        if (node.is(selector)) {
+          found.push(element);
+        }
+        find(node.childNodes);
       }
-
-      find(node.childNodes);
     });
   }
 
