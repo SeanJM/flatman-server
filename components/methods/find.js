@@ -6,10 +6,12 @@ function findNodes(node, selector) {
 
   function find(childNodes) {
     childNodes.forEach(function (node) {
-      if (node.is(selector)) {
-        found.push(node);
+      if (node.childNodes) {
+        if (node.is(selector)) {
+          found.push(node);
+        }
+        find(node.childNodes);
       }
-      find(node.childNodes);
     });
   }
 
