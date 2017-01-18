@@ -6,8 +6,8 @@ module.exports = function attr(property, value) {
   }
 
   if (typeof value === 'undefined') {
-    if (property === 'class') {
-      return this.attributes.className;
+    if (property === 'class' || property === 'className') {
+      return this.attributes.className.join(' ');
     }
     return this.attributes[property];
   }
@@ -16,8 +16,12 @@ module.exports = function attr(property, value) {
     this.attributes['tabIndex'] = value;
   } else if (property.slice(0, 4) === 'data') {
     this.attributes[_.kebabCase(property)] = value;
-  } else if (property === 'className') {
-    this.attributes.className = value.split(' ').map(a => a.trim());
+  } else if (property === 'className' || property === 'class') {
+    this.attributes.className = (
+      Array.isArray(value)
+        ? value
+        : value.split(' ')
+    ).map(a => a.trim());
   } else if (property === 'style') {
     if (typeof value === 'string') {
       throw new Error('Invalid value of "' + value.substr(0, 30) + '", style must be passed an object as an argument and not a string.');
