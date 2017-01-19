@@ -1,6 +1,20 @@
 const _ = require('lodash');
 
-module.exports = function attr(property, value) {
+function attrObject(props) {
+  for (k in props) {
+    if (k.slice(0, 4) === 'once') {
+      this.once(k.slice(4), props[k]);
+    } else if (k.slice(0, 2) === 'on') {
+      this.on(k.slice(2), props[k]);
+    } else if (k === 'className') {
+      this.attr('className', props[k]);
+    } else if (k === 'id') {
+      this.attr('id', props[k]);
+    }
+  }
+}
+
+function attrString(property, value) {
   if (typeof value === 'string' && value === '') {
     value = null;
   }
@@ -30,6 +44,12 @@ module.exports = function attr(property, value) {
   } else {
     this.attributes[property] = value;
   }
+}
 
-  return this;
+module.exports = function attr(property, value) {
+  if (typeof property === 'object') {
+    attrObject.call(this, property);
+    return this;
+  }
+  return attrString.call(this, property, value);
 };
