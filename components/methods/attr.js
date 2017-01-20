@@ -14,6 +14,17 @@ function attrObject(props) {
   }
 }
 
+function getClassName(value) {
+  var array = Array.isArray(value) ? value : value.split(' ');
+  var result = [];
+  var temp;
+  for (var i = 0, n = array.length; i < n; i++) {
+    temp = array[i] && array[i].trim();
+    if (temp) { result.push(temp); }
+  }
+  return result;
+}
+
 function attrString(property, value) {
   if (typeof value === 'string' && value === '') {
     value = null;
@@ -31,11 +42,7 @@ function attrString(property, value) {
   } else if (property.slice(0, 4) === 'data') {
     this.attributes[_.kebabCase(property)] = value;
   } else if (property === 'className' || property === 'class') {
-    this.attributes.className = (
-      Array.isArray(value)
-        ? value
-        : value.split(' ')
-    ).map(a => a.trim());
+    this.attributes.className = getClassName(value);
   } else if (property === 'style') {
     if (typeof value === 'string') {
       throw new Error('Invalid value of "' + value.substr(0, 30) + '", style must be passed an object as an argument and not a string.');
