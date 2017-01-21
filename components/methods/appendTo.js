@@ -1,5 +1,5 @@
 module.exports = function appendTo(parentNode) {
-  this.parentNode = parentNode;
-  parentNode.childNodes.push(this);
+  this.parentNode = parentNode.getNode();
+  this.parentNode.childNodes.push(this);
   return this;
 };
