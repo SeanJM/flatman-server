@@ -6,6 +6,7 @@ const appendTo = require('./methods/appendTo');
 const attr = require('./methods/attr');
 const disable = require('./methods/disable');
 const closest = require('./methods/closest');
+const getNode = require('./methods/getNode');
 const enable = require('./methods/enable');
 const is = require('./methods/is');
 const find = require('./methods/find');
@@ -14,6 +15,7 @@ const html = require('./methods/html');
 const name = require('./methods/name');
 const off = require('./methods/off');
 const on = require('./methods/on');
+const parent = require('./methods/parent');
 const parents = require('./methods/parents');
 const prepend = require('./methods/prepend');
 const removeClass = require('./methods/removeClass');
@@ -44,10 +46,12 @@ module.exports = class DomNode {
     this.attributes = {
       style : {},
       className : [],
-      disabled : null
+      disabled : null,
+      name : null
     };
 
     this.subscribers = { render : [] };
+    this.childNodes = [];
 
     for (var k in opt) {
       if (k.substr(0, 4) === 'once') {
@@ -107,8 +111,16 @@ module.exports = class DomNode {
     return before.call(this, maybeNode);
   }
 
+  children() {
+    return this.childNodes;
+  }
+
   closest(selector) {
     return closest.call(this, selector);
+  }
+
+  getNode() {
+    return getNode.call(this);
   }
 
   is(selector) {
@@ -143,6 +155,10 @@ module.exports = class DomNode {
     return find.call(this, selector);
   }
 
+  parent() {
+    return parent.call(this);
+  }
+
   parents() {
     return parents.call(this);
   }
@@ -163,8 +179,14 @@ module.exports = class DomNode {
     return removeClass.call(this, className);
   }
 
+  remove() {
+    this.parentNode.removeChild(this);
+    return this;
+  }
+
   removeChild(node) {
-    return this.childNodes.splice(this.childNodes.indexOf(node), 1);
+    this.childNodes.splice(this.childNodes.indexOf(node), 1);
+    return this;
   }
 
   toHtml() {
