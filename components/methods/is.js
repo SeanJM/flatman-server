@@ -1,7 +1,7 @@
 const path = require('path');
 const getSelectorObject = require('../../tools/getSelectorObject');
 
-module.exports = function is(selector) {
+function isPredicate(selector) {
   const selectorObject = getSelectorObject(selector);
 
   if (selectorObject.tagName) {
@@ -27,4 +27,11 @@ module.exports = function is(selector) {
   }
 
   return true;
+}
+
+module.exports = function is(selector) {
+  if (typeof selector === 'function') {
+    return selector(this);
+  }
+  return isPredicate.call(this, selector);
 };
