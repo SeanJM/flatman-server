@@ -2,7 +2,7 @@ const el = require('../../index').el;
 const Component = require('../../index').Component;
 
 module.exports = {
-  name : 'find() (component)',
+  name : 'find() (predicate)',
   this() {
     Component.create('c', {
       render(opt) {
@@ -18,7 +18,7 @@ module.exports = {
       b.append([ c ])
     ]);
 
-    return a.find('.test-2')[0] === c.node.document;
+    return a.find(a => a.componentTagName === 'c')[0] === c.node.document;
   },
   isEqual() {
     return true;
