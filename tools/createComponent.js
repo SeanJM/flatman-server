@@ -25,27 +25,18 @@ module.exports = function createComponent(tagName, opt, children) {
   let childNodes = [];
   let text = [];
 
-  component.dict = component.dict || {};
-  component.childNodes = component.childNodes || [];
+  component.dict = Object.assign(component.dict || {}, opt);
   component.subscribers = component.subscribers || {};
   component.node = component.node || {};
 
-  component.tagName = typeof tagName === 'string'
-    ? tagName
-    : undefined;
-
   if (typeof component.render === 'function') {
-
     component.node.document = component.render(opt);
-
     if (component.node.document) {
       getNames(component, component.node.document);
     } else {
       throw new Error('Invalid component, component must return a node in the render function.');
     }
-
-    Object.assign(component.dict, opt);
-    component.attributes = component.node.document.attributes;
+    component.node.document.componentTagName = tagName;
   } else {
     // Assign to value of 'this' first
     for (var k in opt) {
