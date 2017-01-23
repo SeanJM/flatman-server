@@ -21,7 +21,7 @@ function mapType(a) {
 }
 
 function el(tagName) {
-  let opts = {};
+  let props = {};
   let childNodes = [];
   let args = [];
   let types = [];
@@ -56,12 +56,12 @@ function el(tagName) {
 
   if (Array.isArray(arguments[1])) {
     childNodes = arguments[1];
-    opts = arguments[2] || {};
+    props = arguments[2] || {};
   } else if (Array.isArray(arguments[2])) {
     childNodes = arguments[2] || [];
-    opts = arguments[1] || {};
+    props = arguments[1] || {};
   } else if (typeof arguments[1] === 'object') {
-    opts = arguments[1];
+    props = arguments[1];
   }
 
   if (childNodes && childNodes.length) {
@@ -88,11 +88,15 @@ function el(tagName) {
     return new Comment(tagName.substr(2).trim());
   }
 
-  if (typeof tagName === 'function' || Component.lib[tagName]) {
-    return createComponent(tagName, opts, childNodes);
+  if (typeof Component.function[tagName] === 'function') {
+    return Component.function[tagName](props, childNodes);
   }
 
-  return new DomNode(tagName, opts, childNodes);
+  if (typeof tagName === 'function' || Component.lib[tagName]) {
+    return createComponent(tagName, props, childNodes);
+  }
+
+  return new DomNode(tagName, props, childNodes);
 }
 
 module.exports = el;

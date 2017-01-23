@@ -4,6 +4,7 @@ const Component = require('../../index').Component;
 module.exports = {
   name : 'find() (predicate)',
   this() {
+    Component.lib = {};
     Component.create('c', {
       render(opt) {
         return el('div', { className : opt.className });
