@@ -4,7 +4,7 @@ const Component = require('../../index').Component;
 module.exports = {
   name : 'find() (component)',
   this() {
-    Component.create('c', {
+    Component.create('E', {
       render(opt) {
         return el('div', { className : opt.className });
       }
@@ -12,7 +12,7 @@ module.exports = {
 
     var a = el('div');
     var b = el('div', { className : 'test' });
-    var c = el('c', { className : 'test-2' });
+    var c = el('E', { className : 'test-2' });
 
     a.append([
       b.append([ c ])
