@@ -3,16 +3,12 @@ const isComponent = require('../predicates/isComponent');
 const Component = require('flatman-component');
 
 function getNames(component, node) {
-  if (node.childNodes) {
-    node.childNodes.forEach(function (child) {
-      var name = isDomNode(child)
-        ? child.name()
-        : child.dict && child.dict.name;
-
+  if (node.children) {
+    node.children().forEach(function (child) {
+      var name = child.name && child.name();
       if (name) {
         component.node[name] = child;
       }
-
       getNames(component, child);
     });
   }
