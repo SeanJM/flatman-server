@@ -7,75 +7,56 @@ function getNames(component, node) {
     node.children().forEach(function (child) {
       var name = child.name && child.name();
       if (name) {
-        component.node[name] = child;
+        component.node[name] = child.component || child;
       }
       getNames(component, child);
     });
   }
 }
 
-module.exports = function createComponent(tagName, opt, children) {
-  let Constructor = Component.lib[tagName] || tagName;
-  let component = new Constructor(opt);
-  let name = Constructor.name || 'Anonymous Component';
+module.exports = function createComponent(tagName, props, array) {
+  let Constructor = Component.lib[tagName];
+  let component = new Constructor(props);
   let childNodes = [];
-  let text = [];
+  let strings = [];
 
-  component.dict = Object.assign(component.dict || {}, opt);
+  component.tagName = tagName;
+  component.props = component.props;
   component.subscribers = component.subscribers || {};
   component.node = component.node || {};
 
+  if (constructor.prototype.text) {
+    for (var i = 0, n = array.length; i < n; i++) {
+      if (typeof array[i] === 'string' || typeof array[i] === 'number') {
+        strings.push(array[i]);
+      } else {
+        childNodes.push(array[i]);
+      }
+    }
+  } else {
+    childNodes = array;
+  }
+
+  for (var prop in props) {
+    component.props[prop] = props[prop];
+  }
+
   if (typeof component.render === 'function') {
-    component.node.document = component.render(opt);
+    component.node.document = component.render(props);
     if (component.node.document) {
-      getNames(component, component.node.document);
+      component.node.document.component = component;
+      getComponentNames(component, component.node.document);
     } else {
       throw new Error('Invalid component, component must return a node in the render function.');
     }
-    component.node.document.componentTagName = tagName;
-  } else {
-    // Assign to value of 'this' first
-    for (var k in opt) {
-      if (typeof component[k] === 'undefined') {
-        component[k] = opt[k];
-      } else if (k === 'dict') {
-        Object.assign(component[k], opt[k]);
-      }
-    }
-
-    for (var k in opt) {
-      if (k === 'className') {
-        component.addClass(opt[k]);
-      } else if (k === 'id') {
-        component.attr('id', opt[k]);
-      } else if (typeof component[k] === 'function') {
-        component[k](opt[k]);
-      }
-    }
   }
-
-  children.forEach(function (a) {
-    if (typeof a === 'string' || typeof a === 'number') {
-      text.push(a);
-    } else {
-      childNodes.push(a);
-    }
-  });
 
   if (childNodes.length) {
-    if (typeof component.append === 'function') {
-      component.append(childNodes);
-    } else {
-      component.node.document.append(childNodes);
-    }
+    component.append(childNodes);
   }
 
-  if (text.length) {
-    if (typeof component.text === 'function') {
-      component.text.apply(component, text);
-    } else {
-      throw new Error('invalid component \'' + name + '\', the constructor must have a \'text\' method.');
-    }
+  if (strings.length) {
+    component.text.apply(component, strings);
   }
 
   return component;
