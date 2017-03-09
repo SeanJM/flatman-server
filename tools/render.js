@@ -118,18 +118,18 @@ function renderElement(self, tab, depth, e) {
   s += '>';
 
   if (
-    e.childNodes.length === 1 && (
-      typeof e.childNodes[0] === 'string' || typeof e.childNodes[0] === 'number'
+    e.children().length === 1 && (
+      typeof e.children(0) === 'string' || typeof e.children(0) === 'number'
     )
   ) {
     s += `${renderText(self, depth, e.childNodes[0].toString())}</${e.tagName}>`;
   } else {
-    if (e.childNodes.length) {
-      s += `\n${render(self, e.childNodes, depth + 1)}`;
+    if (e.children().length) {
+      s += `\n${render(self, e.children(), depth + 1)}`;
     }
 
     if (OPEN.indexOf(e.tagName) === -1) {
-      if (e.childNodes.length) {
+      if (e.children().length) {
         s += `\n${tab}`;
       }
       s += `</${e.tagName}>`;
