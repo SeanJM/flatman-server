@@ -1,44 +1,24 @@
-const himalaya = require('himalaya');
+const parseHtml = require('flatman-parse');
 const el = require('./el');
 const _ = require('lodash');
 
-function attributeCase(attr) {
-  return attr.split(':').map(_.kebabCase).join(':');
-}
-
-function formatElement(element) {
+function format(element) {
   let attributes = {};
 
-  if (element.type === 'Text') {
-    return element.content.trim();
-  } else if (element.type === 'Comment') {
+  if (typeof element === 'string') {
+    return element.trim();
+  } else if (element.tagName === 'comment') {
     return false;
   }
 
-  for (var k in element.attributes) {
-    if (k === 'className') {
-      attributes.className = element.attributes[k].join(' ');
-    } else {
-      attributes[attributeCase(k)] = element.attributes[k];
-    }
+  if (element.childNodes.length) {
+    return el(element.tagName, element.attributes, format(element.childNodes));
   }
 
-  if (element.children) {
-    return el(element.tagName, attributes, format(element.children));
-  }
-
-  return el(element.tagName, attributes);
-}
-
-function format(arr) {
-  return arr.map(formatElement).filter(function (a) {
-    var isTag = a && typeof a.tagName === 'string';
-    var hasLength = typeof a === 'string' && a.length;
-    return a && (hasLength || isTag);
-  });
+  return el(element.tagName, element.attributes);
 }
 
 module.exports = function parse(string) {
-  const parsed = format(himalaya.parse(string));
+  const parsed = parseHtml(string).map(format);
   return el('root', parsed);
 };
