@@ -7,7 +7,7 @@ module.exports = {
     Component.lib = {};
     Component.create('C');
     var c = el('C', { option : 1 });
-    return c.dict.option === 1;
+    return c.props.option === 1;
   },
   isEqual() {
     return true;

@@ -4,7 +4,7 @@ const fs = require('fs');
 
 Component.create('HTML', {
   constructor() {
-    this.dict = {
+    this.props = {
       script : [],
       head : [],
       body : [],
@@ -18,13 +18,13 @@ Component.create('HTML', {
     var head = this.node.document.find('head')[0];
 
     body.append([].concat(
-      this.dict.body,
-      this.dict.script
+      this.props.body,
+      this.props.script
     ));
 
     head.append([].concat(
-      this.dict.favicon,
-      this.dict.css
+      this.props.favicon,
+      this.props.css
     ));
   },
   render() {
@@ -41,9 +41,9 @@ Component.create('HTML', {
   append(children) {
     children.forEach((child) => {
       if (child.tagName === 'script') {
-        this.dict.script.push(child);
+        this.props.script.push(child);
       } else {
-        this.dict.body.push(child);
+        this.props.body.push(child);
       }
     });
   },
