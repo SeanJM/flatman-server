@@ -8,11 +8,11 @@ function format(element) {
   if (typeof element === 'string') {
     return element.trim();
   } else if (element.tagName === 'comment') {
-    return false;
+    return element;
   }
 
   if (element.childNodes.length) {
-    return el(element.tagName, element.attributes, format(element.childNodes));
+    return el(element.tagName, element.attributes, element.childNodes.map(format));
   }
 
   return el(element.tagName, element.attributes);
