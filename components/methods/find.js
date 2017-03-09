@@ -10,12 +10,12 @@ function findPredicate(predicate) {
         if (predicate(element)) {
           found.push(element);
         }
-        find(element.childNodes);
+        find(element.children());
       }
     });
   }
 
-  find(this.childNodes);
+  find(this.children());
   return found;
 }
 
