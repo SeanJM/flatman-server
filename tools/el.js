@@ -65,21 +65,13 @@ function el(tagName) {
   }
 
   if (childNodes && childNodes.length) {
-    if (childNodes.length > 1) {
-      childNodes = childNodes.reduce(function (a, b) {
-        if (Array.isArray(a)) {
-          return a.concat(b);
-        } else {
-          return [a].concat(b);
-        }
-      });
-    }
+    childNodes = [].concat.apply([], childNodes);
 
     childNodes.forEach(function (child, i) {
       if (Array.isArray(child)) {
         throw new Error('Invalid type \"Array\" in el, valid children are elements.');
-      } else if (!isDomNode(child) && !isComponent(child) && typeof child !== 'string' && typeof child !== 'number') {
-        throw new Error('Cannot append child to ' + stringName + ', child (' + i + ') is of type ' + typeof a);
+      } else if (typeof child === 'undefined') {
+        throw new Error('Cannot append child to \"' + stringName + '\", child (' + i + ') is of type ' + typeof a);
       }
     });
   }
