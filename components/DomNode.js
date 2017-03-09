@@ -5,6 +5,7 @@ const before = require('./methods/before');
 const appendTo = require('./methods/appendTo');
 const attr = require('./methods/attr');
 const disable = require('./methods/disable');
+const children = require('./methods/children');
 const closest = require('./methods/closest');
 const getNode = require('./methods/getNode');
 const enable = require('./methods/enable');
@@ -111,8 +112,8 @@ module.exports = class DomNode {
     return before.call(this, maybeNode);
   }
 
-  children() {
-    return this.childNodes;
+  children(a, b) {
+    return children.call(this, a, b);
   }
 
   closest(selector) {
