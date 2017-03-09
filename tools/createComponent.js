@@ -2,28 +2,29 @@ const isDomNode = require('../predicates/isDomNode');
 const isComponent = require('../predicates/isComponent');
 const Component = require('flatman-component');
 
-function getNames(component, node) {
+function getComponentNames(component, node) {
   if (node.children) {
     node.children().forEach(function (child) {
       var name = child.name && child.name();
-      if (name) {
+      if (name && !component.node[name]) {
         component.node[name] = child.component || child;
       }
-      getNames(component, child);
+      getComponentNames(component, child);
     });
   }
 }
 
 module.exports = function createComponent(tagName, props, array) {
-  let Constructor = Component.lib[tagName];
-  let component = new Constructor(props);
+  let constructor = Component.lib[tagName];
+  let component = new constructor(props);
   let childNodes = [];
   let strings = [];
 
   component.tagName = tagName;
-  component.props = component.props;
+  component.props = component.props || {};
   component.subscribers = component.subscribers || {};
   component.node = component.node || {};
+
 
   if (constructor.prototype.text) {
     for (var i = 0, n = array.length; i < n; i++) {
