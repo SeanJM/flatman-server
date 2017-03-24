@@ -58,6 +58,8 @@ function toHtmlAttribute(name, value) {
     return `tabIndex="${value}"`;
   } else if (name.substr(0, 4) === 'data') {
     return `${_.kebabCase(name)}="${value}"`;
+  } else if (name === 'viewBox') {
+    return `viewBox="${value}"`;
   }
   if (value && value.length) {
     return `${_.kebabCase(name)}="${value}"`;
