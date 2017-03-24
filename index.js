@@ -5,6 +5,8 @@ Component.facade(
   Object.getOwnPropertyNames(DomNode.prototype).filter(a => a !== 'render')
 );
 
+Component.createWrapper(require('./tools/el'));
+
 require('./components/HTML');
 
 module.exports = {
