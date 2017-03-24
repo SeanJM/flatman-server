@@ -15,27 +15,25 @@ function getComponentNames(component, node) {
 }
 
 module.exports = function createComponent(tagName, props, array) {
-  let constructor = Component.lib[tagName];
-  let component = new constructor(props);
-  let childNodes = [];
-  let strings = [];
+  var constructor = Component.lib[tagName];
+  var component = new constructor(props);
+  var children = [];
+  var strings = [];
 
   component.tagName = tagName;
-  component.props = component.props || {};
-  component.subscribers = component.subscribers || {};
   component.node = component.node || {};
-
+  component.props = component.props || {};
 
   if (constructor.prototype.text) {
     for (var i = 0, n = array.length; i < n; i++) {
       if (typeof array[i] === 'string' || typeof array[i] === 'number') {
         strings.push(array[i]);
       } else {
-        childNodes.push(array[i]);
+        children.push(array[i]);
       }
     }
   } else {
-    childNodes = array;
+    children = array;
   }
 
   for (var prop in props) {
@@ -52,8 +50,8 @@ module.exports = function createComponent(tagName, props, array) {
     }
   }
 
-  if (childNodes.length) {
-    component.append(childNodes);
+  if (children.length) {
+    component.append(children);
   }
 
   if (strings.length) {
