@@ -8,11 +8,12 @@ module.exports = {
   this() {
     var a = el('HTML', [
       el('div'),
-      el('script', { src : 'test.js' })
+      el('script', { src : 'test.js' }),
+      el('link', { rel : 'stylesheet', href : 'style.css' })
     ]);
-    return a.toFile('test/tests/htmlComponent.html');
+    return a.toHtml();
   },
   isEqual() {
-    return fs.readFileSync(path.resolve('test/tests/htmlComponent.html'), 'utf8');
+    return fs.readFileSync(path.resolve('test/tests/assets/htmlComponent.html'), 'utf8');
   }
 };

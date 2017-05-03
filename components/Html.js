@@ -9,7 +9,7 @@ Component.create('HTML', {
       head : [],
       body : [],
       favicon : [],
-      css : []
+      link : []
     };
     this.onHtml = this.onHtml.bind(this);
   },
@@ -24,7 +24,7 @@ Component.create('HTML', {
 
     head.append([].concat(
       this.props.favicon,
-      this.props.css
+      this.props.link
     ));
   },
   render() {
@@ -40,7 +40,9 @@ Component.create('HTML', {
   },
   append(children) {
     children.forEach((child) => {
-      if (child.tagName === 'script') {
+      if (child.tagName === 'link') {
+        this.props.link.push(child);
+      } else if (child.tagName === 'script') {
         this.props.script.push(child);
       } else {
         this.props.body.push(child);
