@@ -3,6 +3,7 @@ const _ = require('lodash');
 
 const OPEN = [
   'img',
+  'path',
   'meta',
   'hr',
   'link'
