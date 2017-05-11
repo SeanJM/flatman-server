@@ -65,6 +65,8 @@ function toHtmlAttribute(name, value) {
     return `${_.kebabCase(name)}="${value}"`;
   } else if (name === 'viewBox') {
     return `viewBox="${value}"`;
+  } else if (name.indexOf(':') !== -1) {
+    return `${name}="${value}"`;
   }
   if (value && value.length) {
     return `${_.kebabCase(name)}="${value}"`;
