@@ -3,10 +3,14 @@ const _ = require('lodash');
 
 const OPEN = [
   'img',
-  'path',
   'meta',
   'hr',
   'link'
+];
+
+const SELF_CLOSING = [
+  'path',
+  'rect'
 ];
 
 const ATTR_LIST = [
@@ -119,22 +123,28 @@ module.exports = function toHtml() {
     }
   }
 
-  s.push(getAttributes(this.attributes), '>');
+  s.push(getAttributes(this.attributes));
 
-  if (this.childNodes.length === 1 && isText(this.childNodes[0])) {
-    s.push(toHtmlText(self, depth, this.childNodes[0].toString()));
-    s.push(`</${this.tagName}>`);
-  } else {
-    if (this.childNodes.length) {
-      s.push(`${this.childNodes.filter(a => a.toHtml).map(a => a.toHtml()).join('')}`);
-    }
-
-    if (OPEN.indexOf(this.tagName) === -1) {
-      if (this.isBlockElement() && this.childNodes.length) {
-        s.push(`\n${tab}`);
-      }
+  if (SELF_CLOSING.indexOf(this.tagName) === -1) {
+    s.push('>');
+    if (this.childNodes.length === 1 && isText(this.childNodes[0])) {
+      s.push(toHtmlText(self, depth, this.childNodes[0].toString()));
       s.push(`</${this.tagName}>`);
+    } else {
+      if (this.childNodes.length) {
+        s.push(`${this.childNodes.filter(a => a.toHtml).map(a => a.toHtml()).join('')}`);
+      }
+
+      if (OPEN.indexOf(this.tagName) === -1) {
+        if (this.isBlockElement() && this.childNodes.length) {
+          s.push(`\n${tab}`);
+        }
+        s.push(`</${this.tagName}>`);
+      }
     }
+  } else {
+    // Self closing nodes have no children
+    s.push('/>');
   }
 
   this.isRendering = false;
