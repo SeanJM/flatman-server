@@ -1,7 +1,7 @@
 {
   "name": "flatman-server",
   "description": "A script which generates HTML on the server or writes that HTML to a document.",
-  "version": "0.6.11",
+  "version": "0.6.12",
   "scripts": {
     "test": "test.js"
   },
