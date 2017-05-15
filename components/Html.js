@@ -17,6 +17,19 @@ Component.create('HTML', {
     var body = this.node.document.find('body')[0];
     var head = this.node.document.find('head')[0];
 
+    if (this.isMobile) {
+      head.append([
+        el('meta', {
+          name : 'viewport',
+          content : [
+            'width=device-width initial-scale=1',
+            'maximum-scale=1',
+            'user-scalable=0'
+          ].join(', ')
+        })
+      ])
+    }
+
     body.append([].concat(
       this.props.body,
       this.props.script
