@@ -3,13 +3,14 @@ const Component = require('flatman-component');
 const fs = require('fs');
 
 Component.create('HTML', {
-  constructor() {
+  constructor(props) {
     this.props = {
       script : [],
       head : [],
       body : [],
       favicon : [],
-      link : []
+      link : [],
+      isMobile : props.isMobile
     };
     this.onHtml = this.onHtml.bind(this);
   },
