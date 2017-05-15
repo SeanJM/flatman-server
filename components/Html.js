@@ -18,7 +18,7 @@ Component.create('HTML', {
     var body = this.node.document.find('body')[0];
     var head = this.node.document.find('head')[0];
 
-    if (this.isMobile) {
+    if (this.props.isMobile) {
       head.append([
         el('meta', {
           name : 'viewport',
