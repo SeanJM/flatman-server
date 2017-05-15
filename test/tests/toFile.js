@@ -24,9 +24,9 @@ module.exports = {
       ])
     ]);
 
-    return a.toFile('./toFile.html');
+    return a.toHtml() + '\n';
   },
   isEqual() {
-    return fs.readFileSync(path.resolve('test/tests/toHtml.html'), 'utf8');
+    return fs.readFileSync(path.resolve('test/tests/toFile.html'), 'utf8');
   }
 };

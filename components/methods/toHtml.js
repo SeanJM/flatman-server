@@ -10,7 +10,8 @@ const OPEN = [
 
 const SELF_CLOSING = [
   'path',
-  'rect'
+  'rect',
+  'polygon'
 ];
 
 const ATTR_LIST = [
