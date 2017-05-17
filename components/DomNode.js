@@ -29,13 +29,14 @@ const trigger = require('./methods/trigger');
 
 const INLINE = [
   'a',
-  'span',
-  'li',
-  'u',
   'b',
+  'em',
   'i',
+  'img',
+  'li',
+  'span',
   'strong',
-  'em'
+  'u',
 ];
 
 module.exports = class DomNode {
