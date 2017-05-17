@@ -11,7 +11,7 @@ function format(element) {
     return element;
   }
 
-  if (element.childNodes.length) {
+  if (element.childNodes && element.childNodes.length) {
     return el(element.tagName, element.attributes, element.childNodes.map(format));
   }
 
