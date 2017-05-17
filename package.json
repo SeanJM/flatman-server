@@ -11,7 +11,7 @@
     "colors": "^1.1.2",
     "eslint": "^3.13.1",
     "flatman-component": "^0.9.3",
-    "flatman-parse": "^1.0.6",
+    "flatman-parse": "^1.1.0",
     "grunt": "^1.0.0",
     "lodash": "^4.17.4",
     "match-file-utility": "^3.4.0",
