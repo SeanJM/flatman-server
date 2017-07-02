@@ -8,13 +8,13 @@ module.exports = {
     Component.create('XY', {
       text(value) {
         if (typeof value === 'undefined') {
-          return this.node.document.text();
+          return this.document.text();
         } else {
-          this.node.document.text('xy' + value);
+          this.document.text('xy' + value);
         }
       },
       render() {
-        return el('div')
+        return el('div');
       }
     });
 

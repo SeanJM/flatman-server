@@ -1,17 +1,15 @@
-module.exports = function append(childNodes) {
-  const childNodesRoot = childNodes.map(a => a.getNode ? a.getNode() : a);
-
-  childNodesRoot.forEach((child) => {
+module.exports = function append(children) {
+  children.forEach(child => {
     if (child && child.trigger) {
       if (child.parentNode) {
         child.remove();
       }
-      child.parentNode = this
-    };
+      child.parentNode = this;
+    }
   });
 
-  if (arguments.length === 1 && Array.isArray(childNodesRoot)) {
-    [].push.apply(this.childNodes, childNodesRoot);
+  if (arguments.length === 1 && Array.isArray(children)) {
+    Array.prototype.push.apply(this.childNodes, children);
   }
 
   return this;

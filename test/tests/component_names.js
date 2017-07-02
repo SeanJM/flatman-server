@@ -12,7 +12,7 @@ module.exports = {
           el('div', { name : 'y' }, [
             el('div', { name : 'z' })
           ])
-        ])
+        ]);
       }
     });
 
@@ -26,12 +26,12 @@ module.exports = {
     let da = el('DA');
 
     return (
-      de.node.x.name() === 'x' &&
-      de.node.y.name() === 'y' &&
-      de.node.z.name() === 'z' &&
-      da.node.document.node.x.name() === 'x' &&
-      da.node.document.node.y.name() === 'y' &&
-      da.node.document.node.z.name() === 'z'
+      de.names.x.name() === 'x' &&
+      de.names.y.name() === 'y' &&
+      de.names.z.name() === 'z' &&
+      da.document.names.x.name() === 'x' &&
+      da.document.names.y.name() === 'y' &&
+      da.document.names.z.name() === 'z'
     );
   },
   isEqual() {

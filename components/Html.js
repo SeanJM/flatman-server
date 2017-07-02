@@ -15,8 +15,8 @@ Component.create('HTML', {
     this.onHtml = this.onHtml.bind(this);
   },
   onHtml() {
-    var body = this.node.document.find('body')[0];
-    var head = this.node.document.find('head')[0];
+    var body = this.document.find('body')[0];
+    var head = this.document.find('head')[0];
 
     if (this.props.isMobile) {
       head.append([
@@ -28,7 +28,7 @@ Component.create('HTML', {
             'user-scalable=0'
           ].join(', ')
         })
-      ])
+      ]);
     }
 
     body.append([].concat(
@@ -66,7 +66,7 @@ Component.create('HTML', {
   toHtml() {
     return (
       '<!DOCTYPE HTML>\n' +
-      this.node.document.toHtml()
+      this.document.toHtml()
     );
   },
   toFile(filename) {

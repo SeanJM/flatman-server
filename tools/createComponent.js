@@ -6,8 +6,8 @@ function getComponentNames(component, node) {
   if (node.children) {
     node.children().forEach(function (child) {
       var name = child.name && child.name();
-      if (name && !component.node[name]) {
-        component.node[name] = child.component || child;
+      if (name && !component.names[name]) {
+        component.names[name] = child.component || child;
       }
       getComponentNames(component, child);
     });
@@ -21,7 +21,7 @@ module.exports = function createComponent(tagName, props, array) {
   var strings = [];
 
   component.tagName = tagName;
-  component.node = component.node || {};
+  component.names = component.names || {};
   component.props = component.props || {};
 
   if (constructor.prototype.text) {
@@ -41,10 +41,11 @@ module.exports = function createComponent(tagName, props, array) {
   }
 
   if (typeof component.render === 'function') {
-    component.node.document = component.render(props);
-    if (component.node.document) {
-      component.node.document.component = component;
-      getComponentNames(component, component.node.document);
+    component.document = component.render(props);
+    component.node = component.document.node;
+    if (component.document) {
+      component.document.component = component;
+      getComponentNames(component, component.document);
     } else {
       throw new Error('Invalid component, component must return a node in the render function.');
     }

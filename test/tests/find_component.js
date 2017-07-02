@@ -18,7 +18,7 @@ module.exports = {
       b.append([ c ])
     ]);
 
-    return a.find('.test-2')[0] === c.node.document;
+    return a.find('.test-2')[0] === c;
   },
   isEqual() {
     return true;
