@@ -10,7 +10,7 @@
   "dependencies": {
     "colors": "^1.1.2",
     "eslint": "^3.13.1",
-    "flatman-component": "^0.11.0",
+    "flatman-component": "^0.11.3",
     "flatman-parse": "^1.2.3",
     "lodash": "^4.17.4",
     "match-file-utility": "^3.4.0",
