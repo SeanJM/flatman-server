@@ -5,8 +5,8 @@ module.exports = {
   name : 'find() (component)',
   this() {
     Component.create('E', {
-      render(opt) {
-        return el('div', { className : opt.className });
+      render(props) {
+        return el('div', { className : props.className });
       }
     });
 
@@ -18,7 +18,7 @@ module.exports = {
       b.append([ c ])
     ]);
 
-    return a.find('.test-2')[0] === c;
+    return a.find('E')[0] === c;
   },
   isEqual() {
     return true;

@@ -8,8 +8,11 @@ module.exports = function append(children) {
     }
   });
 
-  if (arguments.length === 1 && Array.isArray(children)) {
-    Array.prototype.push.apply(this.childNodes, children);
+  if (arguments.length === 1) {
+    [].push.apply(
+      this.childNodes,
+      children
+    );
   }
 
   return this;

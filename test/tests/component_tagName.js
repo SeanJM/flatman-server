@@ -7,7 +7,7 @@ module.exports = {
   this() {
     Component.create('DF', {
       render() {
-        return el('div')
+        return el('div');
       }
     });
 

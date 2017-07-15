@@ -2,6 +2,7 @@ const addClass = require('./methods/addClass');
 const append = require('./methods/append');
 const after = require('./methods/after');
 const before = require('./methods/before');
+const insertBefore = require('./methods/insertBefore');
 const appendTo = require('./methods/appendTo');
 const attr = require('./methods/attr');
 const disable = require('./methods/disable');
@@ -49,9 +50,10 @@ module.exports = class DomNode {
       style : {},
       className : [],
       disabled : null,
-      name : null
+      name : null,
     };
 
+    this.node = this;
     this.subscribers = { render : [] };
     this.childNodes = [];
 
@@ -111,6 +113,10 @@ module.exports = class DomNode {
 
   before(maybeNode) {
     return before.call(this, maybeNode);
+  }
+
+  insertBefore(newNode, referenceNode) {
+    return insertBefore.call(this, newNode, referenceNode);
   }
 
   children(a, b) {

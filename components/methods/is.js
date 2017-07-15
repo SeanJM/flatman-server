@@ -1,4 +1,3 @@
-const path = require('path');
 const getSelectorObject = require('../../tools/getSelectorObject');
 
 function isPredicate(selector) {

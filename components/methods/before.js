@@ -1,13 +1,7 @@
-const getDomNode = require('../../tools/getDomNode');
-
-module.exports = function before(node) {
-  const childNodes = this.parentNode.childNodes;
-  const index = childNodes.indexOf(this);
-
-  if (typeof node === 'undefined') {
-    return childNodes[index - 1];
-  }
-
-  childNodes.splice(index, 0, node.getNode());
+// Target is appended before 'this'
+module.exports = function before(target) {
+  const childNodes = target.parentNode.childNodes;
+  const index = childNodes.indexOf(target);
+  childNodes.splice(index, 0, this);
   return this;
 };

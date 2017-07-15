@@ -6,23 +6,19 @@ module.exports = {
   name : 'component text',
   this() {
     Component.create('XY', {
-      text(value) {
-        if (typeof value === 'undefined') {
-          return this.document.text();
-        } else {
-          this.document.text('xy' + value);
-        }
+      text() {
+        return this.document.text();
       },
       render() {
         return el('div');
       }
     });
 
-    let a = el('XY', [ 'lophone' ]);
+    let a = el('XY', [ 'loophole' ]);
 
     return a.text();
   },
   isEqual() {
-    return 'xylophone';
+    return 'loophole';
   }
 };

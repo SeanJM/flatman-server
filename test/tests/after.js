@@ -1,23 +1,19 @@
 const el = require('../../index').el;
 
-var a = el('div', { className : 'parent' });
-var b = el('div');
-var c = el('div');
-var d = el('div');
-
-var result = [];
-
-a.append([b, d]);
-b.after(c);
-
-result.push(b.after() === c);
-
 module.exports = {
   name : 'after()',
   this() {
-    return result;
+    var a = el('div', { className : 'parent' });
+    var b = el('div');
+    var c = el('div');
+    var d = el('div');
+
+    a.append([b, d]);
+    c.after(b);
+
+    return a.childNodes[1] === c;
   },
-  isDeepEqual() {
-    return [ true ];
+  isEqual() {
+    return true;
   }
 };

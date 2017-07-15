@@ -6,7 +6,9 @@ module.exports = {
     var a = el('div');
     var b = el('div');
     var c = el('div');
+
     a.append([b, c]);
+
     return a.childNodes.length;
   },
   isEqual() {

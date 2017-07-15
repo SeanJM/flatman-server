@@ -28,10 +28,10 @@ module.exports = {
     ]);
 
     return (
-      a.children().length === 1 &&
-      a.names.content.children().length === 2 &&
-      b.children().length === 1 &&
-      b.names.content.children().length === 2
+      a.childNodes.length === 0 &&
+      a.names.content.childNodes.length === 2 &&
+      b.childNodes.length === 0 &&
+      b.names.content.childNodes.length === 2
     );
   },
   isEqual() {

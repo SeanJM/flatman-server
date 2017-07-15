@@ -1,16 +1,15 @@
 const getSelectorGroup = require('../../tools/getSelectorGroup');
-const getDomNode = require('../../tools/getDomNode');
 
 function findPredicate(predicate) {
   let found = [];
 
   function find(childNodes) {
     childNodes.forEach(function (element) {
-      if (element.children) {
+      if (element.childNodes) {
         if (predicate(element)) {
           found.push(element);
         }
-        find(element.children());
+        find(element.childNodes);
       }
     });
   }
@@ -22,7 +21,6 @@ function findPredicate(predicate) {
 function findStringSelector(selector) {
   let list = getSelectorGroup(selector);
   let found = [ [ this ] ];
-  let self = this;
 
   function each (node) {
     found.push(findPredicate.call(node, function (element) {
