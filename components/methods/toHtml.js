@@ -135,7 +135,16 @@ module.exports = function toHtml() {
       s.push(`</${this.tagName}>`);
     } else {
       if (this.childNodes.length) {
-        s.push(`${this.childNodes.filter(a => a.toHtml).map(a => a.toHtml()).join('')}`);
+        s.push(
+          this.childNodes
+            .filter(a => a)
+            .map(a => {
+              return typeof a === "string"
+                ? a
+                : a.toHtml && a.toHtml();
+              })
+            .join('')
+        );
       }
 
       if (OPEN.indexOf(this.tagName) === -1) {
