@@ -12,15 +12,11 @@ Component.create("HTML", {
       link : [],
       isMobile : props.isMobile
     };
-    this.onHtml = this.onHtml.bind(this);
   },
 
   onHtml() {
-    var body = this.document.find("body")[0];
-    var head = this.document.find("head")[0];
-
     if (this.props.isMobile) {
-      head.append([
+      this.refs.head.append([
         el("meta", {
           name : "viewport",
           content : [
@@ -32,27 +28,15 @@ Component.create("HTML", {
       ]);
     }
 
-    body.append([].concat(
+    this.refs.body.append([].concat(
       this.props.body,
       this.props.script
     ));
 
-    head.append([].concat(
+    this.refs.head.append([].concat(
       this.props.favicon,
       this.props.link
     ));
-  },
-
-  render() {
-    return el("html", {
-      onHtml : this.onHtml
-    }, [
-      el("head", [
-        el("meta", { httpEquiv : "X-UX-Compatible", content : "IE=edge,chrome=1" }),
-        el("meta", { charset : "UTF-8" })
-      ]),
-      el("body")
-    ]);
   },
 
   append(children) {
@@ -78,5 +62,21 @@ Component.create("HTML", {
     const value = this.toHtml();
     fs.writeFileSync(filename, value);
     return value;
-  }
+  },
+
+  render() {
+    return el("html", {
+      onHtml : () => this.onHtml()
+    }, [
+      el("head", {
+        ref: "head"
+      }, [
+        el("meta", { httpEquiv : "X-UX-Compatible", content : "IE=edge,chrome=1" }),
+        el("meta", { charset : "UTF-8" })
+      ]),
+      el("body", {
+        ref: "body"
+      })
+    ]);
+  },
 });

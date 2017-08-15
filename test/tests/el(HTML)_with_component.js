@@ -30,9 +30,6 @@ module.exports = {
     var a = el("y");
 
     a.append([ el("x") ]);
-
-    console.log(a);
-
     return a.toHtml();
   },
   isEqual() {

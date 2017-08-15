@@ -45,7 +45,9 @@ module.exports = class DomNode {
     this.childNodes = [];
 
     for (var k in opt) {
-      if (k.substr(0, 4) === 'once') {
+      if (k === "ref") {
+        this.ref = opt[k];
+      } else if (k.substr(0, 4) === 'once') {
         once.push({
           name : k.substr(4).toLowerCase(),
           value : opt[k]
