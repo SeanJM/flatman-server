@@ -1,9 +1,9 @@
-const el = require('../../index').el;
+const el = require("../../index").el;
 
 module.exports = {
-  name : 'toHtml() text and node',
+  name : "toHtml() text and node",
   this() {
-    const a = el('div', [ "text", el("div") ]);
+    const a = el("div", [ "text", el("div") ]);
     return a.toHtml();
   },
   isEqual() {

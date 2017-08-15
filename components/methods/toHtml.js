@@ -76,14 +76,18 @@ function toHtmlAttribute(name, value) {
 }
 
 function toHtmlText(self, depth, string) {
-  var EOL = string.match(/\n/g);
-  var tab = new Array(depth + 2).join("  ");
+  const str = string.toString();
+  const EOL = str.match(/\n/g);
+  const tab = new Array(depth + 2).join("  ");
 
   if (EOL && EOL.length > 1) {
-    return "\n" + tab + string.split("\n").join(`\n${tab}`).trim() + "\n" + new Array(depth + 1).join("  ");
+    return (
+      "\n" + tab + str.split("\n").join(`\n${tab}`).trim() +
+      "\n" + new Array(depth + 1).join("  ")
+    );
   }
 
-  return string.trim();
+  return str.trim();
 }
 
 function getAttributes(attributes) {
@@ -139,14 +143,17 @@ module.exports = function toHtml() {
   if (SELF_CLOSING.indexOf(this.tagName) === -1) {
     s.push(">");
     if (this.childNodes.length === 1 && isText(this.childNodes[0])) {
-      s.push(toHtmlText(self, depth, this.childNodes[0].toString()));
+      s.push(toHtmlText(self, depth, this.childNodes[0]));
       s.push(`</${this.tagName}>`);
     } else {
       if (this.childNodes.length) {
         s.push(
           this.childNodes
-            .filter(a => a.toHtml)
-            .map(a => a.toHtml())
+            .map(a =>
+              (typeof a === "string" || typeof a === "number")
+                ? toHtmlText(self, depth, a)
+                : a.toHtml()
+            )
             .join("")
         );
       }
