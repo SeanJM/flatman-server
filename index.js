@@ -1,21 +1,15 @@
-const DomNode = require('./components/DomNode');
-const Component = require('flatman-component');
+const Component = require("flatman-component");
 
-Component.facade(
-  Object.getOwnPropertyNames(DomNode.prototype).filter(a => a !== 'render')
-);
-
-Component.createWrapper(require('./tools/el'));
-
-require('./components/HTML');
+require("./components/HTML");
+require("./init/augmentComponent");
 
 module.exports = {
   Component : Component,
-  css : require('./tools/css'),
-  el : require('./tools/el'),
-  page : require('./tools/page'),
-  parse : require('./tools/parse'),
-  parseFile : require('./tools/parseFile'),
-  read : require('./tools/read'),
-  script : require('./tools/script'),
+  css : require("./tools/css"),
+  el : require("./tools/el"),
+  page : require("./tools/page"),
+  parse : require("./tools/parse"),
+  parseFile : require("./tools/parseFile"),
+  read : require("./tools/read"),
+  script : require("./tools/script"),
 };
