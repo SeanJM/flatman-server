@@ -28,18 +28,6 @@ const style = require('./methods/style');
 const text = require('./methods/text');
 const trigger = require('./methods/trigger');
 
-const INLINE = [
-  'a',
-  'b',
-  'em',
-  'i',
-  'img',
-  'li',
-  'span',
-  'strong',
-  'u',
-];
-
 module.exports = class DomNode {
   constructor(tagName, opt, childNodes) {
     var once = [];
@@ -93,10 +81,6 @@ module.exports = class DomNode {
 
   toString() {
     return '[object HTML' + this.tagName[0].toUpperCase() + this.tagName.slice(1) + 'Element]';
-  }
-
-  isBlockElement() {
-    return INLINE.indexOf(this.tagName) === -1;
   }
 
   append(childNodes) {

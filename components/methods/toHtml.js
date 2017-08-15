@@ -118,12 +118,10 @@ module.exports = function toHtml() {
 
   this.isRendering = true;
 
-  if (this.isBlockElement() || (this.parentNode && this.parentNode.isBlockElement())) {
-    if (depth) {
-      s.unshift('\n', tab);
-    } else {
-      s.unshift(tab);
-    }
+  if (depth) {
+    s.unshift('\n', tab);
+  } else {
+    s.unshift(tab);
   }
 
   s.push(getAttributes(this.attributes));
@@ -139,7 +137,7 @@ module.exports = function toHtml() {
       }
 
       if (OPEN.indexOf(this.tagName) === -1) {
-        if (this.isBlockElement() && this.childNodes.length) {
+        if (this.childNodes.length) {
           s.push(`\n${tab}`);
         }
         s.push(`</${this.tagName}>`);
