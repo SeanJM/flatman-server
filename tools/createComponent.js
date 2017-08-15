@@ -1,4 +1,4 @@
-const Component = require('flatman-component');
+const Component = require("flatman-component");
 
 module.exports = function createComponent(tagName, props, children) {
   var constructor = Component.lib[tagName];
