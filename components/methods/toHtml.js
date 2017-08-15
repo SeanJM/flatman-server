@@ -138,7 +138,9 @@ module.exports = function toHtml() {
     s.unshift(tab);
   }
 
-  s.push(getAttributes(this.attributes));
+  s.push(
+    getAttributes(this.attributes)
+  );
 
   if (SELF_CLOSING.indexOf(this.tagName) === -1) {
     s.push(">");
