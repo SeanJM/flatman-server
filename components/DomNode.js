@@ -18,7 +18,6 @@ const name = require('./methods/name');
 const off = require('./methods/off');
 const on = require('./methods/on');
 const parent = require('./methods/parent');
-const parents = require('./methods/parents');
 const prepend = require('./methods/prepend');
 const removeClass = require('./methods/removeClass');
 const replaceWith = require('./methods/replaceWith');
@@ -149,10 +148,6 @@ module.exports = class DomNode {
 
   parent() {
     return parent.call(this);
-  }
-
-  parents() {
-    return parents.call(this);
   }
 
   prepend(childNodes) {
