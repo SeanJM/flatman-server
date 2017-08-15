@@ -7,7 +7,7 @@ Component.fn("toHtml", function () {
       tagName: this.document.tagName,
       attributes: this.document.attributes,
       trigger: this.trigger,
-      childNodes: this.childNodes,
+      childNodes: this.document.childNodes,
       parentNode: this.parentNode
     }
   );
