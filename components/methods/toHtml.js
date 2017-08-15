@@ -1,25 +1,25 @@
-const isText = require('../../predicates/isText');
-const _ = require('lodash');
+const isText = require("../../predicates/isText");
+const _ = require("lodash");
 
 const OPEN = [
-  'img',
-  'meta',
-  'hr',
-  'link'
+  "img",
+  "meta",
+  "hr",
+  "link"
 ];
 
 const SELF_CLOSING = [
-  'path',
-  'rect',
-  'polygon'
+  "path",
+  "rect",
+  "polygon"
 ];
 
 const ATTR_LIST = [
-  'id',
-  'className',
-  'name',
-  'title',
-  'style'
+  "id",
+  "className",
+  "name",
+  "title",
+  "style"
 ];
 
 function sortAttributes(a, b) {
@@ -39,48 +39,48 @@ function sortAttributes(a, b) {
 function toHtmlStyle(value) {
   var styles = [];
   for (var k in value) {
-    styles.push(_.kebabCase(k) + ': ' + value[k]);
+    styles.push(_.kebabCase(k) + ": " + value[k]);
   }
-  return styles.join(';');
+  return styles.join(";");
 }
 
 function toHtmlAttribute(name, value) {
-  if (typeof value === 'string') {
+  if (typeof value === "string") {
     value = value.trim();
   }
 
-  if (name === 'style') {
-   if (typeof value === 'object' && Object.keys(value).length) {
+  if (name === "style") {
+    if (typeof value === "object" && Object.keys(value).length) {
       return `${name}="${toHtmlStyle(value)}"`;
     }
-    return '';
-  } else if (name === 'className') {
+    return "";
+  } else if (name === "className") {
     if (value.length) {
-      value = value.sort().join(' ');
+      value = value.sort().join(" ");
       return `class="${value}"`;
     }
-    return '';
-  } else if (name === 'tabindex') {
+    return "";
+  } else if (name === "tabindex") {
     return `tabIndex="${value}"`;
-  } else if (name.substr(0, 4) === 'data') {
+  } else if (name.substr(0, 4) === "data") {
     return `${_.kebabCase(name)}="${value}"`;
-  } else if (name === 'viewBox') {
+  } else if (name === "viewBox") {
     return `viewBox="${value}"`;
-  } else if (name.indexOf(':') !== -1) {
+  } else if (name.indexOf(":") !== -1) {
     return `${name}="${value}"`;
   }
   if (value && value.length) {
     return `${_.kebabCase(name)}="${value}"`;
   }
-  return '';
+  return "";
 }
 
 function toHtmlText(self, depth, string) {
   var EOL = string.match(/\n/g);
-  var tab = new Array(depth + 2).join('  ');
+  var tab = new Array(depth + 2).join("  ");
 
   if (EOL && EOL.length > 1) {
-    return '\n' + tab + string.split('\n').join(`\n${tab}`).trim() + '\n' + new Array(depth + 1).join('  ');
+    return "\n" + tab + string.split("\n").join(`\n${tab}`).trim() + "\n" + new Array(depth + 1).join("  ");
   }
 
   return string.trim();
@@ -91,7 +91,7 @@ function getAttributes(attributes) {
   let a = [];
 
   list.forEach(function (attribute) {
-    if (typeof attributes[attribute] !== 'undefined') {
+    if (typeof attributes[attribute] !== "undefined") {
       a.push(
         toHtmlAttribute(attribute, attributes[attribute])
       );
@@ -101,25 +101,35 @@ function getAttributes(attributes) {
   a = a.filter(a => a.length);
 
   if (a.length) {
-    return ' ' + a.join(' ');
+    return " " + a.join(" ");
   }
 
-  return '';
+  return "";
+}
+
+function getParents(element) {
+  let p = [];
+  let n = element.parentNode;
+
+  while (n) {
+    p.push(n);
+    n = n.parentNode;
+  }
+
+  return p;
 }
 
 module.exports = function toHtml() {
-  const depth = this.parents().filter(a => a.isRendering).length;
-  const tab = new Array(depth + 1).join('  ');
+  const depth = getParents(this).length;
+  const tab = new Array(depth + 1).join("  ");
   const self = this;
 
-  this.trigger('html');
+  this.trigger("html");
 
   let s = [ `<${this.tagName}` ];
 
-  this.isRendering = true;
-
   if (depth) {
-    s.unshift('\n', tab);
+    s.unshift("\n", tab);
   } else {
     s.unshift(tab);
   }
@@ -127,13 +137,18 @@ module.exports = function toHtml() {
   s.push(getAttributes(this.attributes));
 
   if (SELF_CLOSING.indexOf(this.tagName) === -1) {
-    s.push('>');
+    s.push(">");
     if (this.childNodes.length === 1 && isText(this.childNodes[0])) {
       s.push(toHtmlText(self, depth, this.childNodes[0].toString()));
       s.push(`</${this.tagName}>`);
     } else {
       if (this.childNodes.length) {
-        s.push(`${this.childNodes.filter(a => a.toHtml).map(a => a.toHtml()).join('')}`);
+        s.push(
+          this.childNodes
+            .filter(a => a.toHtml)
+            .map(a => a.toHtml())
+            .join("")
+        );
       }
 
       if (OPEN.indexOf(this.tagName) === -1) {
@@ -145,10 +160,8 @@ module.exports = function toHtml() {
     }
   } else {
     // Self closing nodes have no children
-    s.push('/>');
+    s.push("/>");
   }
 
-  this.isRendering = false;
-
-  return s.join('');
+  return s.join("");
 };
