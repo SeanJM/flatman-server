@@ -6,11 +6,11 @@ module.exports = {
   this() {
     Component.create('BA', {
       append(children) {
-        this.names.content.append(children);
+        this.refs.content.append(children);
       },
       render() {
         return el('div', [
-          el('div', { className : 'target', name : 'content' })
+          el('div', { className : 'target', ref : 'content' })
         ]);
       }
     });
@@ -29,9 +29,9 @@ module.exports = {
 
     return (
       a.childNodes.length === 0 &&
-      a.names.content.childNodes.length === 2 &&
+      a.refs.content.childNodes.length === 2 &&
       b.childNodes.length === 0 &&
-      b.names.content.childNodes.length === 2
+      b.refs.content.childNodes.length === 2
     );
   },
   isEqual() {

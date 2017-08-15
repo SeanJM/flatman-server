@@ -8,9 +8,9 @@ module.exports = {
     Component.create('DE', {
       render() {
         return el('div', [
-          el('div', { name : 'x' }),
-          el('div', { name : 'y' }, [
-            el('div', { name : 'z' })
+          el('div', { ref : 'x' }),
+          el('div', { ref : 'y' }, [
+            el('div', { ref : 'z' })
           ])
         ]);
       }
@@ -26,12 +26,12 @@ module.exports = {
     let da = el('DA');
 
     return (
-      de.names.x.name() === 'x' &&
-      de.names.y.name() === 'y' &&
-      de.names.z.name() === 'z' &&
-      da.document.names.x.name() === 'x' &&
-      da.document.names.y.name() === 'y' &&
-      da.document.names.z.name() === 'z'
+      de.refs.x.ref === 'x' &&
+      de.refs.y.ref === 'y' &&
+      de.refs.z.ref === 'z' &&
+      da.document.refs.x.ref === 'x' &&
+      da.document.refs.y.ref === 'y' &&
+      da.document.refs.z.ref === 'z'
     );
   },
   isEqual() {

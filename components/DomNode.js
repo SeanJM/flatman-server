@@ -14,7 +14,6 @@ const is = require('./methods/is');
 const find = require('./methods/find');
 const hasClass = require('./methods/hasClass');
 const html = require('./methods/html');
-const name = require('./methods/name');
 const off = require('./methods/off');
 const on = require('./methods/on');
 const parent = require('./methods/parent');
@@ -200,9 +199,5 @@ module.exports = class DomNode {
 
   html(value) {
     return html.call(this, value);
-  }
-
-  name(value) {
-    return name.call(this, value);
   }
 };
