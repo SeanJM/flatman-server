@@ -27,6 +27,6 @@ module.exports = {
     return a.toHtml();
   },
   isEqual() {
-    return fs.readFileSync(path.resolve('test/tests/toHtml.html'), 'utf8');
+    return fs.readFileSync(path.resolve('test/assets/toHtml.html'), 'utf8');
   }
 };

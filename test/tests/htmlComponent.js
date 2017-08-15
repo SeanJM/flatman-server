@@ -21,7 +21,7 @@ module.exports = {
   },
   isEqual() {
     return fs.readFileSync(
-      path.resolve('test/tests/assets/htmlComponent.html'),
+      path.resolve('test/assets/htmlComponent.html'),
       'utf8'
     );
   }
