@@ -2,6 +2,7 @@ const isText = require("../../predicates/isText");
 const _ = require("lodash");
 
 const OPEN = [
+  "input",
   "img",
   "meta",
   "hr",
