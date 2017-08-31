@@ -1,19 +1,9 @@
-const isDomNode = require('./isDomNode');
-
-function isComponent(x) {
-  if (typeof x === 'function' ) {
-    return true;
-  }
-
-  if (
-    typeof x === 'object'
+module.exports = function isComponent(x) {
+  return (
+    typeof x === "function"
+  ) || (
+    typeof x === "object"
     && x.node
-    && x.node.document
-  ) {
-    return true;
-  }
-
-  return false;
-}
-
-module.exports = isComponent;
+    && x.document
+  );
+};
