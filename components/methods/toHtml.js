@@ -123,7 +123,7 @@ module.exports = function toHtml($depth) {
       c = c[0].toString().split("\n");
       s.push(
         c.length > 1
-          ? "\n" + c.map(a => tabN + a + "\n").join("")
+          ? "\n" + c.map(a => tabN + a + "\n").join("") + tab
           : c[0]
       );
     } else if (c.length) {
