@@ -1,6 +1,5 @@
 module.exports = {
-  isDomNode : require('./isDomNode'),
-  isComponent : require('./isComponent'),
-  isHtmlString : require('./isHtmlString'),
-  isText : require('./isText')
+  isDomNode : require("./isDomNode"),
+  isComponent : require("./isComponent"),
+  isHtmlString : require("./isHtmlString")
 };
