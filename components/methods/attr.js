@@ -1,21 +1,21 @@
-const _ = require('lodash');
+const _ = require("lodash");
 
-function attrObject(props) {
-  for (k in props) {
-    if (k.slice(0, 4) === 'once') {
-      this.once(k.slice(4), props[k]);
-    } else if (k.slice(0, 2) === 'on') {
-      this.on(k.slice(2), props[k]);
-    } else if (k === 'className') {
-      this.attr('className', props[k]);
-    } else if (k === 'id') {
-      this.attr('id', props[k]);
+function setAttrObject(node, props) {
+  for (var k in props) {
+    if (k.slice(0, 4) === "once") {
+      node.once(k.slice(4), props[k]);
+    } else if (k.slice(0, 2) === "on") {
+      node.on(k.slice(2), props[k]);
+    } else if (k === "className") {
+      node.attr("className", props[k]);
+    } else if (k === "id") {
+      node.attr("id", props[k]);
     }
   }
 }
 
 function getClassName(value) {
-  var array = Array.isArray(value) ? value : value.split(' ');
+  var array = Array.isArray(value) ? value : value.split(" ");
   var result = [];
   var temp;
   for (var i = 0, n = array.length; i < n; i++) {
@@ -25,38 +25,43 @@ function getClassName(value) {
   return result;
 }
 
-function attrString(property, value) {
-  if (typeof value === 'string' && value === '') {
+function setAttribute(node, property, value) {
+  if (typeof value === "string" && value === "") {
     value = null;
   }
 
-  if (typeof value === 'undefined') {
-    if (property === 'class' || property === 'className') {
-      return this.attributes.className.join(' ');
+  if (["tabIndex", "tabindex"].indexOf(property) > -1) {
+    node.attributes["tabIndex"] = value;
+  } else if (property.slice(0, 4) === "data") {
+    node.attributes[_.kebabCase(property)] = value;
+  } else if (property === "className" || property === "class") {
+    node.attributes.className = getClassName(value);
+  } else if (property === "style") {
+    if (typeof value === "string") {
+      throw new Error("Invalid value of \"" + value.substr(0, 30) + "\", style must be passed an object as an argument and not a string.");
     }
-    return this.attributes[property];
-  }
-
-  if (['tabIndex', 'tabindex'].indexOf(property) > -1) {
-    this.attributes['tabIndex'] = value;
-  } else if (property.slice(0, 4) === 'data') {
-    this.attributes[_.kebabCase(property)] = value;
-  } else if (property === 'className' || property === 'class') {
-    this.attributes.className = getClassName(value);
-  } else if (property === 'style') {
-    if (typeof value === 'string') {
-      throw new Error('Invalid value of "' + value.substr(0, 30) + '", style must be passed an object as an argument and not a string.');
-    }
-    this.style(value);
+    node.style(value);
   } else {
-    this.attributes[property] = value;
+    node.attributes[property] = value;
   }
 }
 
-module.exports = function attr(property, value) {
-  if (typeof property === 'object') {
-    attrObject.call(this, property);
-    return this;
+function getAttribute(node, property) {
+  if (property === "class" || property === "className") {
+    return node.attributes.className.join(" ");
   }
-  return attrString.call(this, property, value);
+  return node.attributes[property];
+}
+
+module.exports = function attr(property, value) {
+  if (typeof property === "object") {
+    setAttrObject(this, property);
+    return this;
+  } else if (typeof property === "string" && typeof value !== "undefined") {
+    setAttribute(this, property, value);
+    return this;
+  } else if (typeof property === "string") {
+    return getAttribute(this, property);
+  }
+  return this.attributes;
 };
