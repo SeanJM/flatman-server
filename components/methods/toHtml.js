@@ -100,11 +100,12 @@ function getAttr(node) {
 module.exports = function toHtml($depth) {
   const depth = $depth || 0;
   const tab = new Array(depth + 1).join("  ");
-  const tabNested = new Array(depth + 2).join("  ");
+  const tabN = new Array(depth + 2).join("  ");
   const isSelfClosing = SELF_CLOSING.indexOf(this.tagName) > -1;
   const isOpen = OPEN.indexOf(this.tagName) > -1;
-
   const s = [tab, "<", this.tagName, getAttr(this)];
+
+  let c = this.childNodes;
 
   this.trigger("html");
 
@@ -115,21 +116,24 @@ module.exports = function toHtml($depth) {
   } else {
     s.push(">");
     if (
-      this.childNodes.length === 1 &&
-      typeof this.childNodes[0] === "string" ||
-      typeof this.childNodes[0] === "number"
+      c.length === 1 &&
+      typeof c[0] === "string" ||
+      typeof c[0] === "number"
     ) {
+      c = c[0].toString().split("\n");
       s.push(
-        this.childNodes[0]
+        c.length > 1
+          ? "\n" + c.map(a => tabN + a + "\n").join("")
+          : c[0]
       );
-    } else if (this.childNodes.length) {
+    } else if (c.length) {
       s.push(
         "\n",
-        this.childNodes
+        c
         .map(a => (
           typeof a === "string" ||
           typeof a === "number"
-            ? tabNested + a + "\n"
+            ? tabN + a + "\n"
             : a.toHtml(depth + 1)
         )).join(""),
         tab
