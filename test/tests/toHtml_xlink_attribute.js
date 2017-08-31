@@ -1,13 +1,13 @@
-const { el } = require('../../index');
+const { el } = require("../../index");
 
 module.exports = {
-  name : 'toHtml() (xlink:href)',
+  name : "toHtml() (xlink:href)",
   this() {
-    return el('use', {
-      'xlink:href' : '#id'
+    return el("use", {
+      "xlink:href" : "#id"
     }).toHtml();
   },
   isEqual() {
-    return '<use xlink:href="#id"></use>';
+    return "<use xlink:href=\"#id\"></use>\n";
   }
 };

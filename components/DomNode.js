@@ -177,8 +177,8 @@ module.exports = class DomNode {
     return this;
   }
 
-  toHtml() {
-    return toHtml.call(this);
+  toHtml(depth) {
+    return toHtml.call(this, depth);
   }
 
   toFile(filename) {

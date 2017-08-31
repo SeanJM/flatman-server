@@ -8,6 +8,6 @@ module.exports = {
     return [ a.childNodes[0].tagName, a.html() ];
   },
   isDeepEqual() {
-    return [ "span", "\n  <span></span>" ];
+    return [ "span", "<span></span>\n" ];
   }
 };

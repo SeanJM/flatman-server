@@ -6,6 +6,6 @@ module.exports = {
     return el("input", { type: "text" }).toHtml();
   },
   isEqual() {
-    return "<input type=\"text\">";
+    return "<input type=\"text\">\n";
   }
 };

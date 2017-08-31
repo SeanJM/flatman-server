@@ -7,6 +7,6 @@ module.exports = {
     return a.toHtml();
   },
   isEqual() {
-    return "<div>text\n  <div></div>\n</div>";
+    return "<div>\n  text\n  <div></div>\n</div>\n";
   }
 };

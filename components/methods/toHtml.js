@@ -1,4 +1,3 @@
-const isText = require("../../predicates/isText");
 const _ = require("lodash");
 
 const OPEN = [
@@ -76,23 +75,9 @@ function toHtmlAttribute(name, value) {
   return "";
 }
 
-function toHtmlText(self, depth, string) {
-  const str = string.toString();
-  const EOL = str.match(/\n/g);
-  const tab = new Array(depth + 2).join("  ");
-
-  if (EOL && EOL.length > 1) {
-    return (
-      "\n" + tab + str.split("\n").join(`\n${tab}`).trim() +
-      "\n" + new Array(depth + 1).join("  ")
-    );
-  }
-
-  return str.trim();
-}
-
-function getAttributes(attributes) {
-  const list = Object.keys(attributes).sort(sortAttributes);
+function getAttr(node) {
+  const attributes = node.attributes;
+  const list = attributes ? Object.keys(attributes).sort(sortAttributes) : [];
   let a = [];
 
   list.forEach(function (attribute) {
@@ -112,66 +97,46 @@ function getAttributes(attributes) {
   return "";
 }
 
-function getParents(element) {
-  let p = [];
-  let n = element.parentNode;
-
-  while (n) {
-    p.push(n);
-    n = n.parentNode;
-  }
-
-  return p;
-}
-
-module.exports = function toHtml() {
-  const depth = getParents(this).length;
+module.exports = function toHtml($depth) {
+  const depth = $depth || 0;
   const tab = new Array(depth + 1).join("  ");
-  const self = this;
+  const tabNested = new Array(depth + 2).join("  ");
+  const isSelfClosing = SELF_CLOSING.indexOf(this.tagName) > -1;
+  const isOpen = OPEN.indexOf(this.tagName) > -1;
+
+  const s = [tab, "<", this.tagName, getAttr(this)];
 
   this.trigger("html");
 
-  let s = [ `<${this.tagName}` ];
-
-  if (depth) {
-    s.unshift("\n", tab);
-  } else {
-    s.unshift(tab);
-  }
-
-  s.push(
-    getAttributes(this.attributes)
-  );
-
-  if (SELF_CLOSING.indexOf(this.tagName) === -1) {
-    s.push(">");
-    if (this.childNodes.length === 1 && isText(this.childNodes[0])) {
-      s.push(toHtmlText(self, depth, this.childNodes[0]));
-      s.push(`</${this.tagName}>`);
-    } else {
-      if (this.childNodes.length) {
-        s.push(
-          this.childNodes
-            .map(a =>
-              (typeof a === "string" || typeof a === "number")
-                ? toHtmlText(self, depth, a)
-                : a.toHtml()
-            )
-            .join("")
-        );
-      }
-
-      if (OPEN.indexOf(this.tagName) === -1) {
-        if (this.childNodes.length) {
-          s.push(`\n${tab}`);
-        }
-        s.push(`</${this.tagName}>`);
-      }
-    }
-  } else {
-    // Self closing nodes have no children
+  if (isSelfClosing) {
     s.push("/>");
+  } else if (isOpen) {
+    s.push(">");
+  } else {
+    s.push(">");
+    if (
+      this.childNodes.length === 1 &&
+      typeof this.childNodes[0] === "string" ||
+      typeof this.childNodes[0] === "number"
+    ) {
+      s.push(
+        this.childNodes[0]
+      );
+    } else if (this.childNodes.length) {
+      s.push(
+        "\n",
+        this.childNodes
+        .map(a => (
+          typeof a === "string" ||
+          typeof a === "number"
+            ? tabNested + a + "\n"
+            : a.toHtml(depth + 1)
+        )).join(""),
+        tab
+      );
+    }
+    s.push("</" + this.tagName + ">");
   }
 
-  return s.join("");
+  return s.join("") + "\n";
 };

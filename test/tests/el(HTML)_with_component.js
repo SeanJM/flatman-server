@@ -12,10 +12,6 @@ module.exports = {
     });
 
     Component.create("y", {
-      toHtml() {
-        return this.document.toHtml();
-      },
-
       render() {
         return el("HTML", [
           el("div"),

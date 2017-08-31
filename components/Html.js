@@ -40,7 +40,7 @@ Component.create("HTML", {
   },
 
   append(children) {
-    children.forEach((child) => {
+    children.forEach(child => {
       if (child.tagName === "link") {
         this.props.link.push(child);
       } else if (child.tagName === "script") {
