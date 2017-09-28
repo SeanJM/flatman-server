@@ -6,8 +6,6 @@ module.exports = {
     var a = el("div", [
       "this is a line\nthis is another line\nthis is a last line",
     ]);
-
-    console.log(a.toHtml());
     return a.toHtml();
   },
   isEqual() {

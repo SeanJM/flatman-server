@@ -3,7 +3,7 @@
   "description": "A script which generates HTML on the server or writes that HTML to a document.",
   "version": "0.14.5",
   "scripts": {
-    "test": "test.js"
+    "test": "node test/index.js"
   },
   "main": "index.js",
   "devDependencies": {},

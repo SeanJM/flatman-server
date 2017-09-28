@@ -39,6 +39,12 @@ Component.create("HTML", {
     ));
   },
 
+  getRefs(child) {
+    if (child.ref && !this.refs[child.ref]) {
+      this.refs[child.ref] = child;
+    }
+  },
+
   append(children) {
     children.forEach(child => {
       if (child.tagName === "link") {
@@ -46,6 +52,7 @@ Component.create("HTML", {
       } else if (child.tagName === "script") {
         this.props.script.push(child);
       } else {
+        this.getRefs(child);
         this.props.body.push(child);
       }
     });
