@@ -65,6 +65,14 @@ Component.create("HTML", {
     );
   },
 
+  title(value) {
+    if (!this.props.title) {
+      this.refs.head.append([ el("title", { ref: "title" }, [ value ]) ]);
+    } else {
+      this.refs.title.html(value);
+    }
+  },
+
   toFile(filename) {
     const value = this.toHtml();
     fs.writeFileSync(filename, value);
