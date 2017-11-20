@@ -1,6 +1,6 @@
 const Component = require("flatman-component");
 
-require("./components/HTML");
+require("./components/Html");
 require("./init/augmentComponent");
 
 module.exports = {
