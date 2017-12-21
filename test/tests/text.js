@@ -1,16 +1,16 @@
-const el = require('../../index').el;
+const el = require("../../index");
 
 module.exports = {
-  name : 'text()',
+  name : "text()",
   this() {
-    var a = el('div', [
-      'some starting text',
-      el('div', [ 'some secondary text'])
+    var a = el("div", [
+      "some starting text",
+      el("div", [ "some secondary text"])
     ]);
 
     return a.text();
   },
   isEqual() {
-    return 'some starting text some secondary text';
+    return "some starting text some secondary text";
   }
 };

@@ -1,24 +1,22 @@
-const flatman = require('../../index');
-const el = flatman.el;
-const Component = flatman.Component;
+const el = require("../../index");
 
 module.exports = {
-  name : 'component text',
+  name : "component text",
   this() {
-    Component.create('XY', {
+    el.create("XY", {
       text() {
-        return this.document.text();
+        return this.node.text();
       },
       render() {
-        return el('div');
+        return el("div");
       }
     });
 
-    let a = el('XY', [ 'loophole' ]);
+    let a = el("XY", [ "loophole" ]);
 
     return a.text();
   },
   isEqual() {
-    return 'loophole';
+    return "loophole";
   }
 };

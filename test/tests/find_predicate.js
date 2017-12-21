@@ -1,24 +1,23 @@
-const el = require('../../index').el;
-const Component = require('../../index').Component;
+const el = require("../../index");
 
 module.exports = {
-  name : 'find() (predicate)',
+  name : "find() (predicate)",
   this() {
-    Component.create('D', {
+    el.create("D", {
       render(opt) {
-        return el('div', { className : opt.className });
+        return el("div", { class : opt.class });
       }
     });
 
-    var a = el('div');
-    var b = el('div', { className : 'test' });
-    var c = el('D', { className : 'test-2' });
+    var a = el("div");
+    var b = el("div", { class : "test" });
+    var c = el("D", { class : "test-2" });
 
     a.append([
       b.append([ c ])
     ]);
 
-    return a.find(a => a.tagName === 'D')[0] === c;
+    return a.find(a => a.tagName === "D")[0] === c;
   },
   isEqual() {
     return true;

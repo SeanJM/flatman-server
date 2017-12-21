@@ -1,11 +1,10 @@
-const el = require('../tools/el');
-const Component = require('flatman-component');
+const el = require("../tools/el");
 
-Component.create('css', {
+el.create("css", {
   render(opt) {
     let file = /css$/.test(opt.src)
       ? opt.src
-      : opt.src + '.css';
-    return el('link', { rel : 'stylesheet', href : file });
+      : opt.src + ".css";
+    return el("link", { rel : "stylesheet", href : file });
   }
 });

@@ -1,10 +1,10 @@
-const el = require('../../index').el;
+const el = require("../../index");
 
 module.exports = {
-  name : 'remove()',
+  name : "remove()",
   this() {
-    var a = el('div');
-    var b = el('div');
+    var a = el("div");
+    var b = el("div");
     var r = [];
 
     r.push(a.childNodes.length);

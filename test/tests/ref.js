@@ -1,12 +1,12 @@
-const el = require('../../index').el;
+const el = require("../../index");
 
 module.exports = {
-  name : 'ref',
+  name : "ref",
   this() {
-    var a = el('div', { ref : 'test' });
+    var a = el("div", { ref : "test" });
     return a.ref;
   },
   isEqual() {
-    return 'test';
+    return "test";
   }
 };

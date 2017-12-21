@@ -1,4 +1,4 @@
-const { el } = require("../../index");
+const el = require("../../index");
 
 module.exports = {
   name : "toHtml() (xlink:href)",

@@ -1,13 +1,12 @@
-const el = require('../../index').el;
-
+const el = require("../../index");
 
 module.exports = {
-  name : 'children()',
+  name : "children()",
   this() {
-    var a = el('div');
-    var b = el('div', { className : 'test' });
-    var c = el('div', { className : 'test' });
-    var d = el('div', { className : 'test' });
+    var a = el("div");
+    var b = el("div", { className : "test" });
+    var c = el("div", { className : "test" });
+    var d = el("div", { className : "test" });
     var res = [];
 
     a.append([ b ]);

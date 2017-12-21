@@ -1,17 +1,17 @@
-const { el, Component } = require("../../index");
-const fs = require("fs");
+const el   = require("../../index");
+const fs   = require("fs");
 const path = require("path");
 
 module.exports = {
   name : "el(\'HTML\') with component",
   this() {
-    Component.create("x",  {
+    el.create("x",  {
       render() {
-        return el("div", { className: "component" });
+        return el("div", { class: "component" });
       }
     });
 
-    Component.create("y", {
+    el.create("y", {
       render() {
         return el("HTML", [
           el("div"),

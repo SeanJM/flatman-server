@@ -1,15 +1,15 @@
-const getSelectorGroup = require('../../tools/getSelectorGroup');
+const getSelectorGroup = require("../../tools/getSelectorGroup");
 
 function findPredicate(predicate) {
   let found = [];
 
   function find(childNodes) {
     childNodes.forEach(function (element) {
-      if (element.childNodes) {
-        if (predicate(element)) {
-          found.push(element);
-        }
-        find(element.childNodes);
+      if (predicate(element)) {
+        found.push(element);
+      }
+      if (element.children) {
+        find(element.children());
       }
     });
   }
@@ -22,9 +22,9 @@ function findStringSelector(selector) {
   let list = getSelectorGroup(selector);
   let found = [ [ this ] ];
 
-  function each (node) {
+  function each(node) {
     found.push(findPredicate.call(node, function (element) {
-      return element.is(list[0]);
+      return element.is && element.is(list[0]);
     }));
   }
 
@@ -36,12 +36,11 @@ function findStringSelector(selector) {
   return found.slice(-1)[0];
 }
 
-
 module.exports = function find(selector) {
-  if (typeof selector === 'string') {
+  if (typeof selector === "string") {
     return findStringSelector.call(this, selector);
-  } else if (typeof selector === 'function') {
+  } else if (typeof selector === "function") {
     return findPredicate.call(this, selector);
   }
-  throw new Error('Invalid selector for \'find\'');
+  throw new Error("Invalid selector for 'find'");
 };

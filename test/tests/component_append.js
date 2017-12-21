@@ -1,16 +1,13 @@
-const flatman = require('../../index');
-const el = flatman.el;
-const Component = flatman.Component;
-
+const el = require("../../index");
 
 module.exports = {
-  name : 'component append',
+  name : "component append",
   this() {
-    const str = 'adfso8903q4kjglkjfsgkl;iu';
+    const str = "adfso8903q4kjglkjfsgkl;iu";
 
-    Component.create(str, {
+    el.create(str, {
       render() {
-        return el('div');
+        return el("div", { class : "root" });
       }
     });
 
@@ -18,10 +15,8 @@ module.exports = {
     const b = el(str);
     const c = el(str);
 
-    c.append([ b ]);
-    a.before(b);
-
-    return c.childNodes[0] === a;
+    c.append([ a, b ]);
+    return c.children()[0] === a;
   },
   isEqual() {
     return true;

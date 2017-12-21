@@ -1,6 +1,6 @@
-const el = require('../../index').el;
-const fs = require('fs');
-const path = require('path');
+const el   = require("../../index");
+const fs   = require("fs");
+const path = require("path");
 
 module.exports = {
   name : "toFile()",

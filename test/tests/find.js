@@ -1,15 +1,14 @@
-const el = require('../../index').el;
-
+const el = require("../../index");
 
 module.exports = {
-  name : 'find()',
+  name : "find()",
   this() {
-    var a = el('div');
-    var b = el ('div', { className : 'test' });
+    var a = el("div");
+    var b = el ("div", { class : "test" });
 
     a.append([ b ]);
 
-    return a.find('.test')[0] === b;
+    return a.find(".test")[0] === b;
   },
   isEqual() {
     return true;

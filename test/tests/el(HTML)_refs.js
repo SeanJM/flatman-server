@@ -1,5 +1,5 @@
-const { el } = require("../../index");
-const fs = require("fs");
+const el   = require("../../index");
+const fs   = require("fs");
 const path = require("path");
 
 module.exports = {

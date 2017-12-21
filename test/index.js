@@ -1,8 +1,8 @@
-const tinyTest = require('tiny-test');
-const path = require('path');
-const m = require('match-file-utility');
+const tinyTest = require("tiny-test");
+const path = require("path");
+const m = require("match-file-utility");
 
-const tests = m('test/tests/', /\.js$/).map(a => require(path.resolve(a)));
+const tests = m("test/tests/", /\.js$/).map(a => require(path.resolve(a)));
 
 module.exports = tinyTest(function (test, load) {
   tests.forEach(function (opts) {

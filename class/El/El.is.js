@@ -1,7 +1,9 @@
-const getSelectorObject = require('../../tools/getSelectorObject');
+const getSelectorObject = require("../../tools/getSelectorObject");
 
 function isPredicate(selector) {
   const selectorObject = getSelectorObject(selector);
+
+  console.log(selectorObject, this.attributes);
 
   if (selectorObject.tagName) {
     if (selectorObject.tagName !== this.tagName) {
@@ -10,12 +12,12 @@ function isPredicate(selector) {
   }
 
   for (var k in selectorObject.attributes) {
-    if (k === 'className') {
-      if (!this.hasClass(selectorObject.attributes[k]).filter(a => a).length) {
+    if (k === "class") {
+      if (!selectorObject.attributes[k].filter(a => this.attributes.className.indexOf(a) > -1).length) {
         return false;
       }
     } else if (selectorObject.attributes[k]) {
-      if (typeof selectorObject.attributes[k] === 'string') {
+      if (typeof selectorObject.attributes[k] === "string") {
         if (selectorObject.attributes[k] !== this.attributes[k]) {
           return false;
         }
@@ -29,7 +31,7 @@ function isPredicate(selector) {
 }
 
 module.exports = function is(selector) {
-  if (typeof selector === 'function') {
+  if (typeof selector === "function") {
     return selector(this);
   }
   return isPredicate.call(this, selector);

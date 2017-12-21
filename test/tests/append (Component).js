@@ -1,18 +1,17 @@
-const el = require("../../index").el;
-const Component = require("../../index").Component;
+const el = require("../../index");
 
 module.exports = {
   name : "append() Component",
   this() {
-    Component.create("BA", {
+    el.create("BA", {
       append(children) {
         this.refs.content.append(children);
       },
       render() {
         return el("div", [
           el("div", {
-            className : "target",
-            ref: "content"
+            class : "target",
+            ref   : "content"
           })
         ]);
       }
@@ -31,10 +30,10 @@ module.exports = {
     ]);
 
     return [
-      a.childNodes.length === 1,
-      a.refs.content.childNodes.length === 2,
-      b.childNodes.length === 1,
-      b.refs.content.childNodes.length === 2
+      a.children().length === 1,
+      a.refs.content.children().length === 2,
+      b.children().length === 1,
+      b.refs.content.children().length === 2
     ];
   },
   isDeepEqual() {

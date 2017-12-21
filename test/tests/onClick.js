@@ -1,7 +1,7 @@
-const el = require('../../index').el;
+const el = require("../../index");
 
 module.exports = {
-  name : 'on { onClick }',
+  name : "on { onClick }",
   this() {
     var result = [];
 
@@ -10,9 +10,9 @@ module.exports = {
     }
 
     var toggle = false;
-    var a = el('div', { onClick : onClick });
+    var a = el("div", { onClick : onClick });
 
-    a.trigger('click');
+    a.trigger("click");
     result.push(toggle);
 
     return result;

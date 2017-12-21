@@ -1,10 +1,10 @@
-const el = require('../../index').el;
+const el = require("../../index");
 
 module.exports = {
-  name : 'appendTo()',
+  name : "appendTo()",
   this() {
-    var a = el('div');
-    var b = el('div');
+    var a = el("div");
+    var b = el("div");
     b.appendTo(a);
     return [ a.childNodes.length, a.childNodes[0] === b ];
   },

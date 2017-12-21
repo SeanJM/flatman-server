@@ -3,7 +3,7 @@ class Comment {
     this.value = value;
   }
   render() {
-    return '<!--' + value + '-->';
+    return "<!--" + this.value + "-->";
   }
 }
 

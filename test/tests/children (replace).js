@@ -1,26 +1,25 @@
-const el = require('../../index').el;
-
+const el = require("../../index");
 
 module.exports = {
-  name : 'children([ replace children ])',
+  name : "children([ replace children ])",
   this() {
     var results = [];
 
     var a = [
-      el('div'),
-      el('div'),
-      el('div'),
-      el('div')
+      el("div"),
+      el("div"),
+      el("div"),
+      el("div")
     ];
 
     var b = [
-      el('div'),
-      el('div'),
-      el('div'),
-      el('div')
+      el("div"),
+      el("div"),
+      el("div"),
+      el("div")
     ];
 
-    var c = el('div', a);
+    var c = el("div", a);
 
     results.push(c.children().length === 4);
     results.push(c.children(0) === a[0]);

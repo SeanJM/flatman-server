@@ -1,11 +1,11 @@
-const el = require('../../index').el;
+const el = require("../../index");
 
 module.exports = {
-  name : 'prepend()',
+  name : "prepend()",
   this() {
-    var a = el('div');
-    var b = el('div');
-    var c = el('div');
+    var a = el("div");
+    var b = el("div");
+    var c = el("div");
 
     a.append([ b ]);
     a.prepend([ c ]);

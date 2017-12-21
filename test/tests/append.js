@@ -1,4 +1,4 @@
-const el = require("../../index").el;
+const el = require("../../index");
 
 module.exports = {
   name : "append()",
@@ -7,7 +7,7 @@ module.exports = {
     var b = el("div");
     var c = el("div");
 
-    a.append([b, c]);
+    a.append([ b, c ]);
 
     return a.childNodes.length;
   },

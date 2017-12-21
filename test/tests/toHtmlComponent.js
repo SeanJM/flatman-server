@@ -1,11 +1,11 @@
-const { el, Component } = require("../../index");
+const el = require("../../index");
 const fs = require("fs");
 const path = require("path");
 
 module.exports = {
   name : "toHtml() (Component)",
   this() {
-    Component.create("splat", {
+    el.create("splat", {
       render() {
         return el("div", { className: "splat" });
       }

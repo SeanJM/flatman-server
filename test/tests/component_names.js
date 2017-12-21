@@ -1,37 +1,35 @@
-const flatman = require('../../index');
-const el = flatman.el;
-const Component = flatman.Component;
+const el = require("../../index");
 
 module.exports = {
-  name : 'component names',
+  name : "component names",
   this() {
-    Component.create('DE', {
+    el.create("DE", {
       render() {
-        return el('div', [
-          el('div', { ref : 'x' }),
-          el('div', { ref : 'y' }, [
-            el('div', { ref : 'z' })
+        return el("div", [
+          el("div", { ref : "x" }),
+          el("div", { ref : "y" }, [
+            el("div", { ref : "z" })
           ])
         ]);
       }
     });
 
-    Component.create('DA', {
+    el.create("DA", {
       render() {
-        return el('DE');
+        return el("DE");
       }
     });
 
-    let de = el('DE');
-    let da = el('DA');
+    let de = el("DE");
+    let da = el("DA");
 
     return (
-      de.refs.x.ref === 'x' &&
-      de.refs.y.ref === 'y' &&
-      de.refs.z.ref === 'z' &&
-      da.document.refs.x.ref === 'x' &&
-      da.document.refs.y.ref === 'y' &&
-      da.document.refs.z.ref === 'z'
+      de.refs.x.ref === "x" &&
+      de.refs.y.ref === "y" &&
+      de.refs.z.ref === "z" &&
+      da.node.refs.x.ref === "x" &&
+      da.node.refs.y.ref === "y" &&
+      da.node.refs.z.ref === "z"
     );
   },
   isEqual() {

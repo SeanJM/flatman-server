@@ -1,8 +1,7 @@
 const el = require("../tools/el");
-const Component = require("flatman-component");
 const fs = require("fs");
 
-Component.create("HTML", {
+el.create("HTML", {
   constructor(props) {
     this.props = {
       script : [],
@@ -61,7 +60,7 @@ Component.create("HTML", {
   toHtml() {
     return (
       "<!DOCTYPE HTML>\n" +
-      this.document.toHtml()
+      this.node.toHtml()
     );
   },
 

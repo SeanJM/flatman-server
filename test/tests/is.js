@@ -1,15 +1,15 @@
-const el = require('../../index').el;
+const el = require("../../index");
 
 module.exports = {
-  name : 'is()',
+  name : "is()",
   this() {
-    var a = el('div', { className : 'test', id : 'my-id', dataTest : 'my-test' });
-    var b = el('div', { className : 'test' });
-    var c = el('div', { id : 'test' });
+    var a = el("div", { className : "test", id : "my-id", dataTest : "my-test" });
+    var b = el("div", { className : "test" });
+    var c = el("div", { id : "test" });
     return [
-      a.is('.test#my-id[data-test="my-test"]'),
-      b.is('.test'),
-      c.is('#test'),
+      a.is(".test#my-id[data-test=\"my-test\"]"),
+      b.is(".test"),
+      c.is("#test"),
     ];
   },
   isDeepEqual() {

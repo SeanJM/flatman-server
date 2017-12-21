@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require("fs");
 
 module.exports = function toFile(filename) {
   const value = this.toHtml();
