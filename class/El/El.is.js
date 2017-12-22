@@ -3,8 +3,6 @@ const getSelectorObject = require("../../tools/getSelectorObject");
 function isPredicate(selector) {
   const selectorObject = getSelectorObject(selector);
 
-  console.log(selectorObject, this.attributes);
-
   if (selectorObject.tagName) {
     if (selectorObject.tagName !== this.tagName) {
       return false;
