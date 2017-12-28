@@ -1,12 +1,9 @@
 const El        = require("../class/El");
-const Comment   = require("../class/Comment");
 const Component = require("../class/Component");
 
 function el(a, b, c) {
   if (Component.lib[a]) {
     return new Component.lib[a](b, c);
-  } else if (a instanceof Comment) {
-    return a;
   } else {
     return new El(a, b, c);
   }

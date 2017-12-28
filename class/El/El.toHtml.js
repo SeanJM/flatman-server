@@ -109,7 +109,9 @@ module.exports = function toHtml($depth) {
 
   this.trigger("html");
 
-  if (isSelfClosing) {
+  if (this.tagName === "comment") {
+    return tab + "<!-- " + this.childNodes.join("\n") + " -->\n";
+  } else if (isSelfClosing) {
     s.push("/>");
   } else if (isOpen) {
     s.push(">");

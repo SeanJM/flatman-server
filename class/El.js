@@ -5,8 +5,6 @@ const Bus       = require("./Bus");
 function parseEach(element) {
   if (typeof element === "string") {
     return element.trim();
-  } else if (element.tagName === "comment") {
-    return element;
   }
 
   if (element.childNodes && element.childNodes.length) {
