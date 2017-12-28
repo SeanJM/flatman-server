@@ -131,10 +131,9 @@ module.exports = function toHtml($depth) {
         "\n",
         c
         .map(a => (
-          typeof a === "string" ||
-          typeof a === "number"
-            ? tabN + a + "\n"
-            : a.toHtml(depth + 1)
+          a.toHtml
+            ? a.toHtml(depth + 1)
+            : tabN + a + "\n"
         )).join(""),
         tab
       );
