@@ -9,9 +9,11 @@ const OPEN = [
 ];
 
 const SELF_CLOSING = [
+  "circle",
+  "ellipsis",
   "path",
-  "rect",
-  "polygon"
+  "polygon",
+  "rect"
 ];
 
 const ATTR_LIST = [
