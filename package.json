@@ -10,7 +10,7 @@
   "dependencies": {
     "eslint": "^3.19.0",
     "eslint-plugin-dependencies": "^2.4.0",
-    "flatman-parse": "^1.2.10",
+    "flatman-parse": "^1.2.11",
     "lodash": "^4.17.4",
     "match-file-utility": "^3.4.0",
     "tiny-test": "^0.9.4"
