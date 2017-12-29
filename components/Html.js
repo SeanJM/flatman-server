@@ -11,9 +11,13 @@ el.create("HTML", {
       link : [],
       isMobile : props.isMobile
     };
+
+    this.on("html", props.onHtml);
   },
 
   onHtml() {
+    this.trigger("html");
+
     if (this.props.isMobile) {
       this.refs.head.append([
         el("meta", {
