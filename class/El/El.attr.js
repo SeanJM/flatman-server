@@ -4,7 +4,10 @@ function setAttribute(node, property, value) {
   if (typeof value === "string" && value === "") {
     value = null;
   }
-  if (["tabIndex", "tabindex"].indexOf(property) > -1) {
+
+  if (attr.onAttr[property]) {
+    attr.onAttr[property].call(node, value);
+  } else if (["tabIndex", "tabindex"].indexOf(property) > -1) {
     node.attributes["tabIndex"] = value;
   } else if (property.slice(0, 4) === "data") {
     node.attributes[_.kebabCase(property)] = value;
@@ -36,7 +39,7 @@ function getAttribute(node, property) {
   return node.attributes[property];
 }
 
-module.exports = function attr(x, y) {
+function attr(x, y) {
   if (typeof x === "object") {
     setAttrObject(this, x);
     return this;
@@ -47,4 +50,7 @@ module.exports = function attr(x, y) {
     return getAttribute(this, x);
   }
   return this.attributes;
-};
+}
+
+attr.onAttr    = {};
+module.exports = attr;

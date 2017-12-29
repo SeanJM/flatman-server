@@ -10,7 +10,7 @@ function el(a, b, c) {
 }
 
 el.onAttr = function (name, callback) {
-  El.__onAttr[name.toLowerCase()] = callback;
+  El.prototype.attr.onAttr[name.toLowerCase()] = callback;
 };
 
 el.onCreate = function (callback) {
