@@ -100,16 +100,16 @@ function getAttr(node) {
 }
 
 module.exports = function toHtml($depth) {
-  const depth = $depth || 0;
-  const tab = new Array(depth + 1).join("  ");
-  const tabN = new Array(depth + 2).join("  ");
+  const depth         = $depth || 0;
+  const tab           = new Array(depth + 1).join("  ");
+  const tabN          = new Array(depth + 2).join("  ");
   const isSelfClosing = SELF_CLOSING.indexOf(this.tagName) > -1;
-  const isOpen = OPEN.indexOf(this.tagName) > -1;
-  const s = [tab, "<", this.tagName, getAttr(this)];
-
-  let c = this.childNodes;
+  const isOpen        = OPEN.indexOf(this.tagName) > -1;
+  const s             = [];
+  let c               = this.childNodes;
 
   this.trigger("html");
+  [].push.apply(s, [ tab, "<", this.tagName, getAttr(this) ]);
 
   if (this.tagName === "comment") {
     return tab + "<!-- " + this.childNodes.join("\n") + " -->\n";
