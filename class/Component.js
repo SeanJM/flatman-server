@@ -5,6 +5,9 @@ const El       = require("./El");
 
 function Component() {}
 
+Component.__defaultProps = {};
+Component.lib            = {};
+
 Component.__extend = function (name) {
   return function (a, b, c) {
     let o = this.node
@@ -13,8 +16,6 @@ Component.__extend = function (name) {
     return o === this.node ? this : o;
   };
 };
-
-Component.lib = {};
 
 for (var k in El.prototype) {
   Component.prototype[k] = Component.__extend(k);
@@ -52,7 +53,12 @@ Component.create = function (name, obj) {
   function C(a, b) {
     let children = Array.isArray(a) ? a : b || [];
 
-    this.props   = isObject(a) ? a : {};
+    this.props   = Object.assign(
+      {},
+      (isObject(a) ? a : {}),
+      Component.__defaultProps
+    );
+
     this.bus     = new Bus({ target: this });
     this.refs    = {};
     this.ref     = this.props.ref;

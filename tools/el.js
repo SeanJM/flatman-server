@@ -11,6 +11,12 @@ function el(a, b, c) {
 
 el.onAttr = function (name, callback) {
   El.prototype.attr.onAttr[name.toLowerCase()] = callback;
+  return el;
+};
+
+el.defaultProps = function (props) {
+  Object.assign(Component.__defaultProps, props);
+  return el;
 };
 
 el.onCreate = function (callback) {
