@@ -1,12 +1,12 @@
 const el = require("../../index");
 
 module.exports = {
-  name : "onRender",
+  name : "onMount",
   this() {
     const name = "5w2dH6FRSNNH";
     el.create(name, {
       render() {
-        return el({ onHtml: () => { this.addClass("test"); }});
+        return el({ onMount: () => { this.addClass("test"); }});
       }
     });
     let a = el(name);
