@@ -3,13 +3,17 @@ const el = require("../../index");
 module.exports = {
   name : "attr()",
   this() {
-    var a = el("div");
+    var a = el();
+    var b = el();
     a.attr({
       text : "1"
     });
-    return a.attr("text");
+    b.attr({
+      id : "id"
+    });
+    return [ a.attr("text"), b.attr("id") ];
   },
-  isEqual() {
-    return "1";
+  isDeepEqual() {
+    return [ "1", "id" ];
   }
 };

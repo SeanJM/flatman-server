@@ -102,7 +102,14 @@ El.prototype.html = function (value) {
     this.childNodes = parsed.childNodes;
     return this;
   } else {
-    return this.children().map(child => child.toHtml()).join("\n");
+    return this
+      .children()
+      .map(child => (
+        child.toHtml
+          ? child.toHtml()
+          : child
+      ))
+      .join("\n");
   }
 };
 
