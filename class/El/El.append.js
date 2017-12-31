@@ -8,7 +8,7 @@ module.exports = function append(childNodes) {
       }
       setRefs.call(this, child);
       child.parentNode = this;
-      this.childNodes.push(child);
+      this.childNodes.push(child.getNode ? child.getNode() : child);
     }
   });
 

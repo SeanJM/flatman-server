@@ -17,7 +17,7 @@ module.exports = {
       b.append([ c ])
     ]);
 
-    return a.find(node => node.tagName === "E")[0] === c;
+    return a.find(".test-2")[0] === c.getNode();
   },
   isEqual() {
     return true;

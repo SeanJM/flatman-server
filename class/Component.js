@@ -37,6 +37,10 @@ Component.prototype.on = function (a, b) {
   return this.bus.on(a, b);
 };
 
+Component.prototype.getNode = function () {
+  return this.node.getNode();
+};
+
 Component.prototype.once = function (a, b) {
   return this.bus.once(a, b);
 };
