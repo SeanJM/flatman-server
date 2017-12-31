@@ -6,7 +6,7 @@ module.exports = function after(target) {
   if (typeof index === "number") {
     parentNode.childNodes.splice(index + 1, 0, this);
   } else {
-    throw "Cannot insert node after " + targetNode.tagName + ", target does have a parent";
+    throw new Error("Cannot insert node after \"" + targetNode.tagName + "\", target does have a parent.");
   }
 
   return this;
