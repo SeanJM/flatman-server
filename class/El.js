@@ -127,6 +127,7 @@ El.prototype.getNode      = require("./El/El.getNode");
 El.prototype.insertBefore = require("./El/El.insertBefore");
 El.prototype.is           = require("./El/El.is");
 El.prototype.prepend      = require("./El/El.prepend");
+El.prototype.parent       = require("./El/El.parent");
 El.prototype.remove       = require("./El/El.remove");
 El.prototype.removeChild  = require("./El/El.removeChild");
 El.prototype.removeClass  = require("./El/El.removeClass");
