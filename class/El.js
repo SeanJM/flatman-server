@@ -114,6 +114,7 @@ El.prototype.html = function (value) {
 };
 
 El.prototype.addClass     = require("./El/El.addClass");
+El.prototype.after        = require("./El/El.after");
 El.prototype.append       = require("./El/El.append");
 El.prototype.appendTo     = require("./El/El.appendTo");
 El.prototype.attr         = require("./El/El.attr");
