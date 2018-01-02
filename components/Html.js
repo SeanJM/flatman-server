@@ -1,6 +1,11 @@
 const el = require("../tools/el");
 const fs = require("fs");
 
+const HEAD_TAGS = {
+  link : true,
+  meta : true
+};
+
 el.create("HTML", {
   constructor(props) {
     this.props = {
@@ -50,7 +55,7 @@ el.create("HTML", {
 
   append(children) {
     children.forEach(child => {
-      if (child.tagName === "link") {
+      if (HEAD_TAGS[child.tagName]) {
         this.props.link.push(child);
       } else if (child.tagName === "script") {
         this.props.script.push(child);
