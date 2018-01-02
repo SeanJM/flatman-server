@@ -1,19 +1,13 @@
 module.exports = function prepend(childNodes) {
-  const self = this;
+  childNodes = []
+    .concat(childNodes)
+    .filter(a => a);
 
-  if (typeof this.childNodes === 'undefined') {
-    this.childNodes = [];
-  }
-
-  childNodes.forEach(function (child) {
-    child.parentNode = self;
+  childNodes.forEach(child => {
+    child.parentNode = this;
   });
 
-  if (arguments.length === 1 && Array.isArray(childNodes)) {
-    [].unshift.apply(this.childNodes, childNodes);
-  } else {
-    throw new Error('flatman: Invalid arguement for \'.prepend\', only a single array is allowed');
-  }
+  [].unshift.apply(this.childNodes, childNodes);
 
   return this;
 };
