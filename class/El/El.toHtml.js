@@ -47,6 +47,12 @@ function toHtmlStyle(value) {
 }
 
 function toHtmlAttribute(name, value) {
+  value = (
+    typeof value === "number"
+      ? value.toString()
+      : value
+  );
+
   if (typeof value === "string") {
     value = value.trim();
   }
