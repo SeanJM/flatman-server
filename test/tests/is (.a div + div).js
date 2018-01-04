@@ -5,8 +5,9 @@ module.exports = {
   this() {
     var a = el();
     var b = el();
-    el({ class : "a" }, [ a, b ]);
-    return b.is(".a div + div") && !b.is(".a") && !a.is(".a div + div");
+    var c = el("table");
+    el({ class : "a" }, [ a, b.append(c) ]);
+    return b.is(".a div + div") && !b.is(".a") && !a.is(".a div + div") && !c.is(".a div + div");
   },
   isEqual() {
     return true;

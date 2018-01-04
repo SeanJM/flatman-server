@@ -52,15 +52,16 @@ function elementPathIs(selectors) {
   }
 
   for (var i = parents.length - 1; i >= 0; i--) {
+    t[0] = selectors.length;
     if (selectors.length) {
       for (var x = selectors.length - 1; x >= 0; x--) {
         // Adjacent selector
         if (selectors[x - 1] && selectors[x - 1].selector === "+") {
-          t[0] = (
+          t[1] = (
             elementIs(parents[i].previous(), selectors[x - 2]) &&
             elementIs(parents[i], selectors[x])
           );
-          if (t[0]) {
+          if (t[1]) {
             selectors.splice(x - 2, 3);
             x = 0;
           } else {
@@ -68,14 +69,14 @@ function elementPathIs(selectors) {
           }
         } else if (selectors[x - 1] && selectors[x - 1].selector === "~") {
           // General sibling combinator
-          t[0] = (
+          t[1] = (
             parents[i].previousNodes()
               .map(element => element.tagName && elementIs(element, selectors[x - 2]))
               .filter(a => a)
               .length &&
             elementIs(parents[i], selectors[x])
           );
-          if (t[0]) {
+          if (t[1]) {
             selectors.splice(x - 2, 3);
             x = 0;
           } else {
@@ -83,11 +84,11 @@ function elementPathIs(selectors) {
           }
         } else if (selectors[x - 1] && selectors[x - 1].selector === ">") {
           // Direct descendent
-          t[0] = (
+          t[1] = (
             elementIs(parents[i].parent(), selectors[x - 2]) &&
             elementIs(parents[i], selectors[x])
           );
-          if (t[0]) {
+          if (t[1]) {
             selectors.splice(x - 2, 3);
             x = 0;
           } else {
@@ -98,6 +99,11 @@ function elementPathIs(selectors) {
           x = 0;
         }
       }
+    }
+
+    // Fail when no selectors have been removed after the first check
+    if (i === parents.length - 1 && t[0] === selectors.length) {
+      return false;
     }
   }
 
