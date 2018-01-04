@@ -12,7 +12,13 @@ function setAttribute(node, property, value) {
   } else if (property.slice(0, 4) === "data") {
     node.attributes[_.kebabCase(property)] = value;
   } else if (property === "class" || property === "className") {
-    node.attributes.className = Array.isArray(value) ? value : value.split(" ");
+    node.attributes.className = (
+      Array.isArray(value)
+        ? value
+        : typeof value === "string"
+          ? value.split(" ")
+          : []
+    );
   } else if (property === "style") {
     node.style(value);
   } else {

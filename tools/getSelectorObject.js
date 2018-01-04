@@ -5,6 +5,7 @@ module.exports = function getSelectorObject(selector) {
   let tagName = selector.match(/^[a-zA-Z0-9\-\_]+/);
 
   let selectorObject = {
+    selector   : selector,
     tagName    : tagName ? tagName[0] : false,
     attributes : {}
   };

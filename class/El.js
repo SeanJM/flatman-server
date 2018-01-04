@@ -25,22 +25,14 @@ function El() {
   let childNodes = [];
   let props      = {};
 
-  if (typeof a[0] === "string") {
-    tagName = a[0];
-  } else if (Array.isArray(a[0])) {
-    childNodes = a[0];
-  } else if (isObject(a[0])) {
-    props = a[0];
-  }
-
-  if (Array.isArray(a[1])) {
-    childNodes = a[1];
-  } else if (isObject(a[1])) {
-    props = a[1];
-  }
-
-  if (Array.isArray(a[2])) {
-    childNodes = a[2];
+  for (var i = 0, n = a.length; i < n; i++) {
+    if (typeof a[i] === "string") {
+      tagName = a[i];
+    } else if (Array.isArray(a[i])) {
+      childNodes = a[i];
+    } else if (isObject(a[i])) {
+      props = a[i];
+    }
   }
 
   this.attributes = {
@@ -70,7 +62,7 @@ function El() {
 
   this.append(childNodes);
 
-  for (var i = 0, n = El.__onCreate.length; i < n; i++) {
+  for (i = 0, n = El.__onCreate.length; i < n; i++) {
     El.__onCreate[i].call(this);
   }
 }
@@ -117,29 +109,31 @@ El.prototype.html = function (value) {
   }
 };
 
-El.prototype.addClass     = require("./El/El.addClass");
-El.prototype.after        = require("./El/El.after");
-El.prototype.append       = require("./El/El.append");
-El.prototype.appendTo     = require("./El/El.appendTo");
-El.prototype.attr         = require("./El/El.attr");
-El.prototype.children     = require("./El/El.children");
-El.prototype.closest      = require("./El/El.closest");
-El.prototype.disable      = require("./El/El.disable");
-El.prototype.enable       = require("./El/El.enable");
-El.prototype.find         = require("./El/El.find");
-El.prototype.getNode      = require("./El/El.getNode");
-El.prototype.insertBefore = require("./El/El.insertBefore");
-El.prototype.is           = require("./El/El.is");
-El.prototype.prepend      = require("./El/El.prepend");
-El.prototype.parent       = require("./El/El.parent");
-El.prototype.remove       = require("./El/El.remove");
-El.prototype.removeChild  = require("./El/El.removeChild");
-El.prototype.removeClass  = require("./El/El.removeClass");
-El.prototype.replaceWith  = require("./El/El.replaceWith");
-El.prototype.style        = require("./El/El.style");
-El.prototype.text         = require("./El/El.text");
-El.prototype.toFile       = require("./El/El.toFile");
-El.prototype.toHtml       = require("./El/El.toHtml");
+El.prototype.addClass      = require("./El/El.addClass");
+El.prototype.after         = require("./El/El.after");
+El.prototype.append        = require("./El/El.append");
+El.prototype.appendTo      = require("./El/El.appendTo");
+El.prototype.attr          = require("./El/El.attr");
+El.prototype.children      = require("./El/El.children");
+El.prototype.closest       = require("./El/El.closest");
+El.prototype.disable       = require("./El/El.disable");
+El.prototype.enable        = require("./El/El.enable");
+El.prototype.find          = require("./El/El.find");
+El.prototype.getNode       = require("./El/El.getNode");
+El.prototype.insertBefore  = require("./El/El.insertBefore");
+El.prototype.is            = require("./El/El.is");
+El.prototype.prepend       = require("./El/El.prepend");
+El.prototype.previous      = require("./El/El.previous");
+El.prototype.previousNodes = require("./El/El.previousNodes");
+El.prototype.parent        = require("./El/El.parent");
+El.prototype.remove        = require("./El/El.remove");
+El.prototype.removeChild   = require("./El/El.removeChild");
+El.prototype.removeClass   = require("./El/El.removeClass");
+El.prototype.replaceWith   = require("./El/El.replaceWith");
+El.prototype.style         = require("./El/El.style");
+El.prototype.text          = require("./El/El.text");
+El.prototype.toFile        = require("./El/El.toFile");
+El.prototype.toHtml        = require("./El/El.toHtml");
 
 El.__onCreate             = [];
 module.exports            = El;
