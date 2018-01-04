@@ -44,6 +44,7 @@ function elementIs(element, props) {
 function elementPathIs(selectorList) {
   let parents = [ this ];
   let p       = this.parent();
+  let prev;
 
   while (p) {
     parents.unshift(p);
@@ -52,16 +53,14 @@ function elementPathIs(selectorList) {
 
   for (var i = selectorList.length - 1; i > 0; i--) {
     while (parents.length && selectorList[i]) {
-      let prev = selectorList[i - 1];
-      p        = parents.slice(-1)[0];
+      prev = selectorList[i - 1];
+      p    = parents.slice(-1)[0];
       // Adjacent selector
       if (prev && prev.selector === "+") {
-        selectorList.splice(
-          i - 2,
-          3,
+        selectorList.splice(i - 2, 3, (
           elementIs(p.previous(), selectorList[i - 2]) &&
           elementIs(p, selectorList[i])
-        );
+        ));
         i -= 3;
       } else if (prev && prev.selector === "~") {
         // General sibling combinator
@@ -69,7 +68,7 @@ function elementPathIs(selectorList) {
           i - 2,
           3,
           p.previousNodes()
-            .map(element => elementIs(element, selectorList[i - 2]))
+            .map(element => element.tagName && elementIs(element, selectorList[i - 2]))
             .filter(a => a)
             .length &&
           elementIs(p, selectorList[i])
