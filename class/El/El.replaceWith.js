@@ -3,8 +3,8 @@ module.exports = function replaceWith(domNode) {
   if (this.parentNode) {
     index = this.parentNode.childNodes.indexOf(this);
     this.parentNode.childNodes[index] = domNode;
-    return domNode;
   } else {
-    throw new Error('Cannot run \'DomNode.prototype.replaceWith\', node requires a parentNode.');
+    Object.assign(this, domNode, { parentNode : this.parentNode });
   }
+  return domNode;
 };
