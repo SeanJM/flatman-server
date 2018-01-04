@@ -141,4 +141,5 @@ El.prototype.text         = require("./El/El.text");
 El.prototype.toFile       = require("./El/El.toFile");
 El.prototype.toHtml       = require("./El/El.toHtml");
 
-module.exports = El;
+El.__onCreate             = [];
+module.exports            = El;
