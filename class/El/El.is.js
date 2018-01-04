@@ -1,8 +1,16 @@
 const getSelectorObject = require("../../tools/getSelectorObject");
 
-function isClassName(selectorClassList) {
-  const classList = this.attributes.className;
-  return !!selectorClassList.filter(a => classList.indexOf(a) > -1).length;
+function isClassName(matchList) {
+  const classList = [];
+  const className = this.attributes.className;
+
+  for (var i = 0, n = className.length; i < n; i++) {
+    if (matchList.indexOf(className[i]) > -1) {
+      classList.push(className[i]);
+    }
+  }
+
+  return classList.length === matchList.length;
 }
 
 function elementIs(element, props) {
