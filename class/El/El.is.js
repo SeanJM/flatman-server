@@ -6,7 +6,7 @@ function isClassName(selectorClassList) {
 }
 
 function elementIs(element, props) {
-  if (!element) {
+  if (!element || typeof element === "string") {
     return false;
   }
 
