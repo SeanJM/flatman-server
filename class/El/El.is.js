@@ -5,24 +5,28 @@ function isClassName(selectorClassList) {
   return !!selectorClassList.filter(a => classList.indexOf(a) > -1).length;
 }
 
-function elementIs(props) {
+function elementIs(element, props) {
+  if (!element) {
+    return false;
+  }
+
   if (props.tagName) {
-    if (props.tagName !== this.tagName) {
+    if (props.tagName !== element.tagName) {
       return false;
     }
   }
 
   for (var k in props.attributes) {
     if (k === "class") {
-      if (!isClassName.call(this, props.attributes[k])) {
+      if (!isClassName.call(element, props.attributes[k])) {
         return false;
       }
     } else if (props.attributes[k]) {
       if (typeof props.attributes[k] === "string") {
-        if (props.attributes[k] !== this.attributes[k]) {
+        if (props.attributes[k] !== element.attributes[k]) {
           return false;
         }
-      } else if (!props.attributes[k].test(this.attributes[k])) {
+      } else if (!props.attributes[k].test(element.attributes[k])) {
         return false;
       }
     }
@@ -55,8 +59,8 @@ function elementPathIs(selectorList) {
         selectorList.splice(
           i - 2,
           3,
-          elementIs.call(p.previous(), selectorList[i - 2]) &&
-          elementIs.call(p, selectorList[i])
+          elementIs(p.previous(), selectorList[i - 2]) &&
+          elementIs(p, selectorList[i])
         );
         i -= 3;
       } else if (prev && prev.selector === "~") {
@@ -65,10 +69,10 @@ function elementPathIs(selectorList) {
           i - 2,
           3,
           p.previousNodes()
-            .map(element => elementIs.call(element, selectorList[i - 2]))
+            .map(element => elementIs(element, selectorList[i - 2]))
             .filter(a => a)
             .length &&
-          elementIs.call(p, selectorList[i])
+          elementIs(p, selectorList[i])
         );
         i -= 3;
       } else if (prev && prev.selector === ">") {
@@ -76,11 +80,11 @@ function elementPathIs(selectorList) {
         selectorList.splice(
           i - 2,
           3,
-          elementIs.call(p.parent(), selectorList[i - 2]) &&
-          elementIs.call(p, selectorList[i])
+          elementIs(p.parent(), selectorList[i - 2]) &&
+          elementIs(p, selectorList[i])
         );
         i -= 3;
-      } else if (elementIs.call(p, selectorList[i])) {
+      } else if (elementIs(p, selectorList[i])) {
         selectorList[i] = true;
       }
       parents.pop();
@@ -95,7 +99,7 @@ function isStringSelector(selector) {
     .split(" ")
     .map(a => getSelectorObject(a.trim()));
   if (selectorList.length === 1) {
-    return elementIs.call(this, selectorList[0]);
+    return elementIs(this, selectorList[0]);
   } else {
     return elementPathIs.call(this, selectorList);
   }
