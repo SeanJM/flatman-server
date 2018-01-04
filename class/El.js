@@ -70,7 +70,7 @@ function El() {
 
   this.append(childNodes);
 
-  for (i = 0, n = El.__onCreate.length; i < n; i++) {
+  for (var i = 0, n = El.__onCreate.length; i < n; i++) {
     El.__onCreate[i].call(this);
   }
 }
