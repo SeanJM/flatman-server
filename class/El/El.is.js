@@ -51,43 +51,45 @@ function elementPathIs(selectorList) {
     p = p.parent();
   }
 
-  for (var i = selectorList.length - 1; i > 0; i--) {
-    while (parents.length && selectorList[i]) {
-      prev = selectorList[i - 1];
-      p    = parents.slice(-1)[0];
-      // Adjacent selector
-      if (prev && prev.selector === "+") {
-        selectorList.splice(i - 2, 3, (
-          elementIs(p.previous(), selectorList[i - 2]) &&
-          elementIs(p, selectorList[i])
-        ));
-        i -= 3;
-      } else if (prev && prev.selector === "~") {
-        // General sibling combinator
-        selectorList.splice(
-          i - 2,
-          3,
-          p.previousNodes()
-            .map(element => element.tagName && elementIs(element, selectorList[i - 2]))
-            .filter(a => a)
-            .length &&
-          elementIs(p, selectorList[i])
-        );
-        i -= 3;
-      } else if (prev && prev.selector === ">") {
-        // Direct descendent
-        selectorList.splice(
-          i - 2,
-          3,
-          elementIs(p.parent(), selectorList[i - 2]) &&
-          elementIs(p, selectorList[i])
-        );
-        i -= 3;
-      } else if (elementIs(p, selectorList[i])) {
-        selectorList[i] = true;
+  for (var i = selectorList.length - 1; i >= 0; i--) {
+    for (var x = parents.length - 1; x >= 0; x--) {
+      if (selectorList[i]) {
+        prev = selectorList[i - 1];
+        p    = parents[x];
+        // Adjacent selector
+        if (prev && prev.selector === "+") {
+          selectorList.splice(i - 2, 3, (
+            elementIs(p.previous(), selectorList[i - 2]) &&
+            elementIs(p, selectorList[i])
+          ));
+          i -= 3;
+        } else if (prev && prev.selector === "~") {
+          // General sibling combinator
+          selectorList.splice(
+            i - 2,
+            3,
+            p.previousNodes()
+              .map(element => element.tagName && elementIs(element, selectorList[i - 2]))
+              .filter(a => a)
+              .length &&
+            elementIs(p, selectorList[i])
+          );
+          i -= 3;
+        } else if (prev && prev.selector === ">") {
+          // Direct descendent
+          selectorList.splice(
+            i - 2,
+            3,
+            elementIs(p.parent(), selectorList[i - 2]) &&
+            elementIs(p, selectorList[i])
+          );
+          i -= 3;
+        } else if (elementIs(p, selectorList[i])) {
+          selectorList[i] = true;
+        }
       }
-      parents.pop();
     }
+    parents.pop();
   }
 
   return selectorList.filter(a => a === true).length === selectorList.length;
