@@ -14,16 +14,15 @@ module.exports = function commentToHtml(element, depth) {
       c.map(x => x.tagName === "comment" ? commentToHtml(x, 0) : x).join("\n")
     );
   } else {
-    s.push("\n");
     s.push(
-      c.map(x => {
-        const tab = new Array(depth + 2).join("  ");
+      c.map((x, i) => {
+        const tab = i > 0 ? new Array(depth).join("  ") + "    " : "";
         return (
           x.tagName === "comment"
             ? tab + commentToHtml(x, depth + 1)
             : tab + x
-        ) + "\n";
-      }).join("")
+        );
+      }).join("\n")
     );
   }
 

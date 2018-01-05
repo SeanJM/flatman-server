@@ -11,10 +11,8 @@ module.exports = {
   },
   isEqual() {
     return (
-      "<!--\n" +
-      "  line 1\n" +
-      "  line 2\n" +
-      "-->\n"
+      "<!--line 1\n" +
+      "    line 2-->\n"
     );
   }
 };
