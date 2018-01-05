@@ -11,7 +11,7 @@ module.exports = function commentToHtml(element, depth) {
 
   if (c.length === 1) {
     s.push(
-      c.map(x => x.tagName === "comment" ? commentToHtml(x, 0) : x).join("\n")
+      c.map(x => x.tagName === "comment" ? commentToHtml(x, 0) : x.tagName ? x.toHtml() : x).join("\n")
     );
   } else {
     s.push(
@@ -20,7 +20,7 @@ module.exports = function commentToHtml(element, depth) {
         return (
           x.tagName === "comment"
             ? tab + commentToHtml(x, depth + 1)
-            : tab + x
+            : x.tagName ? x.toHtml(depth + 1) : tab + x
         );
       }).join("\n")
     );

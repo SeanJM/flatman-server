@@ -120,6 +120,15 @@ module.exports = function toHtml($depth) {
 
   if (this.tagName === "comment") {
     return commentToHtml(this, depth);
+  } else if (this.tagName === "fragment") {
+    return (
+      c
+        .map(a => a.toHtml
+          ? a.toHtml(depth)
+          : tab + a + (c.length > 1 ? "\n": "")
+        )
+        .join("")
+    );
   } else if (isSelfClosing) {
     s.push("/>");
   } else if (isOpen) {
