@@ -6,7 +6,7 @@ const value = `<!DOCTYPE HTML>
     <meta charset="UTF-8">
   </head>
   <body>
-    <!-- comment -->
+    <!--comment-->
   </body>
 </html>
 `;
@@ -14,7 +14,7 @@ const value = `<!DOCTYPE HTML>
 module.exports = {
   name : "el(\'HTML\')",
   this() {
-    var c = el().html("<!-- comment -->").children()[0];
+    var c = el().html("<!--comment-->").children()[0];
     var a = el("HTML", [ c ]);
     var str = a.toHtml();
     return str;

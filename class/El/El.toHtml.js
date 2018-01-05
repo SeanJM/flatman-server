@@ -1,4 +1,5 @@
-const _ = require("lodash");
+const _             = require("lodash");
+const commentToHtml = require("../../tools/commentToHtml");
 
 const OPEN = [
   "input",
@@ -118,7 +119,7 @@ module.exports = function toHtml($depth) {
   [].push.apply(s, [ tab, "<", this.tagName, getAttr(this) ]);
 
   if (this.tagName === "comment") {
-    return tab + "<!-- " + this.childNodes.join("\n") + " -->\n";
+    return commentToHtml(this, depth);
   } else if (isSelfClosing) {
     s.push("/>");
   } else if (isOpen) {
