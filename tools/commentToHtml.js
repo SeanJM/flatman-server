@@ -16,7 +16,7 @@ module.exports = function commentToHtml(element, depth) {
   } else {
     s.push(
       c.map((x, i) => {
-        const tab = i > 0 ? new Array(depth).join("  ") + "    " : "";
+        const tab = i > 0 ? new Array(depth + 1).join("  ") + "    " : "";
         return (
           x.tagName === "comment"
             ? tab + commentToHtml(x, depth + 1)
