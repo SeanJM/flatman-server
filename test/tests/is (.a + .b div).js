@@ -7,14 +7,14 @@ module.exports = {
       style : {
         fontFamily : "Arial"
       },
-      class : "typography_p"
+      class : "t_p"
     });
 
     var b = el("table", {
       style : {
         fontFamily : "Arial"
       },
-      class : "typography_p"
+      class : "t_p"
     });
 
     var c = el("td");
@@ -27,7 +27,10 @@ module.exports = {
       el()
     ]);
 
-    return c.is(".typography_p + .typography_p td");
+    return (
+      c.is(".t_p + .t_p td") &&
+      !b.is(".t_p + .t_p td")
+    );
   },
   isEqual() {
     return true;

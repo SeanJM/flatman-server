@@ -61,7 +61,7 @@ function elementPathIs(selectors) {
 
   for (var i = parents.length - 1; i >= 0; i--) {
     t[0] = selectors.length;
-    if (selectors.length) {
+    if (t[0]) {
       for (var x = selectors.length - 1; x >= 0; x--) {
         // Adjacent selector
         if (selectors[x - 1] && selectors[x - 1].selector === "+") {
@@ -106,12 +106,11 @@ function elementPathIs(selectors) {
           selectors.pop();
           x = 0;
         }
+        // Fail when no selectors have been removed after the first check
+        if (i === parents.length - 1 && t[0] === selectors.length) {
+          return false;
+        }
       }
-    }
-
-    // Fail when no selectors have been removed after the first check
-    if (i === parents.length - 1 && t[0] === selectors.length) {
-      return false;
     }
   }
 
