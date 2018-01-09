@@ -20,15 +20,13 @@ function findPredicate(predicate) {
 function findStringSelector(selector) {
   function find(node) {
     let t;
-    if (node) {
-      if (node.is && node.is(selector)) {
-        return node;
-      } else {
-        for (var i = 0, n = node.childNodes.length; i < n; i++) {
-          t = find(node.childNodes[i]);
-          if (t) {
-            return t;
-          }
+    if (node.is && node.is(selector)) {
+      return node;
+    } else if (node.childNodes) {
+      for (var i = 0, n = node.childNodes.length; i < n; i++) {
+        t = find(node.childNodes[i]);
+        if (t) {
+          return t;
         }
       }
     }
