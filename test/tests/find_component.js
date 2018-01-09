@@ -17,7 +17,10 @@ module.exports = {
       b.append([ c ])
     ]);
 
-    return a.find(".test-2")[0] === c.getNode();
+    return (
+      a.find(".test-2") === c.getNode() &&
+      a.find(".test-3") === false
+    );
   },
   isEqual() {
     return true;

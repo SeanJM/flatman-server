@@ -7,7 +7,7 @@ module.exports = {
     var b = el ({ class : "test" });
 
     a.append([ b ]);
-    return a.find(".test")[0] === b;
+    return a.find(".test") === b && !a.find(".nothing");
   },
   isEqual() {
     return true;

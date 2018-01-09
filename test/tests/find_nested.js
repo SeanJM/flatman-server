@@ -11,7 +11,7 @@ a.append([
 module.exports = {
   name : "find() (nested)",
   this() {
-    return a.find(".test .test-2")[0] === c;
+    return a.find(".test .test-2") === c;
   },
   isEqual() {
     return true;

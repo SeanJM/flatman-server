@@ -1,39 +1,33 @@
 function findPredicate(predicate) {
+  const found = [];
+
   function find(node) {
-    let t;
     if (predicate(node)) {
-      return node;
-    } else {
-      for (var i = 0, n = node.childNodes.length; i < n; i++) {
-        t = find(node.childNodes[i]);
-        if (t) {
-          return t;
-        }
-      }
+      found.push(node);
     }
-    return false;
+    for (var i = 0, n = node.childNodes.length; i < n; i++) {
+      find(node.childNodes[i]);
+    }
   }
 
-  return find(this.node);
+  this.node.childNodes.forEach(find);
+  return found;
 }
 
 function findStringSelector(selector) {
+  const found = [];
+
   function find(node) {
-    let t;
     if (node.is && node.is(selector)) {
-      return node;
-    } else {
-      for (var i = 0, n = node.childNodes.length; i < n; i++) {
-        t = find(node.childNodes[i]);
-        if (t) {
-          return t;
-        }
-      }
+      found.push(node);
     }
-    return false;
+    for (var i = 0, n = node.childNodes.length; i < n; i++) {
+      find(node.childNodes[i]);
+    }
   }
 
-  return find(this.node);
+  this.node.childNodes.forEach(find);
+  return found;
 }
 
 module.exports = function find(selector) {

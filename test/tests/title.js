@@ -5,7 +5,7 @@ module.exports = {
   this() {
     var a = el("HTML");
     a.title("test");
-    return a.refs.head.find("title")[0].childNodes[0] === "test";
+    return a.refs.head.find("title").childNodes[0] === "test";
   },
   isEqual() {
     return true;

@@ -119,6 +119,7 @@ El.prototype.closest       = require("./El/El.closest");
 El.prototype.disable       = require("./El/El.disable");
 El.prototype.enable        = require("./El/El.enable");
 El.prototype.find          = require("./El/El.find");
+El.prototype.findAll       = require("./El/El.findAll");
 El.prototype.getNode       = require("./El/El.getNode");
 El.prototype.insertBefore  = require("./El/El.insertBefore");
 El.prototype.is            = require("./El/El.is");

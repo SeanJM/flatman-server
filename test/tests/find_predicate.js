@@ -17,7 +17,7 @@ module.exports = {
       b.append([ c ])
     ]);
 
-    return a.find(x => x.attributes.className[0] === "test-2")[0] === c.getNode();
+    return a.find(x => x.attributes.className[0] === "test-2") === c.getNode();
   },
   isEqual() {
     return true;
