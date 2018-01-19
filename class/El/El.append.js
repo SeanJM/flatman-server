@@ -1,4 +1,5 @@
 const setRefs = require("../../tools/setRefs");
+const mount   = require("../../tools/mount");
 
 module.exports = function append(childNodes) {
   [].concat(childNodes).forEach(child => {
@@ -10,6 +11,7 @@ module.exports = function append(childNodes) {
       setRefs.call(this, child);
       node.parentNode = this;
       this.childNodes.push(node);
+      mount(child);
     }
   });
 

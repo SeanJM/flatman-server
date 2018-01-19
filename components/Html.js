@@ -17,11 +17,11 @@ el.create("HTML", {
       isMobile : props.isMobile
     };
 
-    this.on("mount", props.onMount);
+    this.on("totml", props.onToHtml);
   },
 
-  onMount() {
-    this.trigger("mount");
+  onToHtml() {
+    this.trigger("totml");
 
     if (this.props.isMobile) {
       this.refs.head.append([
@@ -89,7 +89,7 @@ el.create("HTML", {
 
   render() {
     return el("html", {
-      onMount : () => this.onMount()
+      onToHtml : () => this.onToHtml()
     }, [
       el("head", {
         ref: "head"

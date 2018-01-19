@@ -115,7 +115,7 @@ module.exports = function toHtml($depth) {
   const s             = [];
   let c               = this.childNodes;
 
-  this.trigger("mount");
+  this.trigger("tohtml");
   [].push.apply(s, [ tab, "<", this.tagName, getAttr(this) ]);
 
   if (this.tagName === "comment") {
