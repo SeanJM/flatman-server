@@ -11,7 +11,7 @@ module.exports = function append(childNodes) {
       setRefs.call(this, child);
       node.parentNode = this;
       this.childNodes.push(node);
-      mount(child);
+      mount(node);
     }
   });
 

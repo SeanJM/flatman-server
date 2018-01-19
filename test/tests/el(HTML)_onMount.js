@@ -1,13 +1,26 @@
 const el = require("../../index");
 
 module.exports = {
-  name : "el(\'HTML\') closest body",
+  name : "el(\'HTML\') onMount",
   this() {
-    let a = false;
+    let a = [ false, false ];
+
+    el.create("t", {
+      render() {
+        return el("div", {
+          class   : "t",
+          onMount : () => {
+            a[1] = true;
+          }
+        });
+      }
+    });
+
     el("HTML", [
+      el("t"),
       el("div", {
         onMount: () => {
-          a = true;
+          a[0] = true;
         }
       }),
       el("script", {
@@ -19,7 +32,7 @@ module.exports = {
       })
     ]).toHtml();
 
-    return a;
+    return a[0] === a[1];
   },
   isEqual() {
     return true;
