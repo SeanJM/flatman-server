@@ -1,5 +1,10 @@
 module.exports = function previous() {
   const siblings = this.parentNode ? this.parentNode.childNodes : [];
-  const index    = siblings.indexOf(this);
-  return index > -1 ? siblings[index - 1] : null;
+  let index      = siblings.indexOf(this) - 1;
+
+  while (index > 0 && siblings[index].tagName === "comment") {
+    index -= 1;
+  }
+
+  return siblings[index] || null;
 };
