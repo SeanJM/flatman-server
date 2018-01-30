@@ -69,7 +69,6 @@ function elementPathIs(selectors) {
       for (var x = selectors.length - 1; x >= 0; x--) {
         // Adjacent selector
         if (selectors[x - 1] && selectors[x - 1].selector === "+") {
-          console.log(parents[i].previous());
           t[1] = (
             elementIs(parents[i].previous(), selectors[x - 2]) &&
             elementIs(parents[i], selectors[x])
