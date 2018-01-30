@@ -1,3 +1,9 @@
 module.exports = function parent() {
-  return this.parentNode;
+  let parentNode = this.parentNode;
+
+  while (parentNode && parentNode.tagName === "fragment") {
+    parentNode = parentNode.parentNode;
+  }
+
+  return parentNode;
 };
