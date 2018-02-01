@@ -114,6 +114,7 @@ El.prototype.after         = require("./El/El.after");
 El.prototype.append        = require("./El/El.append");
 El.prototype.appendTo      = require("./El/El.appendTo");
 El.prototype.attr          = require("./El/El.attr");
+El.prototype.before        = require("./El/El.before");
 El.prototype.children      = require("./El/El.children");
 El.prototype.closest       = require("./El/El.closest");
 El.prototype.disable       = require("./El/El.disable");
