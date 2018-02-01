@@ -50,71 +50,28 @@ function elementIs(element, props) {
 }
 
 function elementPathIs(selectors) {
-  let parents = [];
-  let p       = this.parent();
-  let t       = [];
+  let target  = this;
+  const n     = selectors.length - 1;
 
-  if (this.tagName !== "fragment") {
-    parents.push(this);
-  }
-
-  while (p) {
-    parents.unshift(p);
-    p = p.parent();
-  }
-
-  for (var i = parents.length - 1; i >= 0; i--) {
-    t[0] = selectors.length;
-    if (t[0]) {
-      for (var x = selectors.length - 1; x >= 0; x--) {
-        // Adjacent selector
-        if (selectors[x - 1] && selectors[x - 1].selector === "+") {
-          t[1] = (
-            elementIs(parents[i].previous(), selectors[x - 2]) &&
-            elementIs(parents[i], selectors[x])
-          );
-          if (t[1]) {
-            selectors.splice(x - 2, 3);
-            x = 0;
-          } else {
-            x -= 3;
-          }
-        } else if (selectors[x - 1] && selectors[x - 1].selector === "~") {
-          // General sibling combinator
-          t[1] = (
-            parents[i].previousNodes()
-              .map(element => element.tagName && elementIs(element, selectors[x - 2]))
-              .filter(a => a)
-              .length &&
-            elementIs(parents[i], selectors[x])
-          );
-          if (t[1]) {
-            selectors.splice(x - 2, 3);
-            x = 0;
-          } else {
-            x -= 3;
-          }
-        } else if (selectors[x - 1] && selectors[x - 1].selector === ">") {
-          // Direct descendent
-          t[1] = (
-            elementIs(parents[i].parent(), selectors[x - 2]) &&
-            elementIs(parents[i], selectors[x])
-          );
-          if (t[1]) {
-            selectors.splice(x - 2, 3);
-            x = 0;
-          } else {
-            x -= 3;
-          }
-        } else if (elementIs(parents[i], selectors[x])) {
-          selectors.pop();
-          x = 0;
-        }
-        // Fail when no selectors have been removed after the first check
-        if (i === parents.length - 1 && t[0] === selectors.length) {
-          return false;
-        }
-      }
+  for (var i = selectors.length - 1; i >= 0; i--) {
+    if (selectors[i].selector === "+") {
+      selectors.pop();
+      target = target && target.previous();
+    } else if (selectors[i].selector === "~") {
+      selectors.pop();
+      target = target && target
+        .siblings()
+        .filter(x => elementIs(x, selectors[i - 1]))[0];
+    } else if (selectors[i].selector === ">") {
+      selectors.pop();
+      target = target && target.parent();
+    } else if (elementIs(target, selectors[i])) {
+      selectors.pop();
+    } else if (target && i < n) {
+      target = target.parent();
+      i += 1;
+    } else if (i === n) {
+      return false;
     }
   }
 
