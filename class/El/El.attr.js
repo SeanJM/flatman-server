@@ -1,5 +1,16 @@
 const _ = require("lodash");
 
+function getClassName(value) {
+  const classList = [].concat(value);
+  let className = [];
+  for (var i = 0, n = classList.length; i < n; i++) {
+    if (classList[i]) {
+      className = className.concat(classList[i].split(" "));
+    }
+  }
+  return className;
+}
+
 function setAttribute(node, property, value) {
   if (typeof value === "string" && value === "") {
     value = null;
@@ -12,13 +23,7 @@ function setAttribute(node, property, value) {
   } else if (property.slice(0, 4) === "data") {
     node.attributes[_.kebabCase(property)] = value;
   } else if (property === "class" || property === "className") {
-    node.attributes.className = (
-      Array.isArray(value)
-        ? [].concat(value.map(a => a.split(" ")))
-        : typeof value === "string"
-          ? value.split(" ")
-          : []
-    );
+    node.attributes.className = getClassName(value);
   } else if (property === "style") {
     node.style(value);
   } else {
