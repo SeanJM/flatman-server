@@ -14,7 +14,7 @@ function setAttribute(node, property, value) {
   } else if (property === "class" || property === "className") {
     node.attributes.className = (
       Array.isArray(value)
-        ? value
+        ? [].concat(value.map(a => a.split(" ")))
         : typeof value === "string"
           ? value.split(" ")
           : []
