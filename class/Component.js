@@ -93,9 +93,7 @@ Component.create = function (name, obj) {
 
   obj = obj || {};
   for (var k in Component.prototype) {
-    if (!C.prototype[k]) {
-      C.prototype[k] = Component.prototype[k];
-    }
+    C.prototype[k] = Component.prototype[k];
   }
 
   if (obj.append) {
