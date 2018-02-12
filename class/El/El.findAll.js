@@ -21,8 +21,10 @@ function findStringSelector(selector) {
     if (node.is && node.is(selector)) {
       found.push(node);
     }
-    for (var i = 0, n = node.childNodes.length; i < n; i++) {
-      find(node.childNodes[i]);
+    if (node.childNodes) {
+      for (var i = 0, n = node.childNodes.length; i < n; i++) {
+        find(node.childNodes[i]);
+      }
     }
   }
 
