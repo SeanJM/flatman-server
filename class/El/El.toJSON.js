@@ -13,7 +13,9 @@ module.exports = function toJSON() {
   return {
     tagName    : this.tagName,
     key        : key,
-    attributes : this.attributes,
+    attributes : Object.assign({}, this.attributes, {
+      className : this.attributes.className.join(" ")
+    }),
     childNodes : this.childNodes
   };
 };
