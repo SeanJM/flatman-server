@@ -1,23 +1,5 @@
 const isObject  = require("../predicates/isObject");
-const parseHtml = require("flatman-parse");
 const Bus       = require("./Bus");
-
-function parseEach(element) {
-  if (typeof element === "string") {
-    return element.trim();
-  }
-
-  if (element.childNodes && element.childNodes.length) {
-    return new El(element.tagName, element.attributes, element.childNodes.map(parseEach));
-  }
-
-  return new El(element.tagName, element.attributes);
-}
-
-function parse(string) {
-  const parsed = parseHtml(string).map(parseEach);
-  return new El("root", parsed);
-}
 
 function El() {
   const a        = [ arguments[0], arguments[1], arguments[2] ];
@@ -92,23 +74,6 @@ El.prototype.toString = function () {
   return "[object HTML" + tagName + "Element]";
 };
 
-El.prototype.html = function (value) {
-  if (typeof value === "string") {
-    const parsed    = parse(value);
-    this.childNodes = parsed.childNodes;
-    return this;
-  } else {
-    return this
-      .children()
-      .map(child => (
-        child.toHtml
-          ? child.toHtml()
-          : child
-      ))
-      .join("\n");
-  }
-};
-
 El.prototype.addClass      = require("./El/El.addClass");
 El.prototype.after         = require("./El/El.after");
 El.prototype.append        = require("./El/El.append");
@@ -122,6 +87,7 @@ El.prototype.enable        = require("./El/El.enable");
 El.prototype.find          = require("./El/El.find");
 El.prototype.findAll       = require("./El/El.findAll");
 El.prototype.getNode       = require("./El/El.getNode");
+El.prototype.html          = require("./El/El.html")(El);
 El.prototype.insertBefore  = require("./El/El.insertBefore");
 El.prototype.is            = require("./El/El.is");
 El.prototype.parent        = require("./El/El.parent");
