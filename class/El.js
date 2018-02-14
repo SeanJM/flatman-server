@@ -138,6 +138,7 @@ El.prototype.style         = require("./El/El.style");
 El.prototype.text          = require("./El/El.text");
 El.prototype.toFile        = require("./El/El.toFile");
 El.prototype.toHtml        = require("./El/El.toHtml");
+El.prototype.toJSON        = require("./El/El.toJSON");
 
 El.__onCreate             = [];
 module.exports            = El;
