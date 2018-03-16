@@ -3,6 +3,7 @@ const fs = require("fs");
 
 const IS_HEAD_TAG = {
   link  : true,
+  meta  : true,
   title : true
 };
 
