@@ -15,7 +15,7 @@ el.create("HTML", {
       isMobile : props.isMobile
     };
 
-    this.on("totml", props.onToHtml);
+    this.on("tohtml", props.onToHtml);
   },
 
   onToHtml() {
