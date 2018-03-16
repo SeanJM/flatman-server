@@ -11,7 +11,7 @@ module.exports = {
 
     a.attr({ test : "test" });
 
-    return el.attr("class").split(" ").indexOf("test-test") > -1;
+    return a.attr("class").split(" ").indexOf("test-test") > -1;
   },
   isDeepEqual() {
     return true;

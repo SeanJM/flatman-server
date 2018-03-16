@@ -1,19 +1,16 @@
 const el = require("../tools/el");
 const fs = require("fs");
 
-const HEAD_TAGS = {
-  link : true,
-  meta : true
+const IS_HEAD_TAG = {
+  link  : true,
+  title : true
 };
 
 el.create("HTML", {
   constructor(props) {
     this.props = {
-      script : [],
-      head : [],
-      body : [],
-      favicon : [],
-      link : [],
+      favicon  : [],
+      link     : [],
       isMobile : props.isMobile
     };
 
@@ -21,7 +18,7 @@ el.create("HTML", {
   },
 
   onToHtml() {
-    this.trigger("totml");
+    this.trigger("tohtml");
 
     if (this.props.isMobile) {
       this.refs.head.append([
@@ -36,16 +33,6 @@ el.create("HTML", {
         })
       ]);
     }
-
-    this.refs.body.append([].concat(
-      this.props.body,
-      this.props.script
-    ));
-
-    this.refs.head.append([].concat(
-      this.props.favicon,
-      this.props.link
-    ));
   },
 
   getRefs(child) {
@@ -55,16 +42,15 @@ el.create("HTML", {
   },
 
   append(children) {
-    children.forEach(child => {
-      if (HEAD_TAGS[child.tagName]) {
-        this.props.link.push(child);
-      } else if (child.tagName === "script") {
-        this.props.script.push(child);
+    let i   = -1;
+    const n = children.length;
+    while (++i < n) {
+      if (IS_HEAD_TAG[children[i].tagName]) {
+        this.refs.head.append(children[i]);
       } else {
-        this.getRefs(child);
-        this.props.body.push(child);
+        this.refs.body.append(children[i]);
       }
-    });
+    }
   },
 
   toHtml() {
@@ -76,7 +62,9 @@ el.create("HTML", {
 
   title(value) {
     if (!this.props.title) {
-      this.refs.head.append([ el("title", { ref: "title" }, [ value ]) ]);
+      this.refs.head.append([
+        el("title", { ref: "title" }, [ value ])
+      ]);
     } else {
       this.refs.title.html(value);
     }
