@@ -23,6 +23,10 @@ el.onCreate = function (callback) {
   El.__onCreate.push(callback);
 };
 
+el.isComponent = function (name) {
+  return !!Component.lib[name];
+};
+
 el.fn = function (name, callback) {
   El.prototype[name]        = callback;
   Component.prototype[name] = Component.__extend(name);
