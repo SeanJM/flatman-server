@@ -2,11 +2,12 @@ const _             = require("lodash");
 const commentToHtml = require("../../tools/commentToHtml");
 
 const OPEN = [
-  "input",
-  "img",
-  "meta",
   "hr",
-  "link"
+  "img",
+  "input",
+  "link",
+  "meta",
+  "xml",
 ];
 
 const SELF_CLOSING = [
