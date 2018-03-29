@@ -11,6 +11,7 @@ const OPEN = [
 
 const SELF_CLOSING = [
   "circle",
+  "line",
   "ellipsis",
   "path",
   "polygon",
