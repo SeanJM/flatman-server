@@ -74,6 +74,8 @@ El.prototype.toString = function () {
   return "[object HTML" + tagName + "Element]";
 };
 
+El.prototype.clone = require("./El/El.clone")(El);
+
 El.prototype.addClass      = require("./El/El.addClass");
 El.prototype.after         = require("./El/El.after");
 El.prototype.append        = require("./El/El.append");
