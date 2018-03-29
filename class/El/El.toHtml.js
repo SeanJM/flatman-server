@@ -6,8 +6,7 @@ const OPEN = [
   "img",
   "input",
   "link",
-  "meta",
-  "xml",
+  "meta"
 ];
 
 const SELF_CLOSING = [
@@ -120,6 +119,10 @@ module.exports = function toHtml($depth) {
   this.trigger("tohtml");
   [].push.apply(s, [ tab, "<", this.tagName, getAttr(this) ]);
 
+  if (this.tagName === "xml") {
+    s.splice(2, 0, "?");
+  }
+
   if (this.tagName === "comment") {
     return commentToHtml(this, depth);
   } else if (this.tagName === "fragment") {
@@ -135,6 +138,8 @@ module.exports = function toHtml($depth) {
     s.push("/>");
   } else if (isOpen) {
     s.push(">");
+  } else if (this.tagName === "xml") {
+    s.push("?>");
   } else {
     s.push(">");
     if (
