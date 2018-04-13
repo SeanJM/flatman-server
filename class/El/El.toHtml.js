@@ -43,7 +43,9 @@ function sortAttributes(a, b) {
 function toHtmlStyle(value) {
   var styles = [];
   for (var k in value) {
-    styles.push(_.kebabCase(k) + ": " + value[k]);
+    if (value[k]) {
+      styles.push(_.kebabCase(k) + ": " + value[k]);
+    }
   }
   return styles.join(";");
 }

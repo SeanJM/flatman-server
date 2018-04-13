@@ -27,7 +27,7 @@ function setStyle(property, value) {
   }
   if (TO_PIXEL.includes(property) && typeof value === "number") {
     this.attributes.style[property] = value + "px";
-  } else if (typeof value === "string" || typeof value === "number") {
+  } else {
     this.attributes.style[property] = value;
   }
 }
