@@ -43,7 +43,7 @@ function sortAttributes(a, b) {
 function toHtmlStyle(value) {
   var styles = [];
   for (var k in value) {
-    if (value[k]) {
+    if (typeof value[k] === "string") {
       styles.push(_.kebabCase(k) + ": " + value[k]);
     }
   }
