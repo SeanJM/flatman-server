@@ -9,6 +9,6 @@ module.exports = {
     return a.toHtml();
   },
   isEqual() {
-    return "<div>\n  this is a line\n  this is another line\n  this is a last line\n</div>\n";
+    return "<div>\n  this is a line\n  this is another line\n  this is a last line\n</div>";
   }
 };

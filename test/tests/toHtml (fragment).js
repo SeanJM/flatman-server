@@ -5,7 +5,7 @@ const str  = [
   "  <div></div>",
   "  <div></div>",
   "  <div></div>",
-  "</div>\n"
+  "</div>"
 ].join("\n");
 
 module.exports = {

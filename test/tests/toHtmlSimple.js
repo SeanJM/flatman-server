@@ -7,6 +7,6 @@ module.exports = {
     return a.toHtml();
   },
   isEqual() {
-    return "<span></span>\n";
+    return "<span></span>";
   }
 };

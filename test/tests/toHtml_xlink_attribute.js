@@ -8,6 +8,6 @@ module.exports = {
     }).toHtml();
   },
   isEqual() {
-    return "<use xlink:href=\"#id\"></use>\n";
+    return "<use xlink:href=\"#id\"></use>";
   }
 };

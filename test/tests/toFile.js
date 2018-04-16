@@ -23,7 +23,6 @@ module.exports = {
         el("div", { className : "div-3-2" })
       ])
     ]);
-
     return a.toHtml();
   },
   isEqual() {

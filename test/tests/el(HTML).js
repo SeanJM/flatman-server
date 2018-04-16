@@ -15,7 +15,6 @@ module.exports = {
         href : "style.css"
       })
     ]);
-
     return a.toHtml();
   },
   isEqual() {

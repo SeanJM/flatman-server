@@ -26,6 +26,14 @@ const ATTR_LIST = [
   "style"
 ];
 
+const INLINE = {
+  span   : true,
+  b      : true,
+  strong : true,
+  i      : true,
+  em     : true,
+};
+
 function sortAttributes(a, b) {
   const aI = ATTR_LIST.indexOf(a);
   const bI = ATTR_LIST.indexOf(b);
@@ -109,30 +117,40 @@ function getAttr(node) {
   return "";
 }
 
+function isTextNode(node) {
+  return typeof node === "number" || typeof node === "string";
+}
+
 module.exports = function toHtml($depth) {
-  const depth         = $depth || 0;
-  const tab           = new Array(depth + 1).join("  ");
-  const tabN          = new Array(depth + 2).join("  ");
-  const isSelfClosing = SELF_CLOSING.indexOf(this.tagName) > -1;
-  const isOpen        = OPEN.indexOf(this.tagName) > -1;
-  const s             = [];
-  let c               = this.childNodes;
+  const depth          = $depth || 0;
+  const tab            = new Array(depth + 1).join("  ");
+  const tabN           = new Array(depth + 2).join("  ");
+  const isSelfClosing  = SELF_CLOSING.indexOf(this.tagName) > -1;
+  const isOpen         = OPEN.indexOf(this.tagName) > -1;
+  const s              = [];
+  const parentIsInline = this.parentNode && !INLINE[this.parentNode.tagName];
+  let childNodes       = this.childNodes;
+  let hasText          = childNodes.filter(isTextNode).length > 0;
 
   this.trigger("tohtml");
-  [].push.apply(s, [ tab, "<", this.tagName, getAttr(this) ]);
+  if (parentIsInline) {
+    s.push(tab);
+  }
 
   if (this.tagName === "xml") {
-    s.splice(2, 0, "?");
+    s.push("<?", this.tagName, getAttr(this));
+  } else {
+    s.push("<", this.tagName, getAttr(this));
   }
 
   if (this.tagName === "comment") {
     return commentToHtml(this, depth);
   } else if (this.tagName === "fragment") {
     return (
-      c
+      childNodes
         .map(a => a.toHtml
           ? a.toHtml(depth)
-          : tab + a + (c.length > 1 ? "\n": "")
+          : tab + a + (childNodes.length > 1 ? "\n": "")
         )
         .join("")
     );
@@ -145,30 +163,38 @@ module.exports = function toHtml($depth) {
   } else {
     s.push(">");
     if (
-      c.length === 1 &&
-      typeof c[0] === "string" ||
-      typeof c[0] === "number"
+      childNodes.length === 1 &&
+      isTextNode(childNodes[0])
     ) {
-      c = c[0].toString().split("\n");
+      childNodes = childNodes[0].toString().split("\n");
       s.push(
-        c.length > 1
-          ? "\n" + c.map(a => tabN + a + "\n").join("") + tab
-          : c[0]
+        childNodes.length > 1
+          ? "\n" + childNodes.map(a => tabN + a + "\n").join("") + tab
+          : childNodes[0]
       );
-    } else if (c.length) {
-      s.push(
-        "\n",
-        c
-        .map(a => (
-          a.toHtml
-            ? a.toHtml(depth + 1)
-            : tabN + a + "\n"
-        )).join(""),
-        tab
-      );
+    } else if (childNodes.length) {
+      if (!INLINE[this.tagName]) {
+        s.push("\n");
+      }
+
+      childNodes.forEach(function (node, i) {
+        if (node.toHtml) {
+          s.push(node.toHtml(hasText ? 0 : depth + 1));
+        } else {
+          if (i === 0) {
+            s.push(tabN, node);
+          } else {
+            s.push(node);
+          }
+        }
+      });
+
+      if (!INLINE[this.tagName]) {
+        s.push(tab);
+      }
     }
     s.push("</" + this.tagName + ">");
   }
 
-  return s.join("") + "\n";
+  return s.join("") + (parentIsInline ? "\n" : "");
 };

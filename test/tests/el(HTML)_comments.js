@@ -8,11 +8,10 @@ const value = `<!DOCTYPE HTML>
   <body>
     <!--comment-->
   </body>
-</html>
-`;
+</html>`;
 
 module.exports = {
-  name : "el(\'HTML\')",
+  name : "el(\'HTML\') with comments",
   this() {
     var c = el().html("<!--comment-->").children()[0];
     var a = el("HTML", [ c ]);

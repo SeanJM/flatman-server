@@ -9,6 +9,6 @@ module.exports = {
     }).toHtml();
   },
   isEqual() {
-    return "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+    return "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
   }
 };
