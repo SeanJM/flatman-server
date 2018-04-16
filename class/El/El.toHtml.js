@@ -1,13 +1,13 @@
 const _             = require("lodash");
 const commentToHtml = require("../../tools/commentToHtml");
 
-const OPEN = [
-  "hr",
-  "img",
-  "input",
-  "link",
-  "meta"
-];
+const OPEN = {
+  "hr"    : true,
+  "img"   : true,
+  "input" : true,
+  "link"  : true,
+  "meta"  : true
+};
 
 const SELF_CLOSING = [
   "circle",
@@ -121,19 +121,41 @@ function isTextNode(node) {
   return typeof node === "number" || typeof node === "string";
 }
 
+function fragmentToHtml(element, depth) {
+  let childNodes      = element.childNodes;
+  const tab           = new Array(depth + 1).join("  ");
+  const parentIsBlock = this.parentNode && !INLINE[this.parentNode.tagName];
+  const hasText       = childNodes.filter(isTextNode).length;
+  const length        = childNodes.length;
+  return childNodes
+    .map(function (node, i) {
+      if (node.toHtml) {
+        return node.toHtml(hasText ? 0 : depth);
+      }
+      return (
+        (i === 0 ? tab : "") +
+        node +
+        (parentIsBlock && length === 1 || length - 1 === i ? "\n": "")
+      );
+    })
+    .join("");
+}
+
 module.exports = function toHtml($depth) {
   const depth          = $depth || 0;
   const tab            = new Array(depth + 1).join("  ");
   const tabN           = new Array(depth + 2).join("  ");
   const isSelfClosing  = SELF_CLOSING.indexOf(this.tagName) > -1;
-  const isOpen         = OPEN.indexOf(this.tagName) > -1;
+  const isOpen         = OPEN[this.tagName];
   const s              = [];
-  const parentIsInline = this.parentNode && !INLINE[this.parentNode.tagName];
+  const parentIsBlock  = this.parentNode && !INLINE[this.parentNode.tagName];
+  const siblings       = this.siblings();
+  const hasTextSibling = siblings && siblings.filter(isTextNode).length > 0;
+  const isLast         = siblings ? siblings.indexOf(this) === siblings.length - 1 : true;
   let childNodes       = this.childNodes;
-  let hasText          = childNodes.filter(isTextNode).length > 0;
 
   this.trigger("tohtml");
-  if (parentIsInline) {
+  if (parentIsBlock) {
     s.push(tab);
   }
 
@@ -146,14 +168,7 @@ module.exports = function toHtml($depth) {
   if (this.tagName === "comment") {
     return commentToHtml(this, depth);
   } else if (this.tagName === "fragment") {
-    return (
-      childNodes
-        .map(a => a.toHtml
-          ? a.toHtml(depth)
-          : tab + a + (childNodes.length > 1 ? "\n": "")
-        )
-        .join("")
-    );
+    return fragmentToHtml(this, depth);
   } else if (isSelfClosing) {
     s.push("/>");
   } else if (isOpen) {
@@ -179,10 +194,12 @@ module.exports = function toHtml($depth) {
 
       childNodes.forEach(function (node, i) {
         if (node.toHtml) {
-          s.push(node.toHtml(hasText ? 0 : depth + 1));
+          s.push(node.toHtml(depth + 1));
         } else {
           if (i === 0) {
             s.push(tabN, node);
+          } else if (!INLINE[this.tagName] && i === childNodes.length - 1) {
+            s.push(node, "\n");
           } else {
             s.push(node);
           }
@@ -196,5 +213,5 @@ module.exports = function toHtml($depth) {
     s.push("</" + this.tagName + ">");
   }
 
-  return s.join("") + (parentIsInline ? "\n" : "");
+  return s.join("") + (parentIsBlock && (!hasTextSibling || isLast) ? "\n" : "");
 };

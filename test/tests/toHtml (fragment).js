@@ -1,12 +1,5 @@
 const el = require("../../index");
-const str  = [
-  "<div>",
-  "  string",
-  "  <div></div>",
-  "  <div></div>",
-  "  <div></div>",
-  "</div>"
-].join("\n");
+const str  = "<div>\n  string<div></div><div></div><div></div>\n</div>";
 
 module.exports = {
   name : "toHtml() (fragment)",
@@ -19,7 +12,6 @@ module.exports = {
         el("div")
       ])
     ]);
-
     return a.toHtml();
   },
   isEqual() {
