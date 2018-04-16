@@ -1,7 +1,7 @@
 const _             = require("lodash");
 const commentToHtml = require("../../tools/commentToHtml");
 
-const OPEN = {
+const isOpen = {
   "hr"    : true,
   "img"   : true,
   "input" : true,
@@ -9,24 +9,16 @@ const OPEN = {
   "meta"  : true
 };
 
-const SELF_CLOSING = [
-  "circle",
-  "line",
-  "ellipsis",
-  "path",
-  "polygon",
-  "rect"
-];
+const isSelfClosing = {
+  "circle"   : true,
+  "line"     : true,
+  "ellipsis" : true,
+  "path"     : true,
+  "polygon"  : true,
+  "rect"     : true
+};
 
-const ATTR_LIST = [
-  "id",
-  "className",
-  "name",
-  "title",
-  "style"
-];
-
-const INLINE = {
+const isInline = {
   span   : true,
   b      : true,
   strong : true,
@@ -34,9 +26,17 @@ const INLINE = {
   em     : true,
 };
 
+const attrList = [
+  "id",
+  "className",
+  "name",
+  "title",
+  "style"
+];
+
 function sortAttributes(a, b) {
-  const aI = ATTR_LIST.indexOf(a);
-  const bI = ATTR_LIST.indexOf(b);
+  const aI = attrList.indexOf(a);
+  const bI = attrList.indexOf(b);
 
   if (aI > -1 && bI > -1) {
     return aI - bI;
@@ -124,7 +124,7 @@ function isTextNode(node) {
 function fragmentToHtml(element, depth) {
   let childNodes      = element.childNodes;
   const tab           = new Array(depth + 1).join("  ");
-  const parentIsBlock = this.parentNode && !INLINE[this.parentNode.tagName];
+  const parentIsBlock = this.parentNode && !isInline[this.parentNode.tagName];
   const hasText       = childNodes.filter(isTextNode).length;
   const length        = childNodes.length;
   return childNodes
@@ -145,10 +145,8 @@ module.exports = function toHtml($depth) {
   const depth          = $depth || 0;
   const tab            = new Array(depth + 1).join("  ");
   const tabN           = new Array(depth + 2).join("  ");
-  const isSelfClosing  = SELF_CLOSING.indexOf(this.tagName) > -1;
-  const isOpen         = OPEN[this.tagName];
   const s              = [];
-  const parentIsBlock  = this.parentNode && !INLINE[this.parentNode.tagName];
+  const parentIsBlock  = this.parentNode && !isInline[this.parentNode.tagName];
   const siblings       = this.siblings();
   const hasTextSibling = siblings && siblings.filter(isTextNode).length > 0;
   const isLast         = siblings ? siblings.indexOf(this) === siblings.length - 1 : true;
@@ -169,9 +167,9 @@ module.exports = function toHtml($depth) {
     return commentToHtml(this, depth);
   } else if (this.tagName === "fragment") {
     return fragmentToHtml(this, depth);
-  } else if (isSelfClosing) {
+  } else if (isSelfClosing[this.tagName]) {
     s.push("/>");
-  } else if (isOpen) {
+  } else if (isOpen[this.tagName]) {
     s.push(">");
   } else if (this.tagName === "xml") {
     s.push("?>");
@@ -188,7 +186,7 @@ module.exports = function toHtml($depth) {
           : childNodes[0]
       );
     } else if (childNodes.length) {
-      if (!INLINE[this.tagName]) {
+      if (!isInline[this.tagName]) {
         s.push("\n");
       }
 
@@ -198,7 +196,7 @@ module.exports = function toHtml($depth) {
         } else {
           if (i === 0) {
             s.push(tabN, node);
-          } else if (!INLINE[this.tagName] && i === childNodes.length - 1) {
+          } else if (!isInline[this.tagName] && i === childNodes.length - 1) {
             s.push(node, "\n");
           } else {
             s.push(node);
@@ -206,7 +204,7 @@ module.exports = function toHtml($depth) {
         }
       });
 
-      if (!INLINE[this.tagName]) {
+      if (!isInline[this.tagName]) {
         s.push(tab);
       }
     }
