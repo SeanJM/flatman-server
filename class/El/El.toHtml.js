@@ -149,11 +149,12 @@ module.exports = function toHtml($depth) {
   const parentIsBlock  = this.parentNode && !isInline[this.parentNode.tagName];
   const siblings       = this.siblings();
   const hasTextSibling = siblings && siblings.filter(isTextNode).length > 0;
+  const isFirst        = siblings ? siblings.indexOf(this) === 0 : true;
   const isLast         = siblings ? siblings.indexOf(this) === siblings.length - 1 : true;
   let childNodes       = this.childNodes;
 
   this.trigger("tohtml");
-  if (parentIsBlock) {
+  if (parentIsBlock && (hasTextSibling && isFirst || !hasTextSibling)) {
     s.push(tab);
   }
 

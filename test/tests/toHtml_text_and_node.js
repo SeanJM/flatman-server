@@ -7,9 +7,14 @@ module.exports = {
       el("strong", [ "text" ]),
       "text"
     ]);
-    return a.toHtml();
+    const b = el([
+      "text",
+      el("strong", [ "text" ]),
+    ]);
+
+    return [ a.toHtml(), b.toHtml() ];
   },
-  isEqual() {
-    return "<div>\n  <strong>text</strong>text\n</div>";
+  isDeepEqual() {
+    return [ "<div>\n  <strong>text</strong>text\n</div>", "<div>\n  text<strong>text</strong>\n</div>" ];
   }
 };
