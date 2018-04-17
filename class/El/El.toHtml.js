@@ -190,7 +190,7 @@ module.exports = function toHtml($depth) {
         s.push("\n");
       }
 
-      childNodes.forEach(function (node, i) {
+      childNodes.forEach((node, i) => {
         if (node.toHtml) {
           s.push(node.toHtml(depth + 1));
         } else {
