@@ -460,7 +460,6 @@ module.exports = tinyTest(function (test, load) {
     }, [
       el("div"),
     ]);
-    console.log(a.toHtml());
     return a.toHtml();
   })
     .isEqual([

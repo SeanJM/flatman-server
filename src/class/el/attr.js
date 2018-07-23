@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { kebabCase } from "@tools";
 
 function getClassName(value) {
   const classList = [].concat(value);
@@ -21,7 +21,8 @@ function setAttribute(node, property, value) {
   } else if (["tabIndex", "tabindex"].indexOf(property) > -1) {
     node.attributes["tabIndex"] = value;
   } else if (property.slice(0, 4) === "data") {
-    node.attributes[_.kebabCase(property)] = value;
+    console.log(property);
+    node.attributes[kebabCase(property)] = value;
   } else if (property === "class" || property === "className") {
     node.attributes.className = getClassName(value);
   } else if (property === "style") {
