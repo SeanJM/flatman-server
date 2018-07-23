@@ -177,9 +177,10 @@ module.exports = tinyTest(function (test, load) {
 
     d.append(a);
     d.append(b);
+    d.append(c);
     b.before(c);
 
-    return b.previous() === c;
+    return c.previous() === b;
   }).isEqual(true);
 
   test("children()", function () {
