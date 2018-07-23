@@ -1,5 +1,4 @@
-import _ from "lodash";
-import { commentToHtml } from "@tools";
+import { commentToHtml, kebabCase } from "@tools";
 
 const isOpen = {
   "hr": true,
@@ -52,7 +51,7 @@ function toHtmlStyle(value) {
   var styles = [];
   for (var k in value) {
     if (typeof value[k] === "string" || typeof value[k] === "number") {
-      styles.push(_.kebabCase(k) + ": " + value[k]);
+      styles.push(kebabCase(k) + ": " + value[k]);
     }
   }
   return styles.join(";");
@@ -83,14 +82,14 @@ function toHtmlAttribute(name, value) {
   } else if (name === "tabindex") {
     return `tabIndex="${value}"`;
   } else if (name.substr(0, 4) === "data") {
-    return `${_.kebabCase(name)}="${value}"`;
+    return `${kebabCase(name)}="${value}"`;
   } else if (name === "viewBox") {
     return `viewBox="${value}"`;
   } else if (name.indexOf(":") !== -1) {
     return `${name}="${value}"`;
   }
   if (value && value.length) {
-    return `${_.kebabCase(name)}="${value}"`;
+    return `${kebabCase(name)}="${value}"`;
   }
   return "";
 }

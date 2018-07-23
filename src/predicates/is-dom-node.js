@@ -1,3 +1,3 @@
 export function isDomNode(x) {
-  return x && typeof x.constructor && x.constructor.name === "DomNode";
+  return !!(x && typeof x.toHtml === "function");
 }

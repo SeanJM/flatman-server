@@ -1,9 +1,12 @@
 import "source-map-support/register";
 import tinyTest from "tiny-test";
-import el, { Component } from "../src/index";
+import el, { Component } from "../src";
 import { Html } from "../src/components";
 import fs from "fs";
 import path from "path";
+import toHtmlTest from "./to-html-test";
+import isTest from "./is-test";
+import containsFindTest from "./contains-find-test";
 
 module.exports = tinyTest(function (test, load) {
   class MyComponent extends Component {
@@ -177,9 +180,10 @@ module.exports = tinyTest(function (test, load) {
 
     d.append(a);
     d.append(b);
+    d.append(c);
     b.before(c);
 
-    return b.previous() === c;
+    return c.previous() === b;
   }).isEqual(true);
 
   test("children()", function () {
@@ -453,301 +457,34 @@ module.exports = tinyTest(function (test, load) {
   ].join("\n"));
 
   test("el(Html)", function () {
-    const a = el(Html, [
+    const a = el(Html, {
+      scripts: "test.js",
+      styles: "style.css"
+    }, [
       el("div"),
-      el("script", {
-        src: "test.js"
-      }),
-      el("link", {
-        rel: "stylesheet",
-        href: "style.css"
-      })
     ]);
     return a.toHtml();
   })
-    .isEqual(fs.readFileSync(
-      path.resolve("test/assets/htmlComponent.html"),
-      "utf8"
-    ));
-
-  test("find() (with string and undefined)", function () {
-    const a = el();
-    const b = el({ class: "test" });
-    a.append([b, undefined, "string"]);
-    return a.find(".test") === b;
-  }).isEqual(true);
-
-  test("find() (component)", function () {
-    class E extends Component {
-      render(props) {
-        return el({ className: props.className });
-      }
-    }
-
-    const a = el("div");
-    const b = el("div", { className: "test" });
-    const c = el(E, { className: "test-2" });
-
-    a.append([
-      b.append([c])
-    ]);
-
-    return (
-      a.find(".test-2") === c.getNode() &&
-      a.find(".test-3") === false
-    );
-  }).isEqual(true);
-
-  test("find() (nested)", function () {
-    const a = el();
-    const b = el({ className: "test" });
-    const c = el({ className: "test-2" });
-
-    a.append([
-      b.append([c])
-    ]);
-
-    return a.find(".test .test-2") === c;
-  }).isEqual(true);
-
-  test("find() (predicate)", function () {
-    class D extends Component {
-      render(props) {
-        return el({ className: props.className });
-      }
-    }
-
-    const a = el();
-    const b = el({ className: "test" });
-    const c = el(D, { className: "test-2" });
-
-    a.append([
-      b.append([c])
-    ]);
-
-    return a.find(x => x.attributes.className[0] === "test-2") === c.getNode();
-  }).isEqual(true);
-
-  test("find()", function () {
-    const a = el();
-    const b = el({ class: "test" });
-    a.append([b]);
-    return a.find(".test") === b && !a.find(".nothing");
-  }).isEqual(true);
-
-  test("findAll()", function () {
-    const a = el();
-
-    const b = [
-      el({ class: "test" }),
-      el({ class: "test" }),
-      el({ class: "test-2" })
-    ];
-
-    const c = [
-      el({ class: "test" }),
-      el({ class: "test" }),
-      el({ class: "test-3" })
-    ];
-
-    let d;
-
-    a.append(b[0]);
-    b[1].append(c[0]);
-
-    b[0].append(b[1]);
-    c[0].append(c[1]);
-
-    d = a.findAll(".test");
-    return d.length === 4;
-  }).isEqual(true);
+    .isEqual([
+      "<!DOCTYPE HTML>",
+      "<html>",
+      "  <head>",
+      "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
+      "    <meta charset=\"UTF-8\">",
+      "    <script src=\"test.js\"></script>",
+      "    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">",
+      "  </head>",
+      "  <body>",
+      "    <div></div>",
+      "  </body>",
+      "</html>"
+    ].join("\n"));
 
   test("html()", function () {
     const a = el("div");
     a.html("<span></span>");
     return [a.children()[0].tagName, a.html()];
   }).isDeepEqual(["span", "<span></span>\n"]);
-
-  test("is() (.a + .b div)", function () {
-    const a = el("table", {
-      style: {
-        fontFamily: "Arial"
-      },
-      class: "t_p"
-    });
-
-    const b = el("table", {
-      style: {
-        fontFamily: "Arial"
-      },
-      class: "t_p"
-    });
-
-    const c = el("td");
-
-    el([
-      a,
-      b.append(
-        el("tr", [c])
-      ),
-      el()
-    ]);
-
-    return (
-      c.is(".t_p + .t_p td") &&
-      !b.is(".t_p + .t_p td")
-    );
-  }).isEqual(true);
-
-  test("is() (.a div + div)", function () {
-    const a = el();
-    const b = el();
-    const c = el("table");
-    el({ class: "a" }, [a, b.append(c)]);
-    return (
-      b.is(".a div + div") &&
-      !b.is(".a") &&
-      !a.is(".a div + div") &&
-      !c.is(".a div + div")
-    );
-  }).isEqual(true);
-
-  test("is() (.a.b)", function () {
-    const a = el({ class: "a b" });
-    const b = el({ class: "b" });
-    return a.is(".a.b") && !b.is(".a.b");
-  }).isEqual(true);
-
-  test("is() (.class1.class2)", function () {
-    const a = el({ class: "class1 class2" });
-    return (
-      a.is(".class1.class2") &&
-      a.is(".class2.class1") &&
-      a.is(".class2") &&
-      a.is(".class1")
-    );
-  }).isEqual(true);
-
-  test("is() (.parent .child-2)", function () {
-    const a = el({ class: "parent" });
-    const b = el({ class: "child-1" });
-    const c = el({ class: "child-2" });
-    a.append(b.append(c));
-    return c.is(".parent .child-2");
-  }).isEqual(() => true);
-
-  test("is() (.parent .deep)", function () {
-    const a = el({ class: "deep" });
-    const p = el({ class: "parent" });
-    p.append(el().append([el(), el().append(el().append(a))]));
-    return a.is(".parent .deep");
-  }).isEqual(true);
-
-  test("is() (.parent > div)", function () {
-    const a = el();
-    const b = el("table");
-    const c = el({ class: "test" });
-    el({ class: "parent" }, [a, b, c]);
-    return (
-      a.is(".parent > div") &&
-      b.is(".parent > table") &&
-      c.is(".parent > .test")
-    );
-  }).isEqual(true);
-
-  test("is() (+)", function () {
-    const a = el("html", {
-      style: {},
-      class: "",
-      disabled: null,
-      name: null,
-      xmlns: "http://www.w3.org/1999/xhtml"
-    });
-    return a.is("+");
-  }).isEqual(false);
-
-  test("is() (div + div + div)", function () {
-    const a = el();
-    const b = el();
-    const c = el();
-    const d = el();
-    d.append([a, b, c]);
-    return c.is("div + div + div");
-  }).isEqual(true);
-
-  test("is() (div + div) with comment", function () {
-    const a = el();
-    const b = el();
-    el([a, el("comment", ["a comment"]), b]);
-    return b.is("div + div");
-  }).isEqual(true);
-
-  test("is() (div + div) with fragment", function () {
-    const a = el();
-    const b = el();
-    const c = el("fragment", [a]);
-    const d = el("fragment", [b]);
-
-    el([c, el("comment", ["comment"]), d]);
-
-    return b.is("div + div");
-  }).isEqual(true);
-
-  test("is() (div + div)", function () {
-    const a = el();
-    const b = el();
-    el([a, b]);
-    return b.is("div + div");
-  }).isEqual(true);
-
-  test("is() (div ~ div)", function () {
-    const a = el();
-    const b = el("table");
-    const c = el();
-    el([a, b, c]);
-    return (
-      c.is("div ~ div") &&
-      !b.is("table + table") &&
-      b.is("div + table")
-    );
-  }).isEqual(true);
-
-  test("is() (invalid element)",
-    el("div").is("table"))
-    .isEqual(false);
-
-  test("is() (is string sibling)", function () {
-    const a = el();
-    const b = el();
-    a.append([b, "string"]);
-    return [
-      b.is("table + div"),
-      b.is("table ~ div"),
-      b.is("table > div")
-    ];
-  }).isDeepEqual([false, false, false]);
-
-  test("is() Predicate", function () {
-    const a = el({ className: "test-a", id: "my-id", dataTest: "my-test" });
-    const b = el({ className: "test-b" });
-    const c = el({ id: "test" });
-    return [
-      a.is(a => a.attributes.className.indexOf("test-a") > -1),
-      b.is(a => a.attributes.className.indexOf("test-b") > -1),
-      c.is(a => a.attr("id") === "test"),
-    ];
-  }).isDeepEqual([true, true, true]);
-
-  test("is()", function () {
-    var a = el({ className: "test", id: "my-id", dataTest: "my-test" });
-    var b = el({ className: "test" });
-    var c = el({ id: "test" });
-    return [
-      a.is(".test#my-id[data-test=\"my-test\"]"),
-      b.is(".test"),
-      c.is("#test"),
-    ];
-  }).isDeepEqual([true, true, true]);
 
   test("off()", function () {
     const result = [];
@@ -926,6 +663,24 @@ module.exports = tinyTest(function (test, load) {
     return r;
   }).isDeepEqual([0, 1, 0]);
 
+  test("removeChild() (nested)", function () {
+    const a = el();
+    const b = el();
+    const c = el();
+    const d = el();
+    const r = [];
+
+    a.append(b.append(c.append(d)));
+
+    r.push(a.childNodes.length);
+    r.push(c.childNodes.length);
+    a.removeChild(d);
+    r.push(a.childNodes.length);
+    r.push(c.childNodes.length);
+
+    return r;
+  }).isDeepEqual([1, 1, 1, 0]);
+
   test("removeClass()", function () {
     const a = el({ className: "remove dont-remove" });
     a.removeClass("remove");
@@ -1039,112 +794,9 @@ module.exports = tinyTest(function (test, load) {
     return a.toHtml();
   }).isEqual(fs.readFileSync(path.resolve("test/assets/toFile.html"), "utf8"));
 
-  test("toHtml() (fragment)", function () {
-    var a = el([
-      el("fragment", [
-        "string",
-        el(),
-        el(),
-        el()
-      ])
-    ]);
-    return a.toHtml();
-  }).isEqual("<div>\n  string<div></div><div></div><div></div>\n</div>");
-
-  test("toHtml() input[type=\"text\"]", function () {
-    return el("input", { type: "text" }).toHtml();
-  }).isEqual("<input type=\"text\">");
-
-  test("toHtml() xml", function () {
-    return el("xml", {
-      version: "1.0",
-      encoding: "utf-8"
-    }).toHtml();
-  }).isEqual("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-
-  test("toHtml() multiline text", function () {
-    var a = el("div", [
-      "this is a line\nthis is another line\nthis is a last line",
-    ]);
-    return a.toHtml();
-  }).isEqual("<div>\n  this is a line\n  this is another line\n  this is a last line\n</div>");
-
-  test("toHtml() text and node", function () {
-    const a = el([
-      el("strong", ["text"]),
-      "text"
-    ]);
-    const b = el([
-      "text",
-      el("strong", ["text"]),
-    ]);
-    return [a.toHtml(), b.toHtml()];
-  }).isDeepEqual([
-    "<div>\n  <strong>text</strong>text\n</div>",
-    "<div>\n  text<strong>text</strong>\n</div>"
-  ]);
-
-  test("toHtml() (xlink:href)", function () {
-    return el("use", {
-      "xlink:href": "#id"
-    }).toHtml();
-  }).isEqual("<use xlink:href=\"#id\"></use>");
-
-  test("toHtml()", function () {
-    var a = el([
-      el({ className: "div-1" }, [
-        el({ className: "div-1-1" }, [
-          el("span", { className: "div-1-1-1" }, [
-            el("span", { className: "div-1-1-1-1" })
-          ])
-        ]),
-        el({ className: "div-1-2" })
-      ]),
-      el({ className: "div-2" }, [
-        el({ className: "div-2-1" }),
-        el({ className: "div-2-2" })
-      ]),
-      el({ className: "div-3" }, [
-        el({ className: "div-3-1" }),
-        el({ className: "div-3-2" })
-      ])
-    ]);
-
-    return a.toHtml();
-  }).isEqual(fs.readFileSync(path.resolve("test/assets/toHtml.html"), "utf8"));
-
-  test("toHtml() (Component)", function () {
-    class Splat extends Component {
-      render() {
-        return el({ className: "splat" });
-      }
-    }
-
-    const a = el([
-      el({ className: "div-1" }, [
-        el(Splat, [
-          el("span", {
-            className: "splat-child"
-          })
-        ])
-      ])
-    ]);
-
-    return a.toHtml();
-  }).isEqual([
-    "<div>",
-    "  <div class=\"div-1\">",
-    "    <div class=\"splat\">",
-    "      <span class=\"splat-child\"></span>",
-    "    </div>",
-    "  </div>",
-    "</div>",
-  ].join("\n"));
-
-  test("toHtml() (simple)", function () {
-    var a = el("span");
-    return a.toHtml();
-  }).isEqual("<span></span>");
+  toHtmlTest(test);
+  isTest(test);
+  containsFindTest(test);
 
   load();
 });

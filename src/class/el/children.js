@@ -16,7 +16,7 @@ function queryChildren(a, b) {
   let childNodes = getChildren(this);
 
   if (typeof a === "number" && typeof b === "number") {
-    return childNodes.slice(a, b);
+    return childNodes.slice(a, a + b);
   } else if (typeof a === "number") {
     return childNodes[a];
   }

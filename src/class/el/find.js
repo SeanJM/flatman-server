@@ -1,3 +1,5 @@
+import { isDomNode } from "@predicates";
+
 function findPredicate(predicate) {
   function find(node) {
     let t;
@@ -41,6 +43,10 @@ export default function find(selector) {
     return findStringSelector.call(this, selector);
   } else if (typeof selector === "function") {
     return findPredicate.call(this, selector);
+  } else if (isDomNode(selector)) {
+    return findPredicate.call(this, function (node) {
+      return node === selector;
+    });
   }
   throw new Error("Invalid selector for 'find'");
 }

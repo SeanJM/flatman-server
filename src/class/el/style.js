@@ -1,4 +1,4 @@
-import camelCase from "lodash/camelCase";
+import { camelCase } from "@tools";
 
 const TO_PIXEL = [
   "bottom",
