@@ -453,22 +453,29 @@ module.exports = tinyTest(function (test, load) {
   ].join("\n"));
 
   test("el(Html)", function () {
-    const a = el(Html, [
+    const a = el(Html, {
+      scripts: "test.js",
+      styles: "style.css"
+    }, [
       el("div"),
-      el("script", {
-        src: "test.js"
-      }),
-      el("link", {
-        rel: "stylesheet",
-        href: "style.css"
-      })
     ]);
+    console.log(a.toHtml());
     return a.toHtml();
   })
-    .isEqual(fs.readFileSync(
-      path.resolve("test/assets/htmlComponent.html"),
-      "utf8"
-    ));
+    .isEqual([
+      "<!DOCTYPE HTML>",
+      "<html>",
+      "  <head>",
+      "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
+      "    <meta charset=\"UTF-8\">",
+      "    <script src=\"test.js\"></script>",
+      "    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">",
+      "  </head>",
+      "  <body>",
+      "    <div></div>",
+      "  </body>",
+      "</html>"
+    ].join("\n"));
 
   test("find() (with string and undefined)", function () {
     const a = el();

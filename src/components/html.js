@@ -1,14 +1,73 @@
 import { el } from "@tools";
 import fs from "fs";
 import Component from "@class/component";
+import { isDomNode } from "@predicates";
 
-const IS_HEAD_TAG = {
-  link: true,
-  meta: true,
-  title: true
-};
+function Head(props) {
+  const children = [];
+
+  children.push(
+    el("meta", { httpEquiv: "X-UX-Compatible", content: "IE=edge,chrome=1" }),
+    el("meta", { charset: "UTF-8" })
+  );
+
+  if (props.supportMobile) {
+    children.push(
+      el("meta", {
+        name: "viewport",
+        content: [
+          "width=device-width",
+          "initial-scale=1",
+          "maximum-scale=1",
+          "user-scalable=0"
+        ].join(", ")
+      })
+    );
+  }
+
+  if (props.scripts) {
+    [].concat(props.scripts).forEach(a => {
+      children.push(isDomNode(a)
+        ? a
+        : el("script", { src: a })
+      );
+    });
+  }
+
+  if (props.styles) {
+    [].concat(props.styles).forEach(a => {
+      children.push(isDomNode(a)
+        ? a
+        : el("link", {
+          rel: "stylesheet",
+          type: "text/css",
+          href: a
+        })
+      );
+    });
+  }
+
+  if (props.meta) {
+    [].concat(props.meta).forEach(a => {
+      children.push(a);
+    });
+  }
+
+  return el("head",
+    {
+      ref: "head"
+    },
+    children
+  );
+}
 
 export class Html extends Component {
+  /**
+   * @param {object} props
+   * @param {array} props.scripts
+   * @param {array} props.styles
+   * @param {boolean} props.supportMobile
+  */
   constructor(props) {
     super(props);
     this.props.favicon = [];
@@ -19,20 +78,6 @@ export class Html extends Component {
 
   onToHtml() {
     this.trigger("tohtml");
-
-    if (this.props.isMobile) {
-      this.refs.head.append([
-        el("meta", {
-          name: "viewport",
-          content: [
-            "width=device-width",
-            "initial-scale=1",
-            "maximum-scale=1",
-            "user-scalable=0"
-          ].join(", ")
-        })
-      ]);
-    }
   }
 
   getRefs(child) {
@@ -45,11 +90,7 @@ export class Html extends Component {
     let i = -1;
     const n = children.length;
     while (++i < n) {
-      if (IS_HEAD_TAG[children[i].tagName]) {
-        this.refs.head.append(children[i]);
-      } else {
-        this.refs.body.append(children[i]);
-      }
+      this.refs.body.append(children[i]);
     }
   }
 
@@ -76,21 +117,13 @@ export class Html extends Component {
     return value;
   }
 
-  render() {
+  render(props) {
     return el("html",
       {
         onToHtml: () => this.onToHtml()
       },
       [
-        el("head",
-          {
-            ref: "head"
-          },
-          [
-            el("meta", { httpEquiv: "X-UX-Compatible", content: "IE=edge,chrome=1" }),
-            el("meta", { charset: "UTF-8" })
-          ]
-        ),
+        el(Head, props),
         el("body", {
           ref: "body"
         })
