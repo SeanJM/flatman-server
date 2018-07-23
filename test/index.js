@@ -1,7 +1,6 @@
 import "source-map-support/register";
 import tinyTest from "tiny-test";
-import el, { Component } from "../src";
-import { Html } from "../src/components";
+import el, { Component, Html } from "../index";
 import fs from "fs";
 import path from "path";
 import toHtmlTest from "./to-html-test";
@@ -461,8 +460,8 @@ module.exports = tinyTest(function (test, load) {
       scripts: "test.js",
       styles: "style.css"
     }, [
-      el("div"),
-    ]);
+        el("div"),
+      ]);
     return a.toHtml();
   })
     .isEqual([

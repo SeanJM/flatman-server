@@ -49,6 +49,36 @@ el(Html, {
 </html>
 ```
 
+### Refs and rerouting children
+
+When a component receives children, it will trigger the `onAppendChildren` method, if it exists. Otherwise, the default behaviour will simply append the children to the root element (Html).
+
+You can use the `ref` attribute to access any element directly in the `this.refs` object.
+
+```js
+import el, { Html, Component } from "flatman-server";
+
+class MyComponent extends Component {
+  onAppendChildren(children) {
+    this.refs.tinyPage.append(children);
+  }
+
+  render() {
+    return el(Html, {
+      scripts: ["bundle.js"],
+      styles: "bundle.css",
+      supportMobile: true
+    }, [
+      el("div", {
+      ref: "tinyPage"
+        className: "my-tiny-page"
+      })
+    ]).toHtml();
+  }
+}
+
+```
+
 ### Methods
 
 #### `addClass`
