@@ -13,7 +13,6 @@ module.exports = tinyTest(function (test, load) {
       return el("div", { className: "a" });
     }
   }
-  console.log(el, Component, Html);
 
   function PureComponent(props) {
     return el("div", { className: props.className });

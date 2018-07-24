@@ -21,7 +21,6 @@ function setAttribute(node, property, value) {
   } else if (["tabIndex", "tabindex"].indexOf(property) > -1) {
     node.attributes["tabIndex"] = value;
   } else if (property.slice(0, 4) === "data") {
-    console.log(property);
     node.attributes[kebabCase(property)] = value;
   } else if (property === "class" || property === "className") {
     node.attributes.className = getClassName(value);
