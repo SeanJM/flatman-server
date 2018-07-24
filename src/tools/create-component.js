@@ -11,11 +11,15 @@ export function createComponent(maybeConstructor, props, children) {
 
       if (maybeConstructor.prototype.render) {
         component.node = maybeConstructor.prototype.render.call(component, props);
-        component.ref = component.ref || component.node.ref;
 
         if (typeof component.node === "undefined") {
           throw new Error("Component does not return a valid element.");
         }
+
+        component.ref =
+          component.ref
+            ? component.ref
+            : component.node && component.node.ref;
       }
     }
 
