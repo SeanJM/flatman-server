@@ -61,6 +61,12 @@ function Head(props) {
     Array.prototype.push.apply(children, props.head);
   }
 
+  if (props.title) {
+    children.push(
+      el("title", [props.title])
+    );
+  }
+
   return el("head",
     {
       ref: "head"
@@ -133,6 +139,7 @@ export class Html extends Component {
       [
         el(Head, props),
         el("body", {
+          className: props.className,
           ref: "body"
         })
       ]
