@@ -1,5 +1,5 @@
 export function setRefs(child) {
-  const cr = child.ref;
+  const cr = child && child.ref;
 
   if (cr && !this.refs[cr]) {
     this.refs[cr] = child;
