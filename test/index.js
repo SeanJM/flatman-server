@@ -6,6 +6,7 @@ import path from "path";
 import toHtmlTest from "./to-html-test";
 import isTest from "./is-test";
 import containsFindTest from "./contains-find-test";
+import mountTest from "./mount-test";
 
 module.exports = tinyTest(function (test, load) {
   class MyComponent extends Component {
@@ -367,39 +368,6 @@ module.exports = tinyTest(function (test, load) {
       "  </body>",
       "</html>"
     ].join("\n"));
-
-  test("el(Html) onMount", function () {
-    let a = [false, false];
-
-    class T extends Component {
-      render() {
-        return el("div", {
-          class: "t",
-          onMount: () => {
-            a[1] = true;
-          }
-        });
-      }
-    }
-
-    el(Html, [
-      el(T),
-      el("div", {
-        onMount: () => {
-          a[0] = true;
-        }
-      }),
-      el("script", {
-        src: "test.js"
-      }),
-      el("link", {
-        rel: "stylesheet",
-        href: "style.css"
-      })
-    ]).toHtml();
-
-    return a[0] === a[1];
-  }).isEqual(true);
 
   test("el(\'HTML\') refs", function () {
     let html = el(Html, [
@@ -796,6 +764,7 @@ module.exports = tinyTest(function (test, load) {
   toHtmlTest(test);
   isTest(test);
   containsFindTest(test);
+  mountTest(test);
 
   load();
 });

@@ -19,11 +19,24 @@ export function createComponent(maybeConstructor, props, children) {
   }
 
   if (component.node) {
+    component.getNode().on("mount", function () {
+      component.onMount && component.onMount({
+        target: component.getNode()
+      });
+    });
+
+    component.getNode().on("unmount", function () {
+      component.onUnmount && component.onUnmount({
+        target: component.getNode()
+      });
+    });
+
     for (var k in component.node.refs) {
       if (!component.refs[k]) {
         component.refs[k] = component.node.refs[k];
       }
     }
+
     component.append(children);
   }
 

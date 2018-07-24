@@ -73,7 +73,30 @@ class MyComponent extends Component {
       ref: "tinyPage"
         className: "my-tiny-page"
       })
-    ]).toHtml();
+    ]);
+  }
+}
+
+```
+
+### Component mounted & unmounted
+
+When the root node mounts to the document, it will trigger the `onMount` method of the component. When the root node is removed, it will trigger the `onUnmount` method.
+
+```js
+import el, { Html, Component } from "flatman-server";
+
+class MyComponent extends Component {
+  onMount(e) {
+    // e.target = root node
+  }
+
+  onUnmount(e) {
+    // e.target = root node
+  }
+
+  render() {
+    return el();
   }
 }
 
