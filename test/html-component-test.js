@@ -116,4 +116,22 @@ export default function (test) {
       "  <body></body>",
       "</html>"
     ].join("\n"));
+
+  test("el(Html) - title", function () {
+    const a = el(Html, {
+      title: "test"
+    });
+    return a.toHtml();
+  })
+    .isEqual([
+      "<!DOCTYPE HTML>",
+      "<html>",
+      "  <head>",
+      "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
+      "    <meta charset=\"UTF-8\">",
+      "    <title>test</title>",
+      "  </head>",
+      "  <body></body>",
+      "</html>"
+    ].join("\n"));
 }
