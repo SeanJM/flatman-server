@@ -1,4 +1,4 @@
-import el, { Component } from "../src";
+import el, { Component } from "../index";
 import fs from "fs";
 import path from "path";
 

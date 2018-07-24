@@ -1,5 +1,5 @@
 import "source-map-support/register";
-import el, { Component } from "../src";
+import el, { Component } from "../index";
 
 export default function (test) {
   test("find() (with string and undefined)", function () {

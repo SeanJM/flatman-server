@@ -15,6 +15,7 @@ module.exports = function (__root) {
 
     output: {
       libraryTarget: "commonjs2",
+      libraryExport: "default",
       path: path.resolve(__root),
       filename: "index.js",
     },

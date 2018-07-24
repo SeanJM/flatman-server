@@ -1,4 +1,4 @@
-import el from "../src";
+import el from "../index";
 
 export default function (test) {
   test("is() (.a + .b div)", function () {
