@@ -8,6 +8,7 @@ import isTest from "./is-test";
 import containsFindTest from "./contains-find-test";
 import mountTest from "./mount-test";
 import htmlComponentTest from "./html-component-test";
+import higherOrderComponent from "./higher-order-component-test";
 
 module.exports = tinyTest(function (test, load) {
   class MyComponent extends Component {
@@ -670,6 +671,7 @@ module.exports = tinyTest(function (test, load) {
   containsFindTest(test);
   mountTest(test);
   htmlComponentTest(test);
+  higherOrderComponent(test);
 
   load();
 });
