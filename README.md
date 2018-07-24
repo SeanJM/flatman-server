@@ -23,8 +23,14 @@ el(MyElement).toHtml(); // <div class="my-class"></div>
 import el, { Html, Component } from "flatman-server";
 
 el(Html, {
+  // Can be a string, array or null
   scripts: ["bundle.js"],
+  // Can be a string, array or null
   styles: "bundle.css",
+  // Anything in the head property will be appended to the head tag
+  head: [],
+  // must be an element or an array of elements
+  favicon: [],
   supportMobile: true
 }, [
   el("div", {

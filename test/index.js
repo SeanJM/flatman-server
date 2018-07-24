@@ -7,6 +7,7 @@ import toHtmlTest from "./to-html-test";
 import isTest from "./is-test";
 import containsFindTest from "./contains-find-test";
 import mountTest from "./mount-test";
+import htmlComponentTest from "./html-component-test";
 
 module.exports = tinyTest(function (test, load) {
   class MyComponent extends Component {
@@ -350,103 +351,6 @@ module.exports = tinyTest(function (test, load) {
     return a.attr("data-id");
   }).isEqual("test");
 
-  test("HTML comments", function () {
-    const c = el().html("<!--comment-->").children()[0];
-    const a = el(Html, [c]);
-    const str = a.toHtml();
-    return str;
-  })
-    .isEqual([
-      "<!DOCTYPE HTML>",
-      "<html>",
-      "  <head>",
-      "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
-      "    <meta charset=\"UTF-8\">",
-      "  </head>",
-      "  <body>",
-      "    <!--comment-->",
-      "  </body>",
-      "</html>"
-    ].join("\n"));
-
-  test("el(\'HTML\') refs", function () {
-    let html = el(Html, [
-      el("div", { ref: "div" }),
-      el("div", [el("div")]),
-      el("div")
-    ]);
-    html.refs.div.addClass("test");
-    return html.toHtml();
-  })
-    .isDeepEqual(function () {
-      return fs.readFileSync(
-        path.resolve("test/assets/el(HTML)_refs.html"),
-        "utf8"
-      );
-    });
-
-  test("el(Html) - with component", function () {
-    class X extends Component {
-      render() {
-        return el({ class: "component" });
-      }
-    }
-
-    class Y extends Component {
-      render() {
-        return el(Html, [
-          el(),
-          el([el()]),
-          el()
-        ]);
-      }
-    }
-
-    const a = el(Y);
-    a.append([el(X)]);
-    return a.toHtml();
-  }).isEqual([
-    "<!DOCTYPE HTML>",
-    "<html>",
-    "  <head>",
-    "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
-    "    <meta charset=\"UTF-8\">",
-    "  </head>",
-    "  <body>",
-    "    <div></div>",
-    "    <div>",
-    "      <div></div>",
-    "    </div>",
-    "    <div></div>",
-    "    <div class=\"component\"></div>",
-    "  </body>",
-    "</html>"
-  ].join("\n"));
-
-  test("el(Html)", function () {
-    const a = el(Html, {
-      scripts: "test.js",
-      styles: "style.css"
-    }, [
-      el("div"),
-    ]);
-    return a.toHtml();
-  })
-    .isEqual([
-      "<!DOCTYPE HTML>",
-      "<html>",
-      "  <head>",
-      "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
-      "    <meta charset=\"UTF-8\">",
-      "    <script src=\"test.js\"></script>",
-      "    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">",
-      "  </head>",
-      "  <body>",
-      "    <div></div>",
-      "  </body>",
-      "</html>"
-    ].join("\n"));
-
   test("html()", function () {
     const a = el("div");
     a.html("<span></span>");
@@ -765,6 +669,7 @@ module.exports = tinyTest(function (test, load) {
   isTest(test);
   containsFindTest(test);
   mountTest(test);
+  htmlComponentTest(test);
 
   load();
 });

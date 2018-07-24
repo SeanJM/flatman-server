@@ -25,6 +25,10 @@ function Head(props) {
     );
   }
 
+  if (props.favicon) {
+    Array.prototype.push.apply(children, props.favicon);
+  }
+
   if (props.scripts) {
     [].concat(props.scripts).forEach(a => {
       children.push(isDomNode(a)
@@ -51,6 +55,10 @@ function Head(props) {
     [].concat(props.meta).forEach(a => {
       children.push(a);
     });
+  }
+
+  if (props.head) {
+    Array.prototype.push.apply(children, props.head);
   }
 
   return el("head",
