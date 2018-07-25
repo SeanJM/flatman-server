@@ -6,11 +6,11 @@ module.exports = function () {
   const n = arguments.length;
 
   while (++i < n) {
-    if (typeof arguments[i] === "string" || typeof arguments[i] === "function") {
+    if ((typeof arguments[i] === "string" && i === 0) || typeof arguments[i] === "function") {
       args[0] = arguments[i];
     } else if (Array.isArray(arguments[i])) {
       args[2] = arguments[i];
-    } else if (isDomNode(arguments[i])) {
+    } else if (isDomNode(arguments[i]) || typeof arguments[i] === "string") {
       args[2].push(arguments[i]);
     } else if (typeof arguments[i] === "object" && arguments[i] != null) {
       args[1] = arguments[i];
