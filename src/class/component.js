@@ -70,16 +70,20 @@ class Component {
 
   append(children) {
     const slot = this.node.refs.slot || this.node;
-    slot.append(children);
 
+    if (this.beforeAppendChildren) {
+      this.beforeAppendChildren(children);
+    }
+
+    slot.append(children);
     for (const k in slot.refs) {
       if (!this.refs[k]) {
         this.refs[k] = slot.refs[k];
       }
     }
 
-    if (this.onAppendChildren) {
-      this.onAppendChildren(children);
+    if (this.afterAppendChildren) {
+      this.afterAppendChildren(children);
     }
 
     return this;
