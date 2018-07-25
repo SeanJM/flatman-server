@@ -77,4 +77,22 @@ module.exports = function (test) {
 
     return a[0] === a[1];
   }).isEqual(true);
+
+  test("el(Html) onMount - check parent", function () {
+    let hasBodyParent = false;
+
+    class T extends Component {
+      onMount() {
+        hasBodyParent = !!this.node.closest("body");
+      }
+
+      render() {
+        return el();
+      }
+    }
+
+    el(Html, el(T));
+
+    return hasBodyParent;
+  }).isEqual(true);
 };
