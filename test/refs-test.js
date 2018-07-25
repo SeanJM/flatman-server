@@ -34,4 +34,22 @@ module.exports = function (test) {
       da.node.refs.z.ref === "z"
     );
   }).isEqual(true);
+
+  test("Component refs (slot)", function () {
+    class DE extends Component {
+      render() {
+        return el([
+          el({ ref: "a" }),
+          el({ ref: "b" }, [
+            el({ ref: "c" }),
+            el({ ref: "slot" })
+          ])
+        ]);
+      }
+    }
+
+    let de = el(DE, el("div", { ref: "d" }));
+
+    return Object.keys(de.refs).concat(Object.keys(de.refs.a.refs));
+  }).isDeepEqual(["a", "b", "c", "slot", "d"]);
 };

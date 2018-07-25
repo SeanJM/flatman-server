@@ -100,14 +100,6 @@ module.exports = class Html extends Component {
     }
   }
 
-  onAppendChildren(children) {
-    let i = -1;
-    const n = children.length;
-    while (++i < n) {
-      this.refs.body.append(children[i]);
-    }
-  }
-
   toHtml() {
     return (
       "<!DOCTYPE HTML>\n" +
@@ -140,7 +132,7 @@ module.exports = class Html extends Component {
         el(Head, props),
         el("body", {
           className: props.className,
-          ref: "body"
+          ref: "slot"
         })
       ]
     );
