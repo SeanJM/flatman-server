@@ -1,1 +1,784 @@
-module.exports=function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=7)}([function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(8);Object.keys(r).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return r[e]}})});var o=n(9);Object.keys(o).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return o[e]}})});var i=n(10);Object.keys(i).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return i[e]}})});var s=n(45);Object.keys(s).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return s[e]}})});var u=n(46);Object.keys(u).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return u[e]}})});var a=n(47);Object.keys(a).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return a[e]}})});var c=n(48);Object.keys(c).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return c[e]}})});var f=n(49);Object.keys(f).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return f[e]}})});var l=n(50);Object.keys(l).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return l[e]}})});var d=n(51);Object.keys(d).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return d[e]}})});var p=n(52);Object.keys(p).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return p[e]}})});var h=n(53);Object.keys(h).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return h[e]}})});var y=n(54);Object.keys(y).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return y[e]}})})},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=i(n(2)),o=i(n(4));function i(e){return e&&e.__esModule?e:{default:e}}function s(e){return function(){const t=arguments.length,n=new Array(t),o=this.getNode();let i,s=-1;for(;++s<t;)n[s]=arguments[s];return(i=this.node[e]?this.node[e].apply(this.node,n):r.default.prototype[e].apply(o,n))===o?this:i}}t.default=function(e){for(var t in r.default.prototype)e.prototype[t]||(e.prototype[t]=s(t));return e}(class{constructor(e){this.props=e,this.ref=e.ref,this.refs={},this.bus=new o.default({target:this})}on(e,t){return this.bus.on(e,t),this}once(e,t){return this.bus.once(e,t),this}off(e,t){return this.bus.off(e,t),this}trigger(e,t){return this.bus.trigger(e,t),this}getNode(){return this.node.getNode()}append(e){for(var t in this.node.append(e),this.node.refs)this.refs[t]||(this.refs[t]=this.node.refs[t]);return this.onAppendChildren&&this.onAppendChildren(e),this}toJSON(){return{tagName:this.tagName,props:this.props,refs:this.refs,node:this.node.toJSON()}}})},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(3),o=$(n(4)),i=$(n(14)),s=$(n(15)),u=$(n(16)),a=$(n(17)),c=$(n(18)),f=$(n(19)),l=$(n(20)),d=$(n(21)),p=$(n(22)),h=$(n(23)),y=$(n(24)),b=$(n(25)),m=$(n(26)),g=$(n(27)),_=$(n(29)),v=$(n(30)),N=$(n(31)),j=$(n(32)),O=$(n(33)),M=$(n(34)),P=$(n(35)),x=$(n(36)),w=$(n(37)),E=$(n(38)),C=$(n(39)),A=$(n(40)),H=$(n(41)),k=$(n(42)),S=$(n(43)),T=$(n(44));function $(e){return e&&e.__esModule?e:{default:e}}function L(){const e=[arguments[0],arguments[1],arguments[2]];let t="div",n=[],i={};for(var s=0,u=e.length;s<u;s++)"string"==typeof e[s]?t=e[s]:Array.isArray(e[s])?n=e[s]:(0,r.isObject)(e[s])&&(i=e[s]);if(this.attributes={style:{},className:[],disabled:null,name:null},this.ref=i.ref,this.refs={},this.tagName=t,this.node=this,this.bus=new o.default({target:this}),this.subscribers={render:[]},this.childNodes=[],i.data){for(var a in i.data)i["data"+a[0].toUpperCase()+a.substring(1)]=i.data[a];delete i.data}for(a in i)"once"===a.substr(0,4)?this.once(a.substr(4).toLowerCase(),i[a]):"on"===a.substr(0,2)?this.on(a.substr(2).toLowerCase(),i[a]):"ref"!==a&&"data"!==a&&this.attr(a,i[a]);for(this.append(n),s=0,u=L.__onCreate.length;s<u;s++)L.__onCreate[s].call(this)}L.prototype.on=function(e,t){return this.bus.on(e,t),this},L.prototype.once=function(e,t){return this.bus.once(e,t),this},L.prototype.off=function(e,t){return this.bus.off(e,t),this},L.prototype.trigger=function(e,t){return this.bus.trigger(e,t),this},L.prototype.toString=function(){return"[object HTML"+(this.tagName[0].toUpperCase()+this.tagName.slice(1))+"Element]"},L.prototype.clone=(0,d.default)(L),L.prototype.html=(0,g.default)(L),L.prototype.addClass=i.default,L.prototype.after=s.default,L.prototype.append=a.default,L.prototype.appendTo=u.default,L.prototype.attr=c.default,L.prototype.before=f.default,L.prototype.children=l.default,L.prototype.closest=p.default,L.prototype.contains=h.default,L.prototype.find=b.default,L.prototype.findAll=y.default,L.prototype.getNode=m.default,L.prototype.is=_.default,L.prototype.parent=v.default,L.prototype.parents=N.default,L.prototype.prepend=j.default,L.prototype.previous=M.default,L.prototype.previousNodes=O.default,L.prototype.remove=w.default,L.prototype.removeChild=P.default,L.prototype.removeClass=x.default,L.prototype.replaceWith=E.default,L.prototype.siblings=C.default,L.prototype.style=A.default,L.prototype.text=H.default,L.prototype.toFile=k.default,L.prototype.toHtml=S.default,L.prototype.toJSON=T.default,L.__onCreate=[],t.default=L},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(11);Object.keys(r).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return r[e]}})});var o=n(12);Object.keys(o).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return o[e]}})});var i=n(13);Object.keys(i).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return i[e]}})})},function(e,t,n){"use strict";function r(e){this.target=e.target||this,this.subscribers={}}Object.defineProperty(t,"__esModule",{value:!0}),r.prototype.once=function(e,t){const n=r=>{this.off(e,n),t.call(this.target,r)};return this.on(e,n)},r.prototype.off=function(e,t){const n=e.toLowerCase().trim(),r=(this.subscribers[n]||[]).indexOf(t);return r>-1?this.subscribers[n].splice(r,1):void 0===t&&(this.subscribers[n]=[]),this.target},r.prototype.on=function(e,t){const n=e.toLowerCase().trim();return"function"==typeof t&&(this.subscribers[n]=(this.subscribers[n]||[]).concat(t)),this.target},r.prototype.trigger=function(e,t){const n=e.toLowerCase().trim(),r=this.subscribers[n]||[];for(var o=0,i=r.length;o<i;o++)r[o].call(this.target,t);return this.target},t.default=r},function(e,t){e.exports=require("fs")},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.MOUNTED=[]},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(0),o=function(e){return e&&e.__esModule?e:{default:e}}(n(1)),i=n(55);r.el.Component=o.default,r.el.Html=i.Html,r.el.Css=i.Css,t.default=r.el},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.commentToHtml=function e(t,n){const r=new Array(n+1).join("  "),o=[];let i=t.childNodes;return o[0]=r,t.parentNode&&"comment"===t.parentNode.tagName||(o[1]="\x3c!--"),1===i.length?o.push(i.map(t=>"comment"===t.tagName?e(t,0):t.tagName?t.toHtml():t).join("\n")):o.push(i.map((t,r)=>{const o=r>0?new Array(n+1).join("  ")+"    ":"";return"comment"===t.tagName?o+e(t,n+1):t.tagName?t.toHtml(n+1):o+t}).join("\n")),t.parentNode&&"comment"===t.parentNode.tagName||o.push("--\x3e\n"),o.join("")}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.createComponent=function(e,t,n){const r=!!e.prototype.toHtml,o=r?new e(t):e(t);if(o){if(r&&(o.tagName=e,e.prototype.render&&(o.node=e.prototype.render.call(o,t),o.ref=o.ref||o.node.ref,void 0===o.node)))throw new Error("Component does not return a valid element.");if(o.node){for(var i in o.getNode().on("mount",function(){o.onMount&&o.onMount({target:o.getNode()})}),o.getNode().on("unmount",function(){o.onUnmount&&o.onUnmount({target:o.getNode()})}),o.node.refs)o.refs[i]||(o.refs[i]=o.node.refs[i]);o.append(n)}return o}throw new Error("Invalid component, a component cannot return nothing.")}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.el=void 0;var r=s(n(2)),o=s(n(1)),i=n(0);function s(e){return e&&e.__esModule?e:{default:e}}function u(e,t,n){const o=[];return o[0]="function"==typeof e?e:"string"==typeof e?e:"div",o[1]=Array.isArray(e)||"object"!=typeof e?Array.isArray(t)||"object"!=typeof t?{}:t:e,o[2]=Array.isArray(e)?e:Array.isArray(t)?t:Array.isArray(n)?n:[],"function"==typeof e?(0,i.createComponent)(o[0],o[1],o[2]):new r.default(o[0],o[1],o[2])}u.onAttr=function(e,t){return r.default.prototype.attr.onAttr[e.toLowerCase()]=t,u},u.defaultProps=function(e){return Object.assign(o.default.__defaultProps,e),u},u.onCreate=function(e){r.default.__onCreate.push(e)},u.isComponent=function(e){return!!o.default.lib[e]},u.fn=function(e,t){for(var n in r.default.prototype[e]=t,o.default.prototype[e]=o.default.__extend(e),o.default.lib)o.default.lib[n].prototype[e]||(o.default.lib[n].prototype[e]=o.default.prototype[e])},u.create=o.default.create,t.el=u},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.isDomNode=function(e){return!(!e||"function"!=typeof e.toHtml)}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.isObject=function(e){return"[object Object]"===Object.prototype.toString.call(e)}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.isHtmlString=function(e){return/<[^>]+?>/.test(e)}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){var t=this.attributes.className;return-1===t.indexOf(e)&&t.push(e),this}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){const t=e.getNode(),n=t.parentNode,r=n&&n.childNodes.indexOf(t);if("number"!=typeof r)throw new Error('Cannot insert node after "'+t.tagName+'", target does have a parent.');return this.parentNode=n,n.childNodes.splice(r+1,0,this),this}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){return e.childNodes.push(this),this.parentNode=e,(0,r.mount)(this),this};var r=n(0)},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){let t=[].concat(e),n=-1;const i=t.length;for(;++n<i;)if(t[n]){let e=t[n].getNode?t[n].getNode():t[n];e instanceof o.default&&(e.parentNode&&e.parentNode.removeChild(e),r.setRefs.call(this,t[n]),e.parentNode=this),this.childNodes.push(e),(0,r.mount)(e)}return this};var r=n(0),o=function(e){return e&&e.__esModule?e:{default:e}}(n(2))},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(0);function o(e,t,n){"string"==typeof n&&""===n&&(n=null),i.onAttr[t]?i.onAttr[t].call(e,n):["tabIndex","tabindex"].indexOf(t)>-1?e.attributes.tabIndex=n:"data"===t.slice(0,4)?e.attributes[(0,r.kebabCase)(t)]=n:"class"===t||"className"===t?e.attributes.className=function(e){const t=[].concat(e);let n=[];for(var r=0,o=t.length;r<o;r++)t[r]&&(n=n.concat(t[r].split(" ")));return n}(n):"style"===t?e.style(n):e.attributes[t]=n}function i(e,t){return"object"==typeof e?(function(e,t){for(var n in t)"once"===n.slice(0,4)?e.once(n.slice(4),t[n]):"on"===n.slice(0,2)?e.on(n.slice(2),t[n]):o(e,n,t[n])}(this,e),this):"string"==typeof e&&void 0!==t?(o(this,e,t),this):"string"==typeof e?function(e,t){return"class"===t?e.attributes.className.join(" "):e.attributes[t]}(this,e):this.attributes}i.onAttr={},t.default=i},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){const t=e.getNode(),n=t.parentNode,r=n&&n.childNodes.indexOf(t);if("number"!=typeof r)throw new Error('Cannot insert node after "'+t.tagName+'", target does have a parent.');return this.parentNode=n,r>-1?n.childNodes.splice(r,0,this):n.childNodes.unshift(this),this}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e,t){return Array.isArray(e)?(this.childNodes=e,this):function(e,t){let n=function e(t){let n=[];for(let r=0,o=t.childNodes.length;r<o;r++)"fragment"===t.childNodes[r].tagName?n=n.concat(e(t.childNodes[r])):n.push(t.childNodes[r]);return n}(this);return"number"==typeof e&&"number"==typeof t?n.slice(e,e+t):"number"==typeof e?n[e]:n}.call(this,e,t)}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){return function(){return new e(this.tagName,(0,r.merge)({},this.attributes),this.childNodes.map(e=>"string"==typeof e?e:e.clone()))}};var r=n(0)},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){let t=this.parentNode;for(;t;){if(t.is(e))return t;t=t.parentNode}return!1}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){return!!this.find(e)}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){if("string"==typeof e)return function(e){const t=[];return this.node.childNodes.forEach(function n(r){if(r.is&&r.is(e)&&t.push(r),r.childNodes)for(var o=0,i=r.childNodes.length;o<i;o++)n(r.childNodes[o])}),t}.call(this,e);if("function"==typeof e)return function(e){const t=[];return this.node.childNodes.forEach(function n(r){e(r)&&t.push(r);for(var o=0,i=r.childNodes.length;o<i;o++)n(r.childNodes[o])}),t}.call(this,e);throw new Error("Invalid selector for 'find'")}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){if("string"==typeof e)return function(e){return function t(n){let r;if(n.is&&n.is(e))return n;if(n.childNodes)for(var o=0,i=n.childNodes.length;o<i;o++)if(r=t(n.childNodes[o]))return r;return!1}(this.node)}.call(this,e);if("function"==typeof e)return o.call(this,e);if((0,r.isDomNode)(e))return o.call(this,function(t){return t===e});throw new Error("Invalid selector for 'find'")};var r=n(3);function o(e){return function t(n){let r;if(e(n))return n;for(var o=0,i=n.childNodes.length;o<i;o++)if(r=t(n.childNodes[o]))return r;return!1}(this.node)}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(){return this}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){function t(n){return"string"==typeof n?n:n.childNodes&&n.childNodes.length?new e(n.tagName,n.attributes,n.childNodes.map(t)):new e(n.tagName,n.attributes)}return function(n){if("string"==typeof n){const o=function(n){const o=(0,r.default)(n).map(t);return new e("root",o)}(n);return this.childNodes=o.childNodes,this}return this.children().map(e=>e.toHtml?e.toHtml():e).join("\n")}};var r=function(e){return e&&e.__esModule?e:{default:e}}(n(28))},function(e,t){e.exports=require("flatman-parse")},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){return"function"==typeof e?e(this):function(e){const t=e.split(" ").map(e=>(0,r.getSelectorObject)(e.trim()));return 1===t.length?i(this,t[0]):function(e){let t=this;const n=e.length-1;for(var r=e.length-1;r>=0;r--)if("+"===e[r].selector)e.pop(),t=t&&t.previous();else if("~"===e[r].selector)e.pop(),t=t&&t.siblings().filter(t=>i(t,e[r-1]))[0];else if(">"===e[r].selector)e.pop(),t=t&&t.parent();else if(i(t,e[r]))e.pop();else if(t&&r<n)t=t.parent(),r+=1;else if(r===n)return!1;return 0===e.length}.call(this,t)}.call(this,e)};var r=n(0);function o(e){const t=[],n=this.attributes.className;for(var r=0,o=n.length;r<o;r++)e.indexOf(n[r])>-1&&t.push(n[r]);return t.length===e.length}function i(e,t){if(!e||"string"==typeof e)return!1;if(t.tagName&&t.tagName!==e.tagName)return!1;for(var n in t.attributes)if("class"===n){if(!o.call(e,t.attributes[n]))return!1}else if(t.attributes[n])if("string"==typeof t.attributes[n]){if(t.attributes[n]!==e.attributes[n])return!1}else if(!t.attributes[n].test(e.attributes[n]))return!1;return"+"!==t.selector&&"~"!==t.selector}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(){let e=this.parentNode;for(;e&&"fragment"===e.tagName;)e=e.parentNode;return e}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(){const e=[];let t=this.parentNode;for(;t;)for(e.push(t),t=t.parent();t&&"fragment"===t.tagName;)t=t.parent();return e}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){return(e=[].concat(e).filter(e=>e)).forEach(e=>{e.parentNode=this}),[].unshift.apply(this.childNodes,e),this}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(){const e=[];let t=this.previous();for(;t;)e.push(t),t=t.previous();return e}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(){let e=this.parent(),t=e?e.children():[],n=t.indexOf(this)-1;for(;n>-1&&"comment"===t[n].tagName;)n-=1;return t[n]||null}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){const t=this.find(e)&&e.getNode();return t&&(t.parentNode.childNodes.splice(t.parentNode.childNodes.indexOf(t),1),(0,r.unmount)(t)),this};var r=n(0)},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){var t=this.attributes.className;return t.splice(t.indexOf(e),1),this}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(){return this.parentNode.removeChild(this),this}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){var t;return this.parentNode?((0,r.unmount)(this),t=this.parentNode.childNodes.indexOf(this),this.parentNode.childNodes[t]=e,(0,r.mount)(e)):Object.assign(this,e,{parentNode:this.parentNode}),e};var r=n(0)},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(){const e=this.parent();return e&&e.children()}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e,t){if("string"==typeof e)return void 0!==t?(i.call(this,e,t),this):this.attributes.style[e];if("object"!=typeof e)return this.attributes.style;for(var n in e)i.call(this,n,e[n]);return this};var r=n(0);const o=["bottom","height","left","marginBottom","marginLeft","marginRight","marginTop","maxHeight","maxWidth","minHeight","minWidth","paddingBottom","paddingLeft","paddingRight","paddingTop","right","top","width"];function i(e,t){if(e.indexOf("-")>-1)throw"Invalid name: "+e+' please use the JavaScript name for the style of "'+(0,r.camelCase)(e)+'"';o.includes(e)&&"number"==typeof t?this.attributes.style[e]=t+"px":this.attributes.style[e]=t}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){var t=[];return"string"==typeof e||"number"==typeof e?(this.childNodes=[e.toString()],this):(function e(n){"string"==typeof n?t.push(function(e){var t=e.split("\n").map(e=>e.match(/^\s+/m)?e.match(/^\s+/m)[0]:"").filter(e=>e.length>0).sort((e,t)=>e.length-t.length)[0],n=new RegExp("^"+t);return e.split("\n").map(e=>e.replace(n,"")).join("\n")}(n)):n.childNodes.forEach(e)}(this),t.join(" "))}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){const t=this.toHtml();return r.default.writeFileSync(e,t),t};var r=function(e){return e&&e.__esModule?e:{default:e}}(n(5))},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e){const t=e||0,n=new Array(t+1).join("  "),u=new Array(t+2).join("  "),a=[],l=this.parentNode&&!s[this.parentNode.tagName],d=this.siblings(),p=d&&d.filter(f).length>0,h=!d||0===d.indexOf(this),y=!d||d.indexOf(this)===d.length-1;let b=this.childNodes;return this.trigger("tohtml"),l&&(p&&h||!p)&&a.push(n),"xml"===this.tagName?a.push("<?",this.tagName,c(this)):a.push("<",this.tagName,c(this)),"comment"===this.tagName?(0,r.commentToHtml)(this,t):"fragment"===this.tagName?function(e,t){let n=e.childNodes;const r=new Array(t+1).join("  "),o=e.parentNode&&!s[e.parentNode.tagName],i=n.filter(f).length,u=n.length;return n.map(function(e,n){return e.toHtml?e.toHtml(i?0:t):(0===n?r:"")+e+(o&&1===u||u-1===n?"\n":"")}).join("")}(this,t):(i[this.tagName]?a.push("/>"):o[this.tagName]?a.push(">"):"xml"===this.tagName?a.push("?>"):(a.push(">"),1===b.length&&f(b[0])?(b=b[0].toString().split("\n"),a.push(b.length>1?"\n"+b.map(e=>u+e+"\n").join("")+n:b[0])):b.length&&(s[this.tagName]||a.push("\n"),b.forEach((e,n)=>{e.toHtml?a.push(e.toHtml(t+1)):0===n?a.push(u,e):s[this.tagName]||n!==b.length-1?a.push(e):a.push(e,"\n")}),s[this.tagName]||a.push(n)),a.push("</"+this.tagName+">")),a.join("")+(!l||p&&!y?"":"\n"))};var r=n(0);const o={hr:!0,img:!0,input:!0,link:!0,meta:!0},i={circle:!0,line:!0,ellipsis:!0,path:!0,polygon:!0,rect:!0},s={span:!0,b:!0,strong:!0,i:!0,em:!0},u=["id","className","name","title","style"];function a(e,t){const n=u.indexOf(e),r=u.indexOf(t);return n>-1&&r>-1?n-r:n>-1?-1:r>-1?1:0}function c(e){const t=e.attributes;let n=[];return(t?Object.keys(t).sort(a):[]).forEach(function(e){void 0!==t[e]&&n.push(function(e,t){return"string"==typeof(t="number"==typeof t?t.toString():t)&&(t=t.trim()),"style"===e?"object"==typeof t&&Object.keys(t).length?`${e}="${function(e){var t=[];for(var n in e)"string"!=typeof e[n]&&"number"!=typeof e[n]||t.push((0,r.kebabCase)(n)+": "+e[n]);return t.join(";")}(t)}"`:"":"className"===e?t.length?`class="${t=t.sort().join(" ")}"`:"":"tabindex"===e?`tabIndex="${t}"`:"data"===e.substr(0,4)?`${(0,r.kebabCase)(e)}="${t}"`:"viewBox"===e?`viewBox="${t}"`:-1!==e.indexOf(":")?`${e}="${t}"`:t&&t.length?`${(0,r.kebabCase)(e)}="${t}"`:""}(e,t[e]))}),(n=n.filter(e=>e.length)).length?" "+n.join(" "):""}function f(e){return"number"==typeof e||"string"==typeof e}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(){return{tagName:this.tagName,attributes:this.attributes,childNodes:this.childNodes}}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.getSelectorGroup=function(e){var t=[],n=!1,r=e.length,o=0,i="";for(e=e.replace(/\s+/g," ");o<r;)"["===e[o]&&"'"!==e[o-1]?(n=!0,i+=e[o]):"]"===e[o]&&"'"!==e[o-1]?(n=!1,i+=e[o]):" "!==e[o]||n?i+=e[o]:(t.push(i),i=""),o++;return t.push(i),t}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.getSelectorObject=function(e){let t=e.match(/\.[a-zA-Z0-9\-\_]+/g),n=e.match(/\#[a-zA-Z0-9\-\_]+/),r=e.match(/\[[^\]]+?\]/g),o=e.match(/^[a-zA-Z0-9\-\_]+/),i={selector:e,tagName:!!o&&o[0],attributes:{}};return t&&(i.attributes.class=t.map(e=>e.slice(1))),n&&(i.attributes.id=n[0].slice(1)),r&&r.forEach(function(e){let t=e.match(/\[([a-zA-Z0-9\-\_]+)(?:(\*|\^|\$|)=([^\]]+?)\]|)/);t[1]="class"===t[1]?"className":t[1],t[3]=!!t[3]&&t[3].slice(1,-1),t[2]?"*"===t[2]?i.attributes[t[1]]=new RegExp(t[3]):"^"===t[2]?i.attributes[t[1]]=new RegExp("^"+t[3]):"$"===t[2]&&(i.attributes[t[1]]=new RegExp(t[3]+"$")):t[3]?i.attributes[t[1]]=new RegExp("^"+t[3]+"$"):i.attributes[t[1]]=new RegExp(".+")}),i}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.get=function(e,t){let n=e,r=[].concat(t).join(".").split(".");for(var o=0,i=r.length;o<i;o++){if(void 0===n[r[o]])return n[r[o]];n=n[r[o]]}return n}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.kebabCase=function(e){let t="",n=-1;const u=e.length;for(;++n<u;)o[e[n]]?t+=(n>0&&!r[e[n-1]]?"-":"")+e[n].toLowerCase():i[e[n]]||s[e[n]]||"-"===e[n]?t+=e[n]:r[e[n]]&&!r[e[n-1]]&&(t+="-");return t};const r={" ":!0,"\t":!0,"\n":!0},o={A:!0,B:!0,C:!0,D:!0,E:!0,F:!0,G:!0,H:!0,I:!0,J:!0,K:!0,L:!0,M:!0,N:!0,O:!0,P:!0,Q:!0,R:!0,S:!0,T:!0,U:!0,V:!0,W:!0,X:!0,Y:!0,Z:!0},i={a:!0,b:!0,c:!0,d:!0,e:!0,f:!0,g:!0,h:!0,i:!0,j:!0,k:!0,l:!0,m:!0,n:!0,o:!0,p:!0,q:!0,r:!0,s:!0,t:!0,u:!0,v:!0,w:!0,x:!0,y:!0,z:!0},s={0:!0,1:!0,2:!0,3:!0,4:!0,5:!0,6:!0,7:!0,8:!0,9:!0}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.camelCase=function(e){let t="",n=-1;const i=e.length;for(;++n<i;)0===n?t+=e[n].toLowerCase():o[e[n]]&&r[e[n-1]]?t+=e[n].toUpperCase():o[e[n]]&&(t+=e[n].toLowerCase());return t};const r={" ":!0,"\t":!0,"\n":!0,_:!0,"-":!0},o={A:!0,B:!0,C:!0,D:!0,E:!0,F:!0,G:!0,H:!0,I:!0,J:!0,K:!0,L:!0,M:!0,N:!0,O:!0,P:!0,Q:!0,R:!0,S:!0,T:!0,U:!0,V:!0,W:!0,X:!0,Y:!0,Z:!0,a:!0,b:!0,c:!0,d:!0,e:!0,f:!0,g:!0,h:!0,i:!0,j:!0,k:!0,l:!0,m:!0,n:!0,o:!0,p:!0,q:!0,r:!0,s:!0,t:!0,u:!0,v:!0,w:!0,x:!0,y:!0,z:!0,0:!0,1:!0,2:!0,3:!0,4:!0,5:!0,6:!0,7:!0,8:!0,9:!0}},function(e,t,n){"use strict";function r(e,t){return Array.isArray(e)&&Array.isArray(t)?function(e,t){let n=-1;const o=t.length;for(;++n<o;)-1===e.indexOf(t[n])&&(Array.isArray(t[n])?e.push(r([],t[n])):"object"==typeof t[n]?e.push(r({},t[n])):e.push(t[n]));return e}(e,t):"object"==typeof e&&"object"==typeof t?function(e,t){for(var n in t)t.hasOwnProperty(n)&&(Array.isArray(t[n])?e[n]=o([],e[n],t[n]):"object"==typeof t[n]?e[n]=o({},e[n],t[n]):e[n]=t[n]);return e}(e,t):t}function o(e){let t=0;const n=arguments.length;for(null==e&&(e={});++t<n;)arguments[t]&&r(e,arguments[t]);return e}Object.defineProperty(t,"__esModule",{value:!0}),t.merge=o},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.mount=function e(t,n){const o=t.childNodes;let i=t.parentNode;if(void 0===n){for(;i&&i.parentNode;)i=i.parentNode;n=i&&"html"===i.tagName}if(o&&n&&-1===r.MOUNTED.indexOf(t)){r.MOUNTED.push(t),t.trigger("mount");for(var s=0,u=o.length;s<u;s++)e(o[s],n)}};var r=n(6)},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.setRefs=function(e){const t=e.ref;for(var n in t&&!this.refs[t]&&(this.refs[t]=e),e.refs)this.refs[n]||(this.refs[n]=e.refs[n])}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.set=function(e,t,n){let r=e,o=[].concat(t).join(".").split("."),i=o.slice(-1)[0];for(var s=0,u=o.length-1;s<u;s++)void 0===r[o[s]]&&(r[o[s]]={}),r=r[o[s]];return r[i]=n,n}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.unmount=function e(t){const n=t.childNodes,o=r.MOUNTED.indexOf(t);if(n&&-1!==o){r.MOUNTED.splice(o,1),t.trigger("unmount");for(var i=0,s=n.length;i<s;i++)e(n[i])}};var r=n(6)},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(56);Object.keys(r).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return r[e]}})});var o=n(57);Object.keys(o).forEach(function(e){"default"!==e&&"__esModule"!==e&&Object.defineProperty(t,e,{enumerable:!0,get:function(){return o[e]}})})},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.Html=void 0;var r=n(0),o=u(n(5)),i=u(n(1)),s=n(3);function u(e){return e&&e.__esModule?e:{default:e}}function a(e){const t=[];return t.push((0,r.el)("meta",{httpEquiv:"X-UX-Compatible",content:"IE=edge,chrome=1"}),(0,r.el)("meta",{charset:"UTF-8"})),e.supportMobile&&t.push((0,r.el)("meta",{name:"viewport",content:["width=device-width","initial-scale=1","maximum-scale=1","user-scalable=0"].join(", ")})),e.favicon&&Array.prototype.push.apply(t,e.favicon),e.scripts&&[].concat(e.scripts).forEach(e=>{t.push((0,s.isDomNode)(e)?e:(0,r.el)("script",{src:e}))}),e.styles&&[].concat(e.styles).forEach(e=>{t.push((0,s.isDomNode)(e)?e:(0,r.el)("link",{rel:"stylesheet",type:"text/css",href:e}))}),e.meta&&[].concat(e.meta).forEach(e=>{t.push(e)}),e.head&&Array.prototype.push.apply(t,e.head),e.title&&t.push((0,r.el)("title",[e.title])),(0,r.el)("head",{ref:"head"},t)}t.Html=class extends i.default{constructor(e){super(e),this.props.favicon=[],this.props.link=[],this.props.isMobile=e.isMobile,this.on("tohtml",e.onToHtml)}onToHtml(){this.trigger("tohtml")}getRefs(e){e.ref&&!this.refs[e.ref]&&(this.refs[e.ref]=e)}onAppendChildren(e){let t=-1;const n=e.length;for(;++t<n;)this.refs.body.append(e[t])}toHtml(){return"<!DOCTYPE HTML>\n"+this.node.toHtml()}title(e){this.props.title?this.refs.title.html(e):this.refs.head.append([(0,r.el)("title",{ref:"title"},[e])])}toFile(e){const t=this.toHtml();return o.default.writeFileSync(e,t),t}render(e){return(0,r.el)("html",{onToHtml:()=>this.onToHtml()},[(0,r.el)(a,e),(0,r.el)("body",{className:e.className,ref:"body"})])}}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.Css=void 0;var r=n(0),o=function(e){return e&&e.__esModule?e:{default:e}}(n(1));t.Css=class extends o.default{render(e){let t=/css$/.test(e.src)?e.src:e.src+".css";return(0,r.el)("link",{rel:"stylesheet",href:t})}}}]).default;
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/class/bus.js":
+/*!**************************!*\
+  !*** ./src/class/bus.js ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n/**\n * @param {object} props - Bus configuration options\n * @param {object} object.target - The value of 'this' on a triggered callback\n*/\nfunction Bus(props) {\n  this.target = props.target || this;\n  this.subscribers = {};\n}\n\n/**\n * @param {string} name - The name of the event\n * @param {function} callback - The callback function\n * @return {this.target}\n*/\nBus.prototype.once = function (name, callback) {\n  const once = a => {\n    this.off(name, once);\n    callback.call(this.target, a);\n  };\n  return this.on(name, once);\n};\n\n/**\n * @param {string} name - The name of the event\n * @param {function=} callback - The callback function\n * @return {this.target}\n*/\nBus.prototype.off = function (name, callback) {\n  const nameLower = name.toLowerCase().trim();\n  const index = (this.subscribers[nameLower] || []).indexOf(callback);\n  if (index > -1) {\n    this.subscribers[nameLower].splice(index, 1);\n  } else if (typeof callback === \"undefined\") {\n    this.subscribers[nameLower] = [];\n  }\n  return this.target;\n};\n\n/**\n * @param {string} name - The name of the event\n * @param {function} callback - The callback function\n * @return {this.target}\n*/\nBus.prototype.on = function (name, callback) {\n  const nameLower = name.toLowerCase().trim();\n  if (typeof callback === \"function\") {\n    this.subscribers[nameLower] = (this.subscribers[nameLower] || []).concat(callback);\n  }\n  return this.target;\n};\n\n/**\n * @param {string} name - The name of the event\n * @param {any} value - The event value on the callback\n * @return {this.target}\n*/\nBus.prototype.trigger = function (name, value) {\n  const nameLower = name.toLowerCase().trim();\n  const list = this.subscribers[nameLower] || [];\n  for (var i = 0, n = list.length; i < n; i++) {\n    list[i].call(this.target, value);\n  }\n  return this.target;\n};\n\nexports.default = Bus;\n\n//# sourceURL=webpack:///./src/class/bus.js?");
+
+/***/ }),
+
+/***/ "./src/class/component.js":
+/*!********************************!*\
+  !*** ./src/class/component.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _el = __webpack_require__(/*! ./el */ \"./src/class/el.js\");\n\nvar _el2 = _interopRequireDefault(_el);\n\nvar _bus = __webpack_require__(/*! ./bus */ \"./src/class/bus.js\");\n\nvar _bus2 = _interopRequireDefault(_bus);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction extendPrototype(method) {\n  return function () {\n    const n = arguments.length;\n    const a = new Array(n);\n    const node = this.getNode();\n    let i = -1;\n    let res;\n\n    while (++i < n) {\n      a[i] = arguments[i];\n    }\n\n    if (this.node[method]) {\n      res = this.node[method].apply(this.node, a);\n    } else {\n      res = _el2.default.prototype[method].apply(node, a);\n    }\n\n    return res === node ? this : res;\n  };\n}\n\nfunction extendElement(C) {\n  for (var k in _el2.default.prototype) {\n    if (!C.prototype[k]) {\n      C.prototype[k] = extendPrototype(k);\n    }\n  }\n  return C;\n}\n\nclass Component {\n  constructor(props) {\n    this.props = props;\n    this.ref = props.ref;\n    this.refs = {};\n    this.bus = new _bus2.default({\n      target: this\n    });\n  }\n\n  on(name, callback) {\n    this.bus.on(name, callback);\n    return this;\n  }\n\n  once(name, callback) {\n    this.bus.once(name, callback);\n    return this;\n  }\n\n  off(name, callback) {\n    this.bus.off(name, callback);\n    return this;\n  }\n\n  trigger(name, callback) {\n    this.bus.trigger(name, callback);\n    return this;\n  }\n\n  getNode() {\n    return this.node.getNode();\n  }\n\n  append(children) {\n    this.node.append(children);\n\n    for (var k in this.node.refs) {\n      if (!this.refs[k]) {\n        this.refs[k] = this.node.refs[k];\n      }\n    }\n\n    if (this.onAppendChildren) {\n      this.onAppendChildren(children);\n    }\n\n    return this;\n  }\n\n  toJSON() {\n    return {\n      tagName: this.tagName,\n      props: this.props,\n      refs: this.refs,\n      node: this.node.toJSON()\n    };\n  }\n}\n\nexports.default = extendElement(Component);\n\n//# sourceURL=webpack:///./src/class/component.js?");
+
+/***/ }),
+
+/***/ "./src/class/el.js":
+/*!*************************!*\
+  !*** ./src/class/el.js ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _predicates = __webpack_require__(/*! @predicates */ \"./src/predicates/index.js\");\n\nvar _bus = __webpack_require__(/*! ./bus */ \"./src/class/bus.js\");\n\nvar _bus2 = _interopRequireDefault(_bus);\n\nvar _addClass = __webpack_require__(/*! ./el/add-class */ \"./src/class/el/add-class.js\");\n\nvar _addClass2 = _interopRequireDefault(_addClass);\n\nvar _after = __webpack_require__(/*! ./el/after */ \"./src/class/el/after.js\");\n\nvar _after2 = _interopRequireDefault(_after);\n\nvar _appendTo = __webpack_require__(/*! ./el/append-to */ \"./src/class/el/append-to.js\");\n\nvar _appendTo2 = _interopRequireDefault(_appendTo);\n\nvar _append = __webpack_require__(/*! ./el/append */ \"./src/class/el/append.js\");\n\nvar _append2 = _interopRequireDefault(_append);\n\nvar _attr = __webpack_require__(/*! ./el/attr */ \"./src/class/el/attr.js\");\n\nvar _attr2 = _interopRequireDefault(_attr);\n\nvar _before = __webpack_require__(/*! ./el/before */ \"./src/class/el/before.js\");\n\nvar _before2 = _interopRequireDefault(_before);\n\nvar _children = __webpack_require__(/*! ./el/children */ \"./src/class/el/children.js\");\n\nvar _children2 = _interopRequireDefault(_children);\n\nvar _clone = __webpack_require__(/*! ./el/clone */ \"./src/class/el/clone.js\");\n\nvar _clone2 = _interopRequireDefault(_clone);\n\nvar _closest = __webpack_require__(/*! ./el/closest */ \"./src/class/el/closest.js\");\n\nvar _closest2 = _interopRequireDefault(_closest);\n\nvar _contains = __webpack_require__(/*! ./el/contains */ \"./src/class/el/contains.js\");\n\nvar _contains2 = _interopRequireDefault(_contains);\n\nvar _findAll = __webpack_require__(/*! ./el/find-all */ \"./src/class/el/find-all.js\");\n\nvar _findAll2 = _interopRequireDefault(_findAll);\n\nvar _find = __webpack_require__(/*! ./el/find */ \"./src/class/el/find.js\");\n\nvar _find2 = _interopRequireDefault(_find);\n\nvar _getNode = __webpack_require__(/*! ./el/get-node */ \"./src/class/el/get-node.js\");\n\nvar _getNode2 = _interopRequireDefault(_getNode);\n\nvar _html = __webpack_require__(/*! ./el/html */ \"./src/class/el/html.js\");\n\nvar _html2 = _interopRequireDefault(_html);\n\nvar _is = __webpack_require__(/*! ./el/is */ \"./src/class/el/is.js\");\n\nvar _is2 = _interopRequireDefault(_is);\n\nvar _parent = __webpack_require__(/*! ./el/parent */ \"./src/class/el/parent.js\");\n\nvar _parent2 = _interopRequireDefault(_parent);\n\nvar _parents = __webpack_require__(/*! ./el/parents */ \"./src/class/el/parents.js\");\n\nvar _parents2 = _interopRequireDefault(_parents);\n\nvar _prepend = __webpack_require__(/*! ./el/prepend */ \"./src/class/el/prepend.js\");\n\nvar _prepend2 = _interopRequireDefault(_prepend);\n\nvar _previousNodes = __webpack_require__(/*! ./el/previous-nodes */ \"./src/class/el/previous-nodes.js\");\n\nvar _previousNodes2 = _interopRequireDefault(_previousNodes);\n\nvar _previous = __webpack_require__(/*! ./el/previous */ \"./src/class/el/previous.js\");\n\nvar _previous2 = _interopRequireDefault(_previous);\n\nvar _removeChild = __webpack_require__(/*! ./el/remove-child */ \"./src/class/el/remove-child.js\");\n\nvar _removeChild2 = _interopRequireDefault(_removeChild);\n\nvar _removeClass = __webpack_require__(/*! ./el/remove-class */ \"./src/class/el/remove-class.js\");\n\nvar _removeClass2 = _interopRequireDefault(_removeClass);\n\nvar _remove = __webpack_require__(/*! ./el/remove */ \"./src/class/el/remove.js\");\n\nvar _remove2 = _interopRequireDefault(_remove);\n\nvar _replaceWith = __webpack_require__(/*! ./el/replace-with */ \"./src/class/el/replace-with.js\");\n\nvar _replaceWith2 = _interopRequireDefault(_replaceWith);\n\nvar _siblings = __webpack_require__(/*! ./el/siblings */ \"./src/class/el/siblings.js\");\n\nvar _siblings2 = _interopRequireDefault(_siblings);\n\nvar _style = __webpack_require__(/*! ./el/style */ \"./src/class/el/style.js\");\n\nvar _style2 = _interopRequireDefault(_style);\n\nvar _text = __webpack_require__(/*! ./el/text */ \"./src/class/el/text.js\");\n\nvar _text2 = _interopRequireDefault(_text);\n\nvar _toFile = __webpack_require__(/*! ./el/to-file */ \"./src/class/el/to-file.js\");\n\nvar _toFile2 = _interopRequireDefault(_toFile);\n\nvar _toHtml = __webpack_require__(/*! ./el/to-html */ \"./src/class/el/to-html.js\");\n\nvar _toHtml2 = _interopRequireDefault(_toHtml);\n\nvar _toJson = __webpack_require__(/*! ./el/to-json */ \"./src/class/el/to-json.js\");\n\nvar _toJson2 = _interopRequireDefault(_toJson);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction El() {\n  const a = [arguments[0], arguments[1], arguments[2]];\n  let tagName = \"div\";\n  let childNodes = [];\n  let props = {};\n\n  for (var i = 0, n = a.length; i < n; i++) {\n    if (typeof a[i] === \"string\") {\n      tagName = a[i];\n    } else if (Array.isArray(a[i])) {\n      childNodes = a[i];\n    } else if ((0, _predicates.isObject)(a[i])) {\n      props = a[i];\n    }\n  }\n\n  this.attributes = {\n    style: {},\n    className: [],\n    disabled: null,\n    name: null\n  };\n\n  this.ref = props.ref;\n  this.refs = {};\n  this.tagName = tagName;\n  this.node = this;\n  this.bus = new _bus2.default({ target: this });\n  this.subscribers = { render: [] };\n  this.childNodes = [];\n\n  if (props.data) {\n    for (var k in props.data) {\n      props[\"data\" + k[0].toUpperCase() + k.substring(1)] = props.data[k];\n    }\n    delete props.data;\n  }\n\n  for (k in props) {\n    if (k.substr(0, 4) === \"once\") {\n      this.once(k.substr(4).toLowerCase(), props[k]);\n    } else if (k.substr(0, 2) === \"on\") {\n      this.on(k.substr(2).toLowerCase(), props[k]);\n    } else if (k !== \"ref\" && k !== \"data\") {\n      this.attr(k, props[k]);\n    }\n  }\n\n  this.append(childNodes);\n\n  for (i = 0, n = El.__onCreate.length; i < n; i++) {\n    El.__onCreate[i].call(this);\n  }\n}\n\nEl.prototype.on = function (name, callback) {\n  this.bus.on(name, callback);\n  return this;\n};\n\nEl.prototype.once = function (name, callback) {\n  this.bus.once(name, callback);\n  return this;\n};\n\nEl.prototype.off = function (name, callback) {\n  this.bus.off(name, callback);\n  return this;\n};\n\nEl.prototype.trigger = function (name, event) {\n  this.bus.trigger(name, event);\n  return this;\n};\n\nEl.prototype.toString = function () {\n  const tagName = this.tagName[0].toUpperCase() + this.tagName.slice(1);\n  return \"[object HTML\" + tagName + \"Element]\";\n};\n\nEl.prototype.clone = (0, _clone2.default)(El);\nEl.prototype.html = (0, _html2.default)(El);\n\nEl.prototype.addClass = _addClass2.default;\nEl.prototype.after = _after2.default;\nEl.prototype.append = _append2.default;\nEl.prototype.appendTo = _appendTo2.default;\nEl.prototype.attr = _attr2.default;\nEl.prototype.before = _before2.default;\nEl.prototype.children = _children2.default;\nEl.prototype.closest = _closest2.default;\nEl.prototype.contains = _contains2.default;\nEl.prototype.find = _find2.default;\nEl.prototype.findAll = _findAll2.default;\nEl.prototype.getNode = _getNode2.default;\nEl.prototype.is = _is2.default;\nEl.prototype.parent = _parent2.default;\nEl.prototype.parents = _parents2.default;\nEl.prototype.prepend = _prepend2.default;\nEl.prototype.previous = _previous2.default;\nEl.prototype.previousNodes = _previousNodes2.default;\nEl.prototype.remove = _remove2.default;\nEl.prototype.removeChild = _removeChild2.default;\nEl.prototype.removeClass = _removeClass2.default;\nEl.prototype.replaceWith = _replaceWith2.default;\nEl.prototype.siblings = _siblings2.default;\nEl.prototype.style = _style2.default;\nEl.prototype.text = _text2.default;\nEl.prototype.toFile = _toFile2.default;\nEl.prototype.toHtml = _toHtml2.default;\nEl.prototype.toJSON = _toJson2.default;\n\nEl.__onCreate = [];\nexports.default = El;\n\n//# sourceURL=webpack:///./src/class/el.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/add-class.js":
+/*!***********************************!*\
+  !*** ./src/class/el/add-class.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = addClass;\nfunction addClass(className) {\n  var classList = this.attributes.className;\n  if (classList.indexOf(className) === -1) {\n    classList.push(className);\n  }\n  return this;\n}\n\n//# sourceURL=webpack:///./src/class/el/add-class.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/after.js":
+/*!*******************************!*\
+  !*** ./src/class/el/after.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = after;\nfunction after(target) {\n  const targetNode = target.getNode();\n  const parentNode = targetNode.parentNode;\n  const index = parentNode && parentNode.childNodes.indexOf(targetNode);\n\n  if (typeof index === \"number\") {\n    this.parentNode = parentNode;\n    parentNode.childNodes.splice(index + 1, 0, this);\n  } else {\n    throw new Error(\"Cannot insert node after \\\"\" + targetNode.tagName + \"\\\", target does have a parent.\");\n  }\n\n  return this;\n}\n\n//# sourceURL=webpack:///./src/class/el/after.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/append-to.js":
+/*!***********************************!*\
+  !*** ./src/class/el/append-to.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = appendTo;\n\nvar _tools = __webpack_require__(/*! @tools */ \"./src/tools/index.js\");\n\nfunction appendTo(parentNode) {\n  parentNode.childNodes.push(this);\n  this.parentNode = parentNode;\n  (0, _tools.mount)(this);\n  return this;\n}\n\n//# sourceURL=webpack:///./src/class/el/append-to.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/append.js":
+/*!********************************!*\
+  !*** ./src/class/el/append.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = append;\n\nvar _tools = __webpack_require__(/*! @tools */ \"./src/tools/index.js\");\n\nvar _el = __webpack_require__(/*! @class/el */ \"./src/class/el.js\");\n\nvar _el2 = _interopRequireDefault(_el);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction append(maybeArrayOfChildNodes) {\n  let childNodes = [].concat(maybeArrayOfChildNodes);\n  let i = -1;\n  const n = childNodes.length;\n\n  while (++i < n) {\n    if (childNodes[i]) {\n      let node = childNodes[i].getNode ? childNodes[i].getNode() : childNodes[i];\n\n      if (node instanceof _el2.default) {\n        if (node.parentNode) {\n          node.parentNode.removeChild(node);\n        }\n        _tools.setRefs.call(this, childNodes[i]);\n        node.parentNode = this;\n      }\n\n      this.childNodes.push(node);\n      (0, _tools.mount)(node);\n    }\n  }\n\n  return this;\n}\n\n//# sourceURL=webpack:///./src/class/el/append.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/attr.js":
+/*!******************************!*\
+  !*** ./src/class/el/attr.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _tools = __webpack_require__(/*! @tools */ \"./src/tools/index.js\");\n\nfunction getClassName(value) {\n  const classList = [].concat(value);\n  let className = [];\n  for (var i = 0, n = classList.length; i < n; i++) {\n    if (classList[i]) {\n      className = className.concat(classList[i].split(\" \"));\n    }\n  }\n  return className;\n}\n\nfunction setAttribute(node, property, value) {\n  if (typeof value === \"string\" && value === \"\") {\n    value = null;\n  }\n\n  if (attr.onAttr[property]) {\n    attr.onAttr[property].call(node, value);\n  } else if ([\"tabIndex\", \"tabindex\"].indexOf(property) > -1) {\n    node.attributes[\"tabIndex\"] = value;\n  } else if (property.slice(0, 4) === \"data\") {\n    node.attributes[(0, _tools.kebabCase)(property)] = value;\n  } else if (property === \"class\" || property === \"className\") {\n    node.attributes.className = getClassName(value);\n  } else if (property === \"style\") {\n    node.style(value);\n  } else {\n    node.attributes[property] = value;\n  }\n}\n\nfunction setAttrObject(node, props) {\n  for (var k in props) {\n    if (k.slice(0, 4) === \"once\") {\n      node.once(k.slice(4), props[k]);\n    } else if (k.slice(0, 2) === \"on\") {\n      node.on(k.slice(2), props[k]);\n    } else {\n      setAttribute(node, k, props[k]);\n    }\n  }\n}\n\nfunction getAttribute(node, property) {\n  if (property === \"class\") {\n    return node.attributes.className.join(\" \");\n  }\n  return node.attributes[property];\n}\n\nfunction attr(x, y) {\n  if (typeof x === \"object\") {\n    setAttrObject(this, x);\n    return this;\n  } else if (typeof x === \"string\" && typeof y !== \"undefined\") {\n    setAttribute(this, x, y);\n    return this;\n  } else if (typeof x === \"string\") {\n    return getAttribute(this, x);\n  }\n  return this.attributes;\n}\n\nattr.onAttr = {};\nexports.default = attr;\n\n//# sourceURL=webpack:///./src/class/el/attr.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/before.js":
+/*!********************************!*\
+  !*** ./src/class/el/before.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = before;\nfunction before(target) {\n  const targetNode = target.getNode();\n  const parentNode = targetNode.parentNode;\n  const index = parentNode && parentNode.childNodes.indexOf(targetNode);\n\n  if (typeof index === \"number\") {\n    this.parentNode = parentNode;\n    if (index > -1) {\n      parentNode.childNodes.splice(index, 0, this);\n    } else {\n      parentNode.childNodes.unshift(this);\n    }\n  } else {\n    throw new Error(\"Cannot insert node after \\\"\" + targetNode.tagName + \"\\\", target does have a parent.\");\n  }\n\n  return this;\n}\n\n//# sourceURL=webpack:///./src/class/el/before.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/children.js":
+/*!**********************************!*\
+  !*** ./src/class/el/children.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = children;\nfunction getChildren(node) {\n  let childNodes = [];\n\n  for (let i = 0, n = node.childNodes.length; i < n; i++) {\n    if (node.childNodes[i].tagName === \"fragment\") {\n      childNodes = childNodes.concat(getChildren(node.childNodes[i]));\n    } else {\n      childNodes.push(node.childNodes[i]);\n    }\n  }\n\n  return childNodes;\n}\n\nfunction queryChildren(a, b) {\n  let childNodes = getChildren(this);\n\n  if (typeof a === \"number\" && typeof b === \"number\") {\n    return childNodes.slice(a, a + b);\n  } else if (typeof a === \"number\") {\n    return childNodes[a];\n  }\n\n  return childNodes;\n}\n\nfunction children(a, b) {\n  if (Array.isArray(a)) {\n    this.childNodes = a;\n    return this;\n  }\n  return queryChildren.call(this, a, b);\n}\n\n//# sourceURL=webpack:///./src/class/el/children.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/clone.js":
+/*!*******************************!*\
+  !*** ./src/class/el/clone.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nexports.default = function (El) {\n  return function () {\n    return new El(this.tagName, (0, _tools.merge)({}, this.attributes), this.childNodes.map(c => {\n      if (typeof c === \"string\") {\n        return c;\n      } else {\n        return c.clone();\n      }\n    }));\n  };\n};\n\nvar _tools = __webpack_require__(/*! @tools */ \"./src/tools/index.js\");\n\n//# sourceURL=webpack:///./src/class/el/clone.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/closest.js":
+/*!*********************************!*\
+  !*** ./src/class/el/closest.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = closest;\nfunction closest(selector) {\n  let p = this.parentNode;\n\n  while (p) {\n    if (p.is(selector)) {\n      return p;\n    }\n    p = p.parentNode;\n  }\n\n  return false;\n}\n\n//# sourceURL=webpack:///./src/class/el/closest.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/contains.js":
+/*!**********************************!*\
+  !*** ./src/class/el/contains.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = contains;\nfunction contains(el) {\n  return !!this.find(el);\n}\n\n//# sourceURL=webpack:///./src/class/el/contains.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/find-all.js":
+/*!**********************************!*\
+  !*** ./src/class/el/find-all.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = find;\nfunction findPredicate(predicate) {\n  const found = [];\n\n  function find(node) {\n    if (predicate(node)) {\n      found.push(node);\n    }\n    for (var i = 0, n = node.childNodes.length; i < n; i++) {\n      find(node.childNodes[i]);\n    }\n  }\n\n  this.node.childNodes.forEach(find);\n  return found;\n}\n\nfunction findStringSelector(selector) {\n  const found = [];\n\n  function find(node) {\n    if (node.is && node.is(selector)) {\n      found.push(node);\n    }\n    if (node.childNodes) {\n      for (var i = 0, n = node.childNodes.length; i < n; i++) {\n        find(node.childNodes[i]);\n      }\n    }\n  }\n\n  this.node.childNodes.forEach(find);\n  return found;\n}\n\nfunction find(selector) {\n  if (typeof selector === \"string\") {\n    return findStringSelector.call(this, selector);\n  } else if (typeof selector === \"function\") {\n    return findPredicate.call(this, selector);\n  }\n  throw new Error(\"Invalid selector for 'find'\");\n}\n\n//# sourceURL=webpack:///./src/class/el/find-all.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/find.js":
+/*!******************************!*\
+  !*** ./src/class/el/find.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = find;\n\nvar _predicates = __webpack_require__(/*! @predicates */ \"./src/predicates/index.js\");\n\nfunction findPredicate(predicate) {\n  function find(node) {\n    let t;\n    if (predicate(node)) {\n      return node;\n    } else {\n      for (var i = 0, n = node.childNodes.length; i < n; i++) {\n        t = find(node.childNodes[i]);\n        if (t) {\n          return t;\n        }\n      }\n    }\n    return false;\n  }\n\n  return find(this.node);\n}\n\nfunction findStringSelector(selector) {\n  function find(node) {\n    let t;\n    if (node.is && node.is(selector)) {\n      return node;\n    } else if (node.childNodes) {\n      for (var i = 0, n = node.childNodes.length; i < n; i++) {\n        t = find(node.childNodes[i]);\n        if (t) {\n          return t;\n        }\n      }\n    }\n    return false;\n  }\n\n  return find(this.node);\n}\n\nfunction find(selector) {\n  if (typeof selector === \"string\") {\n    return findStringSelector.call(this, selector);\n  } else if (typeof selector === \"function\") {\n    return findPredicate.call(this, selector);\n  } else if ((0, _predicates.isDomNode)(selector)) {\n    return findPredicate.call(this, function (node) {\n      return node === selector;\n    });\n  }\n  throw new Error(\"Invalid selector for 'find'\");\n}\n\n//# sourceURL=webpack:///./src/class/el/find.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/get-node.js":
+/*!**********************************!*\
+  !*** ./src/class/el/get-node.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = getNode;\nfunction getNode() {\n  return this;\n}\n\n//# sourceURL=webpack:///./src/class/el/get-node.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/html.js":
+/*!******************************!*\
+  !*** ./src/class/el/html.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nexports.default = function (El) {\n  function parseEach(element) {\n    if (typeof element === \"string\") {\n      return element;\n    }\n\n    if (element.childNodes && element.childNodes.length) {\n      return new El(element.tagName, element.attributes, element.childNodes.map(parseEach));\n    }\n\n    return new El(element.tagName, element.attributes);\n  }\n\n  function parse(string) {\n    const parsed = (0, _flatmanParse2.default)(string).map(parseEach);\n    return new El(\"root\", parsed);\n  }\n\n  return function html(value) {\n    if (typeof value === \"string\") {\n      const parsed = parse(value);\n      this.childNodes = parsed.childNodes;\n      return this;\n    } else {\n      return this.children().map(child => child.toHtml ? child.toHtml() : child).join(\"\\n\");\n    }\n  };\n};\n\nvar _flatmanParse = __webpack_require__(/*! flatman-parse */ \"flatman-parse\");\n\nvar _flatmanParse2 = _interopRequireDefault(_flatmanParse);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n//# sourceURL=webpack:///./src/class/el/html.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/is.js":
+/*!****************************!*\
+  !*** ./src/class/el/is.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = is;\n\nvar _tools = __webpack_require__(/*! @tools */ \"./src/tools/index.js\");\n\nfunction isClassName(matchList) {\n  const classList = [];\n  const className = this.attributes.className;\n\n  for (var i = 0, n = className.length; i < n; i++) {\n    if (matchList.indexOf(className[i]) > -1) {\n      classList.push(className[i]);\n    }\n  }\n\n  return classList.length === matchList.length;\n}\n\nfunction elementIs(element, props) {\n  if (!element || typeof element === \"string\") {\n    return false;\n  }\n\n  if (props.tagName) {\n    if (props.tagName !== element.tagName) {\n      return false;\n    }\n  }\n\n  for (var k in props.attributes) {\n    if (k === \"class\") {\n      if (!isClassName.call(element, props.attributes[k])) {\n        return false;\n      }\n    } else if (props.attributes[k]) {\n      if (typeof props.attributes[k] === \"string\") {\n        if (props.attributes[k] !== element.attributes[k]) {\n          return false;\n        }\n      } else if (!props.attributes[k].test(element.attributes[k])) {\n        return false;\n      }\n    }\n  }\n\n  if (props.selector === \"+\") {\n    return false;\n  } else if (props.selector === \"~\") {\n    return false;\n  }\n\n  return true;\n}\n\nfunction elementPathIs(selectors) {\n  let target = this;\n  const n = selectors.length - 1;\n\n  for (var i = selectors.length - 1; i >= 0; i--) {\n    if (selectors[i].selector === \"+\") {\n      selectors.pop();\n      target = target && target.previous();\n    } else if (selectors[i].selector === \"~\") {\n      selectors.pop();\n      target = target && target.siblings().filter(x => elementIs(x, selectors[i - 1]))[0];\n    } else if (selectors[i].selector === \">\") {\n      selectors.pop();\n      target = target && target.parent();\n    } else if (elementIs(target, selectors[i])) {\n      selectors.pop();\n    } else if (target && i < n) {\n      target = target.parent();\n      i += 1;\n    } else if (i === n) {\n      return false;\n    }\n  }\n\n  return selectors.length === 0;\n}\n\nfunction isStringSelector(selector) {\n  const selectors = selector.split(\" \").map(a => (0, _tools.getSelectorObject)(a.trim()));\n  if (selectors.length === 1) {\n    return elementIs(this, selectors[0]);\n  } else {\n    return elementPathIs.call(this, selectors);\n  }\n}\n\nfunction is(selector) {\n  if (typeof selector === \"function\") {\n    return selector(this);\n  }\n  return isStringSelector.call(this, selector);\n}\n\n//# sourceURL=webpack:///./src/class/el/is.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/parent.js":
+/*!********************************!*\
+  !*** ./src/class/el/parent.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = parent;\nfunction parent() {\n  let parentNode = this.parentNode;\n\n  while (parentNode && parentNode.tagName === \"fragment\") {\n    parentNode = parentNode.parentNode;\n  }\n\n  return parentNode;\n}\n\n//# sourceURL=webpack:///./src/class/el/parent.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/parents.js":
+/*!*********************************!*\
+  !*** ./src/class/el/parents.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = parents;\nfunction parents() {\n  const parents = [];\n  let parentNode = this.parentNode;\n\n  while (parentNode) {\n    parents.push(parentNode);\n    parentNode = parentNode.parent();\n    while (parentNode && parentNode.tagName === \"fragment\") {\n      parentNode = parentNode.parent();\n    }\n  }\n\n  return parents;\n}\n\n//# sourceURL=webpack:///./src/class/el/parents.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/prepend.js":
+/*!*********************************!*\
+  !*** ./src/class/el/prepend.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = prepend;\nfunction prepend(childNodes) {\n  childNodes = [].concat(childNodes).filter(a => a);\n\n  childNodes.forEach(child => {\n    child.parentNode = this;\n  });\n\n  [].unshift.apply(this.childNodes, childNodes);\n\n  return this;\n}\n\n//# sourceURL=webpack:///./src/class/el/prepend.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/previous-nodes.js":
+/*!****************************************!*\
+  !*** ./src/class/el/previous-nodes.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = previousNodes;\nfunction previousNodes() {\n  const previousNodes = [];\n  let p = this.previous();\n  while (p) {\n    previousNodes.push(p);\n    p = p.previous();\n  }\n  return previousNodes;\n}\n\n//# sourceURL=webpack:///./src/class/el/previous-nodes.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/previous.js":
+/*!**********************************!*\
+  !*** ./src/class/el/previous.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = previous;\nfunction previous() {\n  let parentNode = this.parent();\n  let siblings = parentNode ? parentNode.children() : [];\n  let index = siblings.indexOf(this) - 1;\n\n  while (index > -1 && siblings[index].tagName === \"comment\") {\n    index -= 1;\n  }\n\n  return siblings[index] || null;\n}\n\n//# sourceURL=webpack:///./src/class/el/previous.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/remove-child.js":
+/*!**************************************!*\
+  !*** ./src/class/el/remove-child.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = removeChild;\n\nvar _tools = __webpack_require__(/*! @tools */ \"./src/tools/index.js\");\n\nfunction removeChild(element) {\n  const foundElement = this.find(element);\n  const node = foundElement && element.getNode();\n  if (node) {\n    node.parentNode.childNodes.splice(node.parentNode.childNodes.indexOf(node), 1);\n    (0, _tools.unmount)(node);\n  }\n  return this;\n}\n\n//# sourceURL=webpack:///./src/class/el/remove-child.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/remove-class.js":
+/*!**************************************!*\
+  !*** ./src/class/el/remove-class.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = removeClass;\nfunction removeClass(className) {\n  var $className = this.attributes.className;\n  $className.splice($className.indexOf(className), 1);\n  return this;\n}\n\n//# sourceURL=webpack:///./src/class/el/remove-class.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/remove.js":
+/*!********************************!*\
+  !*** ./src/class/el/remove.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = remove;\nfunction remove() {\n  this.parentNode.removeChild(this);\n  return this;\n}\n\n//# sourceURL=webpack:///./src/class/el/remove.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/replace-with.js":
+/*!**************************************!*\
+  !*** ./src/class/el/replace-with.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = replaceWith;\n\nvar _tools = __webpack_require__(/*! @tools */ \"./src/tools/index.js\");\n\nfunction replaceWith(domNode) {\n  var index;\n  if (this.parentNode) {\n    (0, _tools.unmount)(this);\n    index = this.parentNode.childNodes.indexOf(this);\n    this.parentNode.childNodes[index] = domNode;\n    (0, _tools.mount)(domNode);\n  } else {\n    Object.assign(this, domNode, { parentNode: this.parentNode });\n  }\n  return domNode;\n}\n\n//# sourceURL=webpack:///./src/class/el/replace-with.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/siblings.js":
+/*!**********************************!*\
+  !*** ./src/class/el/siblings.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = siblings;\nfunction siblings() {\n  const p = this.parent();\n  return p && p.children();\n}\n\n//# sourceURL=webpack:///./src/class/el/siblings.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/style.js":
+/*!*******************************!*\
+  !*** ./src/class/el/style.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = style;\n\nvar _tools = __webpack_require__(/*! @tools */ \"./src/tools/index.js\");\n\nconst TO_PIXEL = [\"bottom\", \"height\", \"left\", \"marginBottom\", \"marginLeft\", \"marginRight\", \"marginTop\", \"maxHeight\", \"maxWidth\", \"minHeight\", \"minWidth\", \"paddingBottom\", \"paddingLeft\", \"paddingRight\", \"paddingTop\", \"right\", \"top\", \"width\"];\n\nfunction setStyle(property, value) {\n  if (property.indexOf(\"-\") > -1) {\n    throw \"Invalid name: \" + property + \" please use the JavaScript name for the style of \\\"\" + (0, _tools.camelCase)(property) + \"\\\"\";\n  }\n  if (TO_PIXEL.includes(property) && typeof value === \"number\") {\n    this.attributes.style[property] = value + \"px\";\n  } else {\n    this.attributes.style[property] = value;\n  }\n}\n\nfunction style(property, value) {\n  if (typeof property === \"string\") {\n    if (typeof value !== \"undefined\") {\n      setStyle.call(this, property, value);\n      return this;\n    } else {\n      return this.attributes.style[property];\n    }\n  } else if (typeof property === \"object\") {\n    for (var name in property) {\n      setStyle.call(this, name, property[name]);\n    }\n  } else {\n    return this.attributes.style;\n  }\n\n  return this;\n}\n\n//# sourceURL=webpack:///./src/class/el/style.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/text.js":
+/*!******************************!*\
+  !*** ./src/class/el/text.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = text;\nfunction cleanText(string) {\n  var tab = string.split(\"\\n\").map(a => a.match(/^\\s+/m) ? a.match(/^\\s+/m)[0] : \"\").filter(a => a.length > 0).sort((a, b) => a.length - b.length)[0];\n\n  var exp = new RegExp(\"^\" + tab);\n\n  return string.split(\"\\n\").map(a => a.replace(exp, \"\")).join(\"\\n\");\n}\n\nfunction text(value) {\n  var text = [];\n\n  function getText(element) {\n    if (typeof element === \"string\") {\n      text.push(cleanText(element));\n    } else {\n      element.childNodes.forEach(getText);\n    }\n  }\n\n  if (typeof value === \"string\" || typeof value === \"number\") {\n    this.childNodes = [value.toString()];\n    return this;\n  }\n\n  getText(this);\n  return text.join(\" \");\n}\n\n//# sourceURL=webpack:///./src/class/el/text.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/to-file.js":
+/*!*********************************!*\
+  !*** ./src/class/el/to-file.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = toFile;\n\nvar _fs = __webpack_require__(/*! fs */ \"fs\");\n\nvar _fs2 = _interopRequireDefault(_fs);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction toFile(filename) {\n  const value = this.toHtml();\n  _fs2.default.writeFileSync(filename, value);\n  return value;\n}\n\n//# sourceURL=webpack:///./src/class/el/to-file.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/to-html.js":
+/*!*********************************!*\
+  !*** ./src/class/el/to-html.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = toHtml;\n\nvar _tools = __webpack_require__(/*! @tools */ \"./src/tools/index.js\");\n\nconst isOpen = {\n  \"hr\": true,\n  \"img\": true,\n  \"input\": true,\n  \"link\": true,\n  \"meta\": true\n};\n\nconst isSelfClosing = {\n  \"circle\": true,\n  \"line\": true,\n  \"ellipsis\": true,\n  \"path\": true,\n  \"polygon\": true,\n  \"rect\": true\n};\n\nconst isInline = {\n  span: true,\n  b: true,\n  strong: true,\n  i: true,\n  em: true\n};\n\nconst attrList = [\"id\", \"className\", \"name\", \"title\", \"style\"];\n\nfunction sortAttributes(a, b) {\n  const aI = attrList.indexOf(a);\n  const bI = attrList.indexOf(b);\n\n  if (aI > -1 && bI > -1) {\n    return aI - bI;\n  } else if (aI > -1) {\n    return -1;\n  } else if (bI > -1) {\n    return 1;\n  }\n  return 0;\n}\n\nfunction toHtmlStyle(value) {\n  var styles = [];\n  for (var k in value) {\n    if (typeof value[k] === \"string\" || typeof value[k] === \"number\") {\n      styles.push((0, _tools.kebabCase)(k) + \": \" + value[k]);\n    }\n  }\n  return styles.join(\";\");\n}\n\nfunction toHtmlAttribute(name, value) {\n  value = typeof value === \"number\" ? value.toString() : value;\n\n  if (typeof value === \"string\") {\n    value = value.trim();\n  }\n\n  if (name === \"style\") {\n    if (typeof value === \"object\" && Object.keys(value).length) {\n      return `${name}=\"${toHtmlStyle(value)}\"`;\n    }\n    return \"\";\n  } else if (name === \"className\") {\n    if (value.length) {\n      value = value.sort().join(\" \");\n      return `class=\"${value}\"`;\n    }\n    return \"\";\n  } else if (name === \"tabindex\") {\n    return `tabIndex=\"${value}\"`;\n  } else if (name.substr(0, 4) === \"data\") {\n    return `${(0, _tools.kebabCase)(name)}=\"${value}\"`;\n  } else if (name === \"viewBox\") {\n    return `viewBox=\"${value}\"`;\n  } else if (name.indexOf(\":\") !== -1) {\n    return `${name}=\"${value}\"`;\n  }\n  if (value && value.length) {\n    return `${(0, _tools.kebabCase)(name)}=\"${value}\"`;\n  }\n  return \"\";\n}\n\nfunction getAttr(node) {\n  const attributes = node.attributes;\n  const list = attributes ? Object.keys(attributes).sort(sortAttributes) : [];\n  let a = [];\n\n  list.forEach(function (attribute) {\n    if (typeof attributes[attribute] !== \"undefined\") {\n      a.push(toHtmlAttribute(attribute, attributes[attribute]));\n    }\n  });\n\n  a = a.filter(a => a.length);\n\n  if (a.length) {\n    return \" \" + a.join(\" \");\n  }\n\n  return \"\";\n}\n\nfunction isTextNode(node) {\n  return typeof node === \"number\" || typeof node === \"string\";\n}\n\nfunction fragmentToHtml(element, depth) {\n  let childNodes = element.childNodes;\n  const tab = new Array(depth + 1).join(\"  \");\n  const parentIsBlock = element.parentNode && !isInline[element.parentNode.tagName];\n  const hasText = childNodes.filter(isTextNode).length;\n  const length = childNodes.length;\n  return childNodes.map(function (node, i) {\n    if (node.toHtml) {\n      return node.toHtml(hasText ? 0 : depth);\n    }\n    return (i === 0 ? tab : \"\") + node + (parentIsBlock && length === 1 || length - 1 === i ? \"\\n\" : \"\");\n  }).join(\"\");\n}\n\nfunction toHtml($depth) {\n  const depth = $depth || 0;\n  const tab = new Array(depth + 1).join(\"  \");\n  const tabN = new Array(depth + 2).join(\"  \");\n  const s = [];\n  const parentIsBlock = this.parentNode && !isInline[this.parentNode.tagName];\n  const siblings = this.siblings();\n  const hasTextSibling = siblings && siblings.filter(isTextNode).length > 0;\n  const isFirst = siblings ? siblings.indexOf(this) === 0 : true;\n  const isLast = siblings ? siblings.indexOf(this) === siblings.length - 1 : true;\n  let childNodes = this.childNodes;\n\n  this.trigger(\"tohtml\");\n  if (parentIsBlock && (hasTextSibling && isFirst || !hasTextSibling)) {\n    s.push(tab);\n  }\n\n  if (this.tagName === \"xml\") {\n    s.push(\"<?\", this.tagName, getAttr(this));\n  } else {\n    s.push(\"<\", this.tagName, getAttr(this));\n  }\n\n  if (this.tagName === \"comment\") {\n    return (0, _tools.commentToHtml)(this, depth);\n  } else if (this.tagName === \"fragment\") {\n    return fragmentToHtml(this, depth);\n  } else if (isSelfClosing[this.tagName]) {\n    s.push(\"/>\");\n  } else if (isOpen[this.tagName]) {\n    s.push(\">\");\n  } else if (this.tagName === \"xml\") {\n    s.push(\"?>\");\n  } else {\n    s.push(\">\");\n    if (childNodes.length === 1 && isTextNode(childNodes[0])) {\n      childNodes = childNodes[0].toString().split(\"\\n\");\n      s.push(childNodes.length > 1 ? \"\\n\" + childNodes.map(a => tabN + a + \"\\n\").join(\"\") + tab : childNodes[0]);\n    } else if (childNodes.length) {\n      if (!isInline[this.tagName]) {\n        s.push(\"\\n\");\n      }\n\n      childNodes.forEach((node, i) => {\n        if (node.toHtml) {\n          s.push(node.toHtml(depth + 1));\n        } else {\n          if (i === 0) {\n            s.push(tabN, node);\n          } else if (!isInline[this.tagName] && i === childNodes.length - 1) {\n            s.push(node, \"\\n\");\n          } else {\n            s.push(node);\n          }\n        }\n      });\n\n      if (!isInline[this.tagName]) {\n        s.push(tab);\n      }\n    }\n    s.push(\"</\" + this.tagName + \">\");\n  }\n\n  return s.join(\"\") + (parentIsBlock && (!hasTextSibling || isLast) ? \"\\n\" : \"\");\n}\n\n//# sourceURL=webpack:///./src/class/el/to-html.js?");
+
+/***/ }),
+
+/***/ "./src/class/el/to-json.js":
+/*!*********************************!*\
+  !*** ./src/class/el/to-json.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = toJSON;\nfunction toJSON() {\n  return {\n    tagName: this.tagName,\n    attributes: this.attributes,\n    childNodes: this.childNodes\n  };\n}\n\n//# sourceURL=webpack:///./src/class/el/to-json.js?");
+
+/***/ }),
+
+/***/ "./src/components/css.js":
+/*!*******************************!*\
+  !*** ./src/components/css.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.Css = undefined;\n\nvar _tools = __webpack_require__(/*! @tools */ \"./src/tools/index.js\");\n\nvar _component = __webpack_require__(/*! @class/component */ \"./src/class/component.js\");\n\nvar _component2 = _interopRequireDefault(_component);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nclass Css extends _component2.default {\n  render(props) {\n    let file = /css$/.test(props.src) ? props.src : props.src + \".css\";\n    return (0, _tools.el)(\"link\", {\n      rel: \"stylesheet\",\n      href: file\n    });\n  }\n}\nexports.Css = Css;\n\n//# sourceURL=webpack:///./src/components/css.js?");
+
+/***/ }),
+
+/***/ "./src/components/html.js":
+/*!********************************!*\
+  !*** ./src/components/html.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.Html = undefined;\n\nvar _tools = __webpack_require__(/*! @tools */ \"./src/tools/index.js\");\n\nvar _fs = __webpack_require__(/*! fs */ \"fs\");\n\nvar _fs2 = _interopRequireDefault(_fs);\n\nvar _component = __webpack_require__(/*! @class/component */ \"./src/class/component.js\");\n\nvar _component2 = _interopRequireDefault(_component);\n\nvar _predicates = __webpack_require__(/*! @predicates */ \"./src/predicates/index.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction Head(props) {\n  const children = [];\n\n  children.push((0, _tools.el)(\"meta\", { httpEquiv: \"X-UX-Compatible\", content: \"IE=edge,chrome=1\" }), (0, _tools.el)(\"meta\", { charset: \"UTF-8\" }));\n\n  if (props.supportMobile) {\n    children.push((0, _tools.el)(\"meta\", {\n      name: \"viewport\",\n      content: [\"width=device-width\", \"initial-scale=1\", \"maximum-scale=1\", \"user-scalable=0\"].join(\", \")\n    }));\n  }\n\n  if (props.favicon) {\n    Array.prototype.push.apply(children, props.favicon);\n  }\n\n  if (props.scripts) {\n    [].concat(props.scripts).forEach(a => {\n      children.push((0, _predicates.isDomNode)(a) ? a : (0, _tools.el)(\"script\", { src: a }));\n    });\n  }\n\n  if (props.styles) {\n    [].concat(props.styles).forEach(a => {\n      children.push((0, _predicates.isDomNode)(a) ? a : (0, _tools.el)(\"link\", {\n        rel: \"stylesheet\",\n        type: \"text/css\",\n        href: a\n      }));\n    });\n  }\n\n  if (props.meta) {\n    [].concat(props.meta).forEach(a => {\n      children.push(a);\n    });\n  }\n\n  if (props.head) {\n    Array.prototype.push.apply(children, props.head);\n  }\n\n  if (props.title) {\n    children.push((0, _tools.el)(\"title\", [props.title]));\n  }\n\n  return (0, _tools.el)(\"head\", {\n    ref: \"head\"\n  }, children);\n}\n\nclass Html extends _component2.default {\n  /**\n   * @param {object} props\n   * @param {array} props.scripts\n   * @param {array} props.styles\n   * @param {boolean} props.supportMobile\n  */\n  constructor(props) {\n    super(props);\n    this.props.favicon = [];\n    this.props.link = [];\n    this.props.isMobile = props.isMobile;\n    this.on(\"tohtml\", props.onToHtml);\n  }\n\n  onToHtml() {\n    this.trigger(\"tohtml\");\n  }\n\n  getRefs(child) {\n    if (child.ref && !this.refs[child.ref]) {\n      this.refs[child.ref] = child;\n    }\n  }\n\n  onAppendChildren(children) {\n    let i = -1;\n    const n = children.length;\n    while (++i < n) {\n      this.refs.body.append(children[i]);\n    }\n  }\n\n  toHtml() {\n    return \"<!DOCTYPE HTML>\\n\" + this.node.toHtml();\n  }\n\n  title(value) {\n    if (!this.props.title) {\n      this.refs.head.append([(0, _tools.el)(\"title\", { ref: \"title\" }, [value])]);\n    } else {\n      this.refs.title.html(value);\n    }\n  }\n\n  toFile(filename) {\n    const value = this.toHtml();\n    _fs2.default.writeFileSync(filename, value);\n    return value;\n  }\n\n  render(props) {\n    return (0, _tools.el)(\"html\", {\n      onToHtml: () => this.onToHtml()\n    }, [(0, _tools.el)(Head, props), (0, _tools.el)(\"body\", {\n      className: props.className,\n      ref: \"body\"\n    })]);\n  }\n}\nexports.Html = Html;\n\n//# sourceURL=webpack:///./src/components/html.js?");
+
+/***/ }),
+
+/***/ "./src/components/index.js":
+/*!*********************************!*\
+  !*** ./src/components/index.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _html = __webpack_require__(/*! ./html */ \"./src/components/html.js\");\n\nObject.keys(_html).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _html[key];\n    }\n  });\n});\n\nvar _css = __webpack_require__(/*! ./css */ \"./src/components/css.js\");\n\nObject.keys(_css).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _css[key];\n    }\n  });\n});\n\n//# sourceURL=webpack:///./src/components/index.js?");
+
+/***/ }),
+
+/***/ "./src/constants/mounted.js":
+/*!**********************************!*\
+  !*** ./src/constants/mounted.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nvar MOUNTED = exports.MOUNTED = [];\n\n//# sourceURL=webpack:///./src/constants/mounted.js?");
+
+/***/ }),
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _tools = __webpack_require__(/*! @tools */ \"./src/tools/index.js\");\n\nvar _component = __webpack_require__(/*! @class/component */ \"./src/class/component.js\");\n\nvar _component2 = _interopRequireDefault(_component);\n\nvar _components = __webpack_require__(/*! ./components */ \"./src/components/index.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n_tools.el.Component = _component2.default;\n_tools.el.Html = _components.Html;\n_tools.el.Css = _components.Css;\n\nexports.default = _tools.el;\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/predicates/index.js":
+/*!*********************************!*\
+  !*** ./src/predicates/index.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _isDomNode = __webpack_require__(/*! ./is-dom-node */ \"./src/predicates/is-dom-node.js\");\n\nObject.keys(_isDomNode).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _isDomNode[key];\n    }\n  });\n});\n\nvar _isObject = __webpack_require__(/*! ./is-object */ \"./src/predicates/is-object.js\");\n\nObject.keys(_isObject).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _isObject[key];\n    }\n  });\n});\n\nvar _isHtmlString = __webpack_require__(/*! ./is-html-string */ \"./src/predicates/is-html-string.js\");\n\nObject.keys(_isHtmlString).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _isHtmlString[key];\n    }\n  });\n});\n\n//# sourceURL=webpack:///./src/predicates/index.js?");
+
+/***/ }),
+
+/***/ "./src/predicates/is-dom-node.js":
+/*!***************************************!*\
+  !*** ./src/predicates/is-dom-node.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.isDomNode = isDomNode;\nfunction isDomNode(x) {\n  return !!(x && typeof x.toHtml === \"function\");\n}\n\n//# sourceURL=webpack:///./src/predicates/is-dom-node.js?");
+
+/***/ }),
+
+/***/ "./src/predicates/is-html-string.js":
+/*!******************************************!*\
+  !*** ./src/predicates/is-html-string.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.isHtmlString = isHtmlString;\nfunction isHtmlString(value) {\n  return (/<[^>]+?>/.test(value)\n  );\n}\n\n//# sourceURL=webpack:///./src/predicates/is-html-string.js?");
+
+/***/ }),
+
+/***/ "./src/predicates/is-object.js":
+/*!*************************************!*\
+  !*** ./src/predicates/is-object.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.isObject = isObject;\nfunction isObject(a) {\n  return Object.prototype.toString.call(a) === \"[object Object]\";\n}\n\n//# sourceURL=webpack:///./src/predicates/is-object.js?");
+
+/***/ }),
+
+/***/ "./src/tools/camel-case.js":
+/*!*********************************!*\
+  !*** ./src/tools/camel-case.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.camelCase = camelCase;\nconst space = {\n  \" \": true,\n  \"\\t\": true,\n  \"\\n\": true,\n  \"_\": true,\n  \"-\": true\n};\n\nconst letter = {\n  \"A\": true,\n  \"B\": true,\n  \"C\": true,\n  \"D\": true,\n  \"E\": true,\n  \"F\": true,\n  \"G\": true,\n  \"H\": true,\n  \"I\": true,\n  \"J\": true,\n  \"K\": true,\n  \"L\": true,\n  \"M\": true,\n  \"N\": true,\n  \"O\": true,\n  \"P\": true,\n  \"Q\": true,\n  \"R\": true,\n  \"S\": true,\n  \"T\": true,\n  \"U\": true,\n  \"V\": true,\n  \"W\": true,\n  \"X\": true,\n  \"Y\": true,\n  \"Z\": true,\n  \"a\": true,\n  \"b\": true,\n  \"c\": true,\n  \"d\": true,\n  \"e\": true,\n  \"f\": true,\n  \"g\": true,\n  \"h\": true,\n  \"i\": true,\n  \"j\": true,\n  \"k\": true,\n  \"l\": true,\n  \"m\": true,\n  \"n\": true,\n  \"o\": true,\n  \"p\": true,\n  \"q\": true,\n  \"r\": true,\n  \"s\": true,\n  \"t\": true,\n  \"u\": true,\n  \"v\": true,\n  \"w\": true,\n  \"x\": true,\n  \"y\": true,\n  \"z\": true,\n  \"0\": true,\n  \"1\": true,\n  \"2\": true,\n  \"3\": true,\n  \"4\": true,\n  \"5\": true,\n  \"6\": true,\n  \"7\": true,\n  \"8\": true,\n  \"9\": true\n};\n\nfunction camelCase(str) {\n  let kebabbed = \"\";\n  let i = -1;\n  const n = str.length;\n  while (++i < n) {\n    if (i === 0) {\n      kebabbed += str[i].toLowerCase();\n    } else if (letter[str[i]] && space[str[i - 1]]) {\n      kebabbed += str[i].toUpperCase();\n    } else if (letter[str[i]]) {\n      kebabbed += str[i].toLowerCase();\n    }\n  }\n  return kebabbed;\n}\n\n//# sourceURL=webpack:///./src/tools/camel-case.js?");
+
+/***/ }),
+
+/***/ "./src/tools/comment-to-html.js":
+/*!**************************************!*\
+  !*** ./src/tools/comment-to-html.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.commentToHtml = commentToHtml;\nfunction commentToHtml(element, depth) {\n  const tab = new Array(depth + 1).join(\"  \");\n  const s = [];\n  let c = element.childNodes;\n\n  s[0] = tab;\n\n  if (!element.parentNode || element.parentNode.tagName !== \"comment\") {\n    s[1] = \"<!--\";\n  }\n\n  if (c.length === 1) {\n    s.push(c.map(x => x.tagName === \"comment\" ? commentToHtml(x, 0) : x.tagName ? x.toHtml() : x).join(\"\\n\"));\n  } else {\n    s.push(c.map((x, i) => {\n      const tab = i > 0 ? new Array(depth + 1).join(\"  \") + \"    \" : \"\";\n      return x.tagName === \"comment\" ? tab + commentToHtml(x, depth + 1) : x.tagName ? x.toHtml(depth + 1) : tab + x;\n    }).join(\"\\n\"));\n  }\n\n  if (!element.parentNode || element.parentNode.tagName !== \"comment\") {\n    s.push(\"-->\\n\");\n  }\n\n  return s.join(\"\");\n}\n\n//# sourceURL=webpack:///./src/tools/comment-to-html.js?");
+
+/***/ }),
+
+/***/ "./src/tools/create-component.js":
+/*!***************************************!*\
+  !*** ./src/tools/create-component.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.createComponent = createComponent;\nfunction createComponent(maybeConstructor, props, children) {\n  const isConstructor = !!maybeConstructor.prototype.toHtml;\n\n  const component = isConstructor ? new maybeConstructor(props) : maybeConstructor(props);\n\n  if (component) {\n    if (isConstructor) {\n      component.tagName = maybeConstructor;\n\n      if (maybeConstructor.prototype.render) {\n        component.node = maybeConstructor.prototype.render.call(component, props);\n        component.ref = component.ref || component.node.ref;\n\n        if (typeof component.node === \"undefined\") {\n          throw new Error(\"Component does not return a valid element.\");\n        }\n      }\n    }\n\n    if (component.node) {\n      component.getNode().on(\"mount\", function () {\n        component.onMount && component.onMount({\n          target: component.getNode()\n        });\n      });\n\n      component.getNode().on(\"unmount\", function () {\n        component.onUnmount && component.onUnmount({\n          target: component.getNode()\n        });\n      });\n\n      for (var k in component.node.refs) {\n        if (!component.refs[k]) {\n          component.refs[k] = component.node.refs[k];\n        }\n      }\n\n      component.append(children);\n    }\n\n    return component;\n  } else {\n    throw new Error(\"Invalid component, a component cannot return nothing.\");\n  }\n}\n\n//# sourceURL=webpack:///./src/tools/create-component.js?");
+
+/***/ }),
+
+/***/ "./src/tools/el.js":
+/*!*************************!*\
+  !*** ./src/tools/el.js ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.el = undefined;\n\nvar _el = __webpack_require__(/*! @class/el */ \"./src/class/el.js\");\n\nvar _el2 = _interopRequireDefault(_el);\n\nvar _component = __webpack_require__(/*! @class/component */ \"./src/class/component.js\");\n\nvar _component2 = _interopRequireDefault(_component);\n\nvar _tools = __webpack_require__(/*! @tools */ \"./src/tools/index.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction el(a, b, c) {\n  const args = [];\n\n  args[0] = typeof a === \"function\" ? a : typeof a === \"string\" ? a : \"div\";\n\n  args[1] = !Array.isArray(a) && typeof a === \"object\" ? a : !Array.isArray(b) && typeof b === \"object\" ? b : {};\n\n  args[2] = Array.isArray(a) ? a : Array.isArray(b) ? b : Array.isArray(c) ? c : [];\n\n  if (typeof a === \"function\") {\n    return (0, _tools.createComponent)(args[0], args[1], args[2]);\n  }\n\n  return new _el2.default(args[0], args[1], args[2]);\n}\n\nel.onAttr = function (name, callback) {\n  _el2.default.prototype.attr.onAttr[name.toLowerCase()] = callback;\n  return el;\n};\n\nel.defaultProps = function (props) {\n  Object.assign(_component2.default.__defaultProps, props);\n  return el;\n};\n\nel.onCreate = function (callback) {\n  _el2.default.__onCreate.push(callback);\n};\n\nel.isComponent = function (name) {\n  return !!_component2.default.lib[name];\n};\n\nel.fn = function (name, callback) {\n  _el2.default.prototype[name] = callback;\n  _component2.default.prototype[name] = _component2.default.__extend(name);\n\n  for (var k in _component2.default.lib) {\n    if (!_component2.default.lib[k].prototype[name]) {\n      _component2.default.lib[k].prototype[name] = _component2.default.prototype[name];\n    }\n  }\n};\n\nel.create = _component2.default.create;\nexports.el = el;\n\n//# sourceURL=webpack:///./src/tools/el.js?");
+
+/***/ }),
+
+/***/ "./src/tools/get-selector-group.js":
+/*!*****************************************!*\
+  !*** ./src/tools/get-selector-group.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.getSelectorGroup = getSelectorGroup;\nfunction getSelectorGroup(s) {\n  var group = [];\n  var open = false;\n  var n = s.length;\n  var i = 0;\n  var cur = \"\";\n\n  s = s.replace(/\\s+/g, \" \");\n\n  while (i < n) {\n    if (s[i] === \"[\" && s[i - 1] !== \"'\") {\n      open = true;\n      cur += s[i];\n    } else if (s[i] === \"]\" && s[i - 1] !== \"'\") {\n      open = false;\n      cur += s[i];\n    } else if (s[i] === \" \" && !open) {\n      group.push(cur);\n      cur = \"\";\n    } else {\n      cur += s[i];\n    }\n    i++;\n  }\n\n  group.push(cur);\n  return group;\n}\n\n//# sourceURL=webpack:///./src/tools/get-selector-group.js?");
+
+/***/ }),
+
+/***/ "./src/tools/get-selector-object.js":
+/*!******************************************!*\
+  !*** ./src/tools/get-selector-object.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.getSelectorObject = getSelectorObject;\nfunction getSelectorObject(selector) {\n  let classes = selector.match(/\\.[a-zA-Z0-9\\-\\_]+/g);\n  let id = selector.match(/\\#[a-zA-Z0-9\\-\\_]+/);\n  let attr = selector.match(/\\[[^\\]]+?\\]/g);\n  let tagName = selector.match(/^[a-zA-Z0-9\\-\\_]+/);\n\n  let selectorObject = {\n    selector: selector,\n    tagName: tagName ? tagName[0] : false,\n    attributes: {}\n  };\n\n  if (classes) {\n    selectorObject.attributes.class = classes.map(a => a.slice(1));\n  }\n\n  if (id) {\n    selectorObject.attributes.id = id[0].slice(1);\n  }\n\n  if (attr) {\n    attr.forEach(function (string) {\n      let value = string.match(/\\[([a-zA-Z0-9\\-\\_]+)(?:(\\*|\\^|\\$|)=([^\\]]+?)\\]|)/);\n      value[1] = value[1] === \"class\" ? \"className\" : value[1];\n      value[3] = value[3] ? value[3].slice(1, -1) : false;\n\n      if (value[2]) {\n        if (value[2] === \"*\") {\n          selectorObject.attributes[value[1]] = new RegExp(value[3]);\n        } else if (value[2] === \"^\") {\n          selectorObject.attributes[value[1]] = new RegExp(\"^\" + value[3]);\n        } else if (value[2] === \"$\") {\n          selectorObject.attributes[value[1]] = new RegExp(value[3] + \"$\");\n        }\n      } else if (value[3]) {\n        selectorObject.attributes[value[1]] = new RegExp(\"^\" + value[3] + \"$\");\n      } else {\n        selectorObject.attributes[value[1]] = new RegExp(\".+\");\n      }\n    });\n  }\n\n  return selectorObject;\n}\n\n//# sourceURL=webpack:///./src/tools/get-selector-object.js?");
+
+/***/ }),
+
+/***/ "./src/tools/get.js":
+/*!**************************!*\
+  !*** ./src/tools/get.js ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.get = get;\nfunction get(obj, path) {\n  let t = obj;\n  let p = [].concat(path).join(\".\").split(\".\");\n\n  for (var i = 0, n = p.length; i < n; i++) {\n    if (typeof t[p[i]] === \"undefined\") {\n      return t[p[i]];\n    }\n    t = t[p[i]];\n  }\n\n  return t;\n}\n\n//# sourceURL=webpack:///./src/tools/get.js?");
+
+/***/ }),
+
+/***/ "./src/tools/index.js":
+/*!****************************!*\
+  !*** ./src/tools/index.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _commentToHtml = __webpack_require__(/*! ./comment-to-html */ \"./src/tools/comment-to-html.js\");\n\nObject.keys(_commentToHtml).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _commentToHtml[key];\n    }\n  });\n});\n\nvar _createComponent = __webpack_require__(/*! ./create-component */ \"./src/tools/create-component.js\");\n\nObject.keys(_createComponent).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _createComponent[key];\n    }\n  });\n});\n\nvar _el = __webpack_require__(/*! ./el */ \"./src/tools/el.js\");\n\nObject.keys(_el).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _el[key];\n    }\n  });\n});\n\nvar _getSelectorGroup = __webpack_require__(/*! ./get-selector-group */ \"./src/tools/get-selector-group.js\");\n\nObject.keys(_getSelectorGroup).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _getSelectorGroup[key];\n    }\n  });\n});\n\nvar _getSelectorObject = __webpack_require__(/*! ./get-selector-object */ \"./src/tools/get-selector-object.js\");\n\nObject.keys(_getSelectorObject).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _getSelectorObject[key];\n    }\n  });\n});\n\nvar _get = __webpack_require__(/*! ./get */ \"./src/tools/get.js\");\n\nObject.keys(_get).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _get[key];\n    }\n  });\n});\n\nvar _kebabCase = __webpack_require__(/*! ./kebab-case */ \"./src/tools/kebab-case.js\");\n\nObject.keys(_kebabCase).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _kebabCase[key];\n    }\n  });\n});\n\nvar _camelCase = __webpack_require__(/*! ./camel-case */ \"./src/tools/camel-case.js\");\n\nObject.keys(_camelCase).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _camelCase[key];\n    }\n  });\n});\n\nvar _merge = __webpack_require__(/*! ./merge */ \"./src/tools/merge.js\");\n\nObject.keys(_merge).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _merge[key];\n    }\n  });\n});\n\nvar _mount = __webpack_require__(/*! ./mount */ \"./src/tools/mount.js\");\n\nObject.keys(_mount).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _mount[key];\n    }\n  });\n});\n\nvar _setRefs = __webpack_require__(/*! ./set-refs */ \"./src/tools/set-refs.js\");\n\nObject.keys(_setRefs).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _setRefs[key];\n    }\n  });\n});\n\nvar _set = __webpack_require__(/*! ./set */ \"./src/tools/set.js\");\n\nObject.keys(_set).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _set[key];\n    }\n  });\n});\n\nvar _unmount = __webpack_require__(/*! ./unmount */ \"./src/tools/unmount.js\");\n\nObject.keys(_unmount).forEach(function (key) {\n  if (key === \"default\" || key === \"__esModule\") return;\n  Object.defineProperty(exports, key, {\n    enumerable: true,\n    get: function () {\n      return _unmount[key];\n    }\n  });\n});\n\n//# sourceURL=webpack:///./src/tools/index.js?");
+
+/***/ }),
+
+/***/ "./src/tools/kebab-case.js":
+/*!*********************************!*\
+  !*** ./src/tools/kebab-case.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.kebabCase = kebabCase;\nconst space = {\n  \" \": true,\n  \"\\t\": true,\n  \"\\n\": true\n};\n\nconst upper = {\n  \"A\": true,\n  \"B\": true,\n  \"C\": true,\n  \"D\": true,\n  \"E\": true,\n  \"F\": true,\n  \"G\": true,\n  \"H\": true,\n  \"I\": true,\n  \"J\": true,\n  \"K\": true,\n  \"L\": true,\n  \"M\": true,\n  \"N\": true,\n  \"O\": true,\n  \"P\": true,\n  \"Q\": true,\n  \"R\": true,\n  \"S\": true,\n  \"T\": true,\n  \"U\": true,\n  \"V\": true,\n  \"W\": true,\n  \"X\": true,\n  \"Y\": true,\n  \"Z\": true\n};\n\nconst lower = {\n  \"a\": true,\n  \"b\": true,\n  \"c\": true,\n  \"d\": true,\n  \"e\": true,\n  \"f\": true,\n  \"g\": true,\n  \"h\": true,\n  \"i\": true,\n  \"j\": true,\n  \"k\": true,\n  \"l\": true,\n  \"m\": true,\n  \"n\": true,\n  \"o\": true,\n  \"p\": true,\n  \"q\": true,\n  \"r\": true,\n  \"s\": true,\n  \"t\": true,\n  \"u\": true,\n  \"v\": true,\n  \"w\": true,\n  \"x\": true,\n  \"y\": true,\n  \"z\": true\n};\n\nconst number = {\n  \"0\": true,\n  \"1\": true,\n  \"2\": true,\n  \"3\": true,\n  \"4\": true,\n  \"5\": true,\n  \"6\": true,\n  \"7\": true,\n  \"8\": true,\n  \"9\": true\n};\n\nfunction kebabCase(str) {\n  let kebabbed = \"\";\n  let i = -1;\n  const n = str.length;\n  while (++i < n) {\n    if (upper[str[i]]) {\n      kebabbed += (i > 0 && !space[str[i - 1]] ? \"-\" : \"\") + str[i].toLowerCase();\n    } else if (lower[str[i]] || number[str[i]] || str[i] === \"-\") {\n      kebabbed += str[i];\n    } else if (space[str[i]] && !space[str[i - 1]]) {\n      kebabbed += \"-\";\n    }\n  }\n  return kebabbed;\n}\n\n//# sourceURL=webpack:///./src/tools/kebab-case.js?");
+
+/***/ }),
+
+/***/ "./src/tools/merge.js":
+/*!****************************!*\
+  !*** ./src/tools/merge.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.merge = merge;\nfunction mergeArray(left, right) {\n  let i = -1;\n  const n = right.length;\n  while (++i < n) {\n    if (left.indexOf(right[i]) === -1) {\n      if (Array.isArray(right[i])) {\n        left.push(mergeRightToLeft([], right[i]));\n      } else if (typeof right[i] === \"object\") {\n        left.push(mergeRightToLeft({}, right[i]));\n      } else {\n        left.push(right[i]);\n      }\n    }\n  }\n  return left;\n}\n\nfunction mergeRightToLeftObject(left, right) {\n  for (var k in right) {\n    if (right.hasOwnProperty(k)) {\n      if (Array.isArray(right[k])) {\n        left[k] = merge([], left[k], right[k]);\n      } else if (typeof right[k] === \"object\") {\n        left[k] = merge({}, left[k], right[k]);\n      } else {\n        left[k] = right[k];\n      }\n    }\n  }\n  return left;\n}\n\nfunction mergeRightToLeft(left, right) {\n  if (Array.isArray(left) && Array.isArray(right)) {\n    return mergeArray(left, right);\n  } else if (typeof left === \"object\" && typeof right === \"object\") {\n    return mergeRightToLeftObject(left, right);\n  }\n  return right;\n}\n\nfunction merge(a) {\n  let i = 0;\n  const n = arguments.length;\n  if (a == null) {\n    a = {};\n  }\n  while (++i < n) {\n    if (arguments[i]) {\n      mergeRightToLeft(a, arguments[i]);\n    }\n  }\n  return a;\n}\n\n//# sourceURL=webpack:///./src/tools/merge.js?");
+
+/***/ }),
+
+/***/ "./src/tools/mount.js":
+/*!****************************!*\
+  !*** ./src/tools/mount.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.mount = mount;\n\nvar _mounted = __webpack_require__(/*! @constants/mounted */ \"./src/constants/mounted.js\");\n\nfunction mount(node, shouldMount) {\n  const children = node.childNodes;\n  let p = node.parentNode;\n\n  if (typeof shouldMount === \"undefined\") {\n    while (p && p.parentNode) {\n      p = p.parentNode;\n    }\n    shouldMount = p && p.tagName === \"html\";\n  }\n\n  if (children && shouldMount && _mounted.MOUNTED.indexOf(node) === -1) {\n    _mounted.MOUNTED.push(node);\n    node.trigger(\"mount\");\n    for (var i = 0, n = children.length; i < n; i++) {\n      mount(children[i], shouldMount);\n    }\n  }\n}\n\n//# sourceURL=webpack:///./src/tools/mount.js?");
+
+/***/ }),
+
+/***/ "./src/tools/set-refs.js":
+/*!*******************************!*\
+  !*** ./src/tools/set-refs.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.setRefs = setRefs;\nfunction setRefs(child) {\n  const cr = child.ref;\n\n  if (cr && !this.refs[cr]) {\n    this.refs[cr] = child;\n  }\n\n  for (var k in child.refs) {\n    if (!this.refs[k]) {\n      this.refs[k] = child.refs[k];\n    }\n  }\n}\n\n//# sourceURL=webpack:///./src/tools/set-refs.js?");
+
+/***/ }),
+
+/***/ "./src/tools/set.js":
+/*!**************************!*\
+  !*** ./src/tools/set.js ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.set = set;\nfunction set(obj, path, value) {\n  let t = obj;\n  let p = [].concat(path).join(\".\").split(\".\");\n  let l = p.slice(-1)[0];\n\n  for (var i = 0, n = p.length - 1; i < n; i++) {\n    if (typeof t[p[i]] === \"undefined\") {\n      t[p[i]] = {};\n    }\n    t = t[p[i]];\n  }\n\n  t[l] = value;\n  return value;\n}\n\n//# sourceURL=webpack:///./src/tools/set.js?");
+
+/***/ }),
+
+/***/ "./src/tools/unmount.js":
+/*!******************************!*\
+  !*** ./src/tools/unmount.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.unmount = unmount;\n\nvar _mounted = __webpack_require__(/*! @constants/mounted */ \"./src/constants/mounted.js\");\n\nfunction unmount(node) {\n  const children = node.childNodes;\n  const indexOf = _mounted.MOUNTED.indexOf(node);\n\n  if (children && indexOf !== -1) {\n    _mounted.MOUNTED.splice(indexOf, 1);\n\n    node.trigger(\"unmount\");\n\n    for (var i = 0, n = children.length; i < n; i++) {\n      unmount(children[i]);\n    }\n  }\n}\n\n//# sourceURL=webpack:///./src/tools/unmount.js?");
+
+/***/ }),
+
+/***/ "flatman-parse":
+/*!********************************!*\
+  !*** external "flatman-parse" ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"flatman-parse\");\n\n//# sourceURL=webpack:///external_%22flatman-parse%22?");
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"fs\");\n\n//# sourceURL=webpack:///external_%22fs%22?");
+
+/***/ })
+
+/******/ })["default"];
