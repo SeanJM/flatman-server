@@ -2,7 +2,7 @@ require("source-map-support").install();
 
 const tinyTest = require("tiny-test");
 const el = require("../src/index");
-const { Component, Html } = require("../src/index");
+const { Component } = require("../src/index");
 const fs = require("fs");
 const path = require("path");
 const toHtmlTest = require("./to-html-test");
@@ -12,6 +12,7 @@ const mountTest = require("./mount-test");
 const htmlComponentTest = require("./html-component-test");
 const higherOrderComponent = require("./higher-order-component-test");
 const refsTest = require("./refs-test");
+const removeTest = require("./remove-test");
 
 tinyTest(function (test, load) {
   class MyComponent extends Component {
@@ -69,6 +70,19 @@ tinyTest(function (test, load) {
     },
     childNodes: []
   });
+
+  test("Component slot", function () {
+    class C extends Component {
+      render() {
+        return el("div", [
+          el("div", { ref: "slot" })
+        ]);
+      }
+    }
+    const a = el("div", { className: "test" });
+    const c = el(C, [a]);
+    return c.children()[0].childNodes[0] === a;
+  }).isEqual(true);
 
   test("Node: addClass()", function () {
     const a = el("div");
@@ -456,74 +470,10 @@ tinyTest(function (test, load) {
     return a.previous() === null && c.previous() === b;
   }).isDeepEqual(true);
 
-  test("defaultProps (extended component)", function () {
-    function extendProps(C, defaultProps) {
-      return function (props) {
-        const extendedProps = Object.assign({}, defaultProps, props);
-        return el(C, extendedProps);
-      };
-    }
-
-    class T extends Component {
-      render() {
-        return el();
-      }
-    }
-
-    const ExtendedT = extendProps(T, { test: "test" });
-    return el(ExtendedT).props.test;
-  }).isDeepEqual("test");
-
   test("ref", function () {
     var a = el({ ref: "test" });
     return a.ref;
   }).isEqual("test");
-
-  test("remove()", function () {
-    const a = el();
-    const b = el();
-    const r = [];
-
-    r.push(a.childNodes.length);
-    a.append([b]);
-    r.push(a.childNodes.length);
-    b.remove();
-    r.push(a.childNodes.length);
-
-    return r;
-  }).isDeepEqual([0, 1, 0]);
-
-  test("removeChild()", function () {
-    const a = el();
-    const b = el();
-    const r = [];
-
-    r.push(a.childNodes.length);
-    a.append([b]);
-    r.push(a.childNodes.length);
-    a.removeChild(b);
-    r.push(a.childNodes.length);
-
-    return r;
-  }).isDeepEqual([0, 1, 0]);
-
-  test("removeChild() (nested)", function () {
-    const a = el();
-    const b = el();
-    const c = el();
-    const d = el();
-    const r = [];
-
-    a.append(b.append(c.append(d)));
-
-    r.push(a.childNodes.length);
-    r.push(c.childNodes.length);
-    a.removeChild(d);
-    r.push(a.childNodes.length);
-    r.push(c.childNodes.length);
-
-    return r;
-  }).isDeepEqual([1, 1, 1, 0]);
 
   test("removeClass()", function () {
     const a = el({ className: "remove dont-remove" });
@@ -610,12 +560,6 @@ tinyTest(function (test, load) {
     return a.text();
   }).isEqual("some starting text some secondary text");
 
-  test("title()", function () {
-    const a = el(Html);
-    a.title("test");
-    return a.refs.head.find("title").childNodes[0] === "test";
-  }).isEqual(true);
-
   test("toFile()", function () {
     var a = el([
       el({ className: "div-1" }, [
@@ -645,6 +589,7 @@ tinyTest(function (test, load) {
   htmlComponentTest(test);
   higherOrderComponent(test);
   refsTest(test);
+  removeTest(test);
 
   load();
 });

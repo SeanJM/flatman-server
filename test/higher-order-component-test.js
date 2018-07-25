@@ -27,4 +27,22 @@ module.exports = function (test) {
     return el(T).attr("class") === "test";
   })
     .isEqual(true);
+
+  test("HOC - defaultProps", function () {
+    function extendProps(C, defaultProps) {
+      return function (props) {
+        const extendedProps = Object.assign({}, defaultProps, props);
+        return el(C, extendedProps);
+      };
+    }
+
+    class T extends Component {
+      render() {
+        return el();
+      }
+    }
+
+    const ExtendedT = extendProps(T, { test: "test" });
+    return el(ExtendedT).props.test;
+  }).isDeepEqual("test");
 };

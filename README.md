@@ -55,11 +55,41 @@ el(Html, {
 </html>
 ```
 
-### Refs and rerouting children
+### Refs and listening for children being appended
 
-When a component receives children, it will trigger the `onAppendChildren` method, if it exists. Otherwise, the default behaviour will simply append the children to the root element (Html).
+When a component receives children, it will trigger the `onAppendChildren`.
 
-You can use the `ref` attribute to access any element directly in the `this.refs` object.
+```js
+import el, { Html, Component } from "flatman-server";
+
+class MyComponent extends Component {
+  onAppendChildren(children) {
+    let i = -1;
+    const n = children.length;
+    while (++i < n) {
+      children[i].addClass("a-class-name");
+    }
+  }
+
+  render() {
+    return el(Html, {
+      scripts: ["bundle.js"],
+      styles: "bundle.css",
+      supportMobile: true
+    }, [
+      el("div", {
+      ref: "tinyPage"
+        className: "my-tiny-page"
+      })
+    ]);
+  }
+}
+
+```
+
+### Refs and rerouting children (slot)
+
+When a component receives children, it can append to the `slot` ref if it exists. Otherwise, the default behaviour will simply append the children to the root element.
 
 ```js
 import el, { Html, Component } from "flatman-server";
@@ -76,7 +106,8 @@ class MyComponent extends Component {
       supportMobile: true
     }, [
       el("div", {
-      ref: "tinyPage"
+        // Will be appended here
+      ref: "slot"
         className: "my-tiny-page"
       })
     ]);

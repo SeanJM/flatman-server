@@ -69,7 +69,8 @@ class Component {
   }
 
   append(children) {
-    this.node.append(children);
+    const slot = this.node.refs.slot || this.node;
+    slot.append(children);
 
     for (var k in this.node.refs) {
       if (!this.refs[k]) {

@@ -135,4 +135,10 @@ module.exports = function (test) {
       "  <body></body>",
       "</html>"
     ].join("\n"));
+
+  test("title()", function () {
+    const a = el(Html);
+    a.title("test");
+    return a.refs.head.find("title").childNodes[0] === "test";
+  }).isEqual(true);
 };
