@@ -76,4 +76,17 @@ module.exports = function (test) {
       childNodes: []
     }]
   });
+
+  test("createElement - one child, string", function () {
+    return el("div", null, "text").toJSON();
+  }).isDeepEqual({
+    tagName: "div",
+    attributes: {
+      style: {},
+      className: [],
+      disabled: null,
+      name: null
+    },
+    childNodes: ["text"]
+  });
 };
