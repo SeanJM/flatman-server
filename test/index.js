@@ -38,6 +38,19 @@ tinyTest(function (test, load) {
     childNodes: []
   });
 
+  test("Create element with null attributes", function () {
+    return el("div", null, []).toJSON();
+  }).isDeepEqual({
+    tagName: "div",
+    attributes: {
+      style: {},
+      className: [],
+      disabled: null,
+      name: null
+    },
+    childNodes: []
+  });
+
   test("Create component", function () {
     let result = el(MyComponent, { className: "a" }).toJSON();
     return result;
@@ -69,6 +82,30 @@ tinyTest(function (test, load) {
       name: null
     },
     childNodes: []
+  });
+
+  test("Create component (pure function) - childNodes", function () {
+    console.log(el(PureComponent, { className: "a" }, [el("div")]).toJSON());
+    let result = el(PureComponent, { className: "a" }, [el("div")]).toJSON();
+    return result;
+  }).isDeepEqual({
+    tagName: "div",
+    attributes: {
+      style: {},
+      className: ["a"],
+      disabled: null,
+      name: null
+    },
+    childNodes: [{
+      tagName: "div",
+      attributes: {
+        style: {},
+        className: [],
+        disabled: null,
+        name: null
+      },
+      childNodes: []
+    }]
   });
 
   test("Component slot", function () {
