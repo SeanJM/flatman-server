@@ -1,5 +1,5 @@
-const el = require("../index");
-const { Component } = require("../index");
+const el = require("../src/index");
+const { Component } = require("../src/index");
 const fs = require("fs");
 const path = require("path");
 

@@ -1,8 +1,8 @@
 require("source-map-support").install();
 
 const tinyTest = require("tiny-test");
-const el = require("../index");
-const { Component, Html } = require("../index");
+const el = require("../src/index");
+const { Component, Html } = require("../src/index");
 const fs = require("fs");
 const path = require("path");
 const toHtmlTest = require("./to-html-test");

@@ -1,5 +1,5 @@
-const el = require("../index");
-const { Component } = require("../index");
+const el = require("../src/index");
+const { Component } = require("../src/index");
 
 function withProps(C) {
   return function (props) {

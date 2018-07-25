@@ -1,5 +1,5 @@
-const el = require("../index");
-const { Component, Html } = require("../index");
+const el = require("../src/index");
+const { Component, Html } = require("../src/index");
 
 module.exports = function (test) {
   test("el(Html) onMount", function () {

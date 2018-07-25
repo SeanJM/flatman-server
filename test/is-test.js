@@ -1,4 +1,4 @@
-const el = require("../index");
+const el = require("../src/index");
 
 module.exports = function (test) {
   test("is() (.a + .b div)", function () {

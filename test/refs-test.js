@@ -1,7 +1,7 @@
 require("source-map-support").install();
 
-const el = require("../index");
-const { Component } = require("../index");
+const el = require("../src/index");
+const { Component } = require("../src/index");
 
 module.exports = function (test) {
   test("Component refs", function () {
