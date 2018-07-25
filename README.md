@@ -55,39 +55,38 @@ el(Html, {
 </html>
 ```
 
-### Refs and listening for children being appended
+### Lifecycle
 
-When a component receives children, it will trigger the `onAppendChildren`.
+`onMount` and `onUnmount` work with the `Html` component. `beforeAppendChildren` and 'afterAppendChildren` work with any component.
 
 ```js
 import el, { Html, Component } from "flatman-server";
 
 class MyComponent extends Component {
-  onAppendChildren(children) {
-    let i = -1;
-    const n = children.length;
-    while (++i < n) {
-      children[i].addClass("a-class-name");
-    }
+  beforeAppendChildren(children) {
+    // Do stuff to your children, you can mutate them here
+  }
+
+  afterAppendChildren(children) {
+    // ...
+  }
+
+  onMount() {
+    // ...
+  }
+
+  onUnmount() {
+    // ...
   }
 
   render() {
-    return el(Html, {
-      scripts: ["bundle.js"],
-      styles: "bundle.css",
-      supportMobile: true
-    }, [
-      el("div", {
-      ref: "tinyPage"
-        className: "my-tiny-page"
-      })
-    ]);
+    return el();
   }
 }
 
 ```
 
-### Refs and rerouting children (slot)
+### Slots
 
 When a component receives children, it can append to the `slot` ref if it exists. Otherwise, the default behaviour will simply append the children to the root element.
 
@@ -95,10 +94,6 @@ When a component receives children, it can append to the `slot` ref if it exists
 import el, { Html, Component } from "flatman-server";
 
 class MyComponent extends Component {
-  onAppendChildren(children) {
-    this.refs.tinyPage.append(children);
-  }
-
   render() {
     return el(Html, {
       scripts: ["bundle.js"],
@@ -111,29 +106,6 @@ class MyComponent extends Component {
         className: "my-tiny-page"
       })
     ]);
-  }
-}
-
-```
-
-### Component mounted & unmounted
-
-When the root node mounts to the document, it will trigger the `onMount` method of the component. When the root node is removed, it will trigger the `onUnmount` method.
-
-```js
-import el, { Html, Component } from "flatman-server";
-
-class MyComponent extends Component {
-  onMount(e) {
-    // e.target = root node
-  }
-
-  onUnmount(e) {
-    // e.target = root node
-  }
-
-  render() {
-    return el();
   }
 }
 
