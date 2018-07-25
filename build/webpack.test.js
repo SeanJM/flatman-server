@@ -51,11 +51,13 @@ module.exports = function (__root) {
         use: {
           loader: "babel-loader",
           options: {
-            presets: [["env", {
-              targets: {
-                node: "current"
-              }
-            }]],
+            presets: [
+              ["env", {
+                targets: {
+                  node: "current"
+                }
+              }]
+            ],
             plugins: [
               "transform-object-rest-spread",
             ],
