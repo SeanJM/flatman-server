@@ -1,6 +1,6 @@
-import { unmount } from "@tools";
+const { unmount } = require("../../tools");
 
-export default function removeChild(element) {
+module.exports = function removeChild(element) {
   const foundElement = this.find(element);
   const node = foundElement && element.getNode();
   if (node) {
@@ -8,4 +8,4 @@ export default function removeChild(element) {
     unmount(node);
   }
   return this;
-}
+};

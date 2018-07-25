@@ -1,4 +1,4 @@
-export function get(obj, path) {
+module.exports = function get(obj, path) {
   let t = obj;
   let p = [].concat(path).join(".").split(".");
 
@@ -10,4 +10,4 @@ export function get(obj, path) {
   }
 
   return t;
-}
+};

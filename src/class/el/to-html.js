@@ -1,4 +1,4 @@
-import { commentToHtml, kebabCase } from "@tools";
+const { commentToHtml, kebabCase } = require("../../tools");
 
 const isOpen = {
   "hr": true,
@@ -140,7 +140,7 @@ function fragmentToHtml(element, depth) {
     .join("");
 }
 
-export default function toHtml($depth) {
+module.exports = function toHtml($depth) {
   const depth = $depth || 0;
   const tab = new Array(depth + 1).join("  ");
   const tabN = new Array(depth + 2).join("  ");
@@ -212,4 +212,4 @@ export default function toHtml($depth) {
   }
 
   return s.join("") + (parentIsBlock && (!hasTextSibling || isLast) ? "\n" : "");
-}
+};

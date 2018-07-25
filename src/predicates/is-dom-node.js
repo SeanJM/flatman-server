@@ -1,3 +1,3 @@
-export function isDomNode(x) {
+module.exports = function isDomNode(x) {
   return !!(x && typeof x.toHtml === "function");
-}
+};

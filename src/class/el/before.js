@@ -1,4 +1,4 @@
-export default function before(target) {
+module.exports = function before(target) {
   const targetNode = target.getNode();
   const parentNode = targetNode.parentNode;
   const index = parentNode && parentNode.childNodes.indexOf(targetNode);
@@ -15,4 +15,4 @@ export default function before(target) {
   }
 
   return this;
-}
+};

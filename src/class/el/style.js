@@ -1,4 +1,4 @@
-import { camelCase } from "@tools";
+const { camelCase } = require("../../tools");
 
 const TO_PIXEL = [
   "bottom",
@@ -32,7 +32,7 @@ function setStyle(property, value) {
   }
 }
 
-export default function style(property, value) {
+module.exports = function style(property, value) {
   if (typeof property === "string") {
     if (typeof value !== "undefined") {
       setStyle.call(this, property, value);
@@ -49,4 +49,4 @@ export default function style(property, value) {
   }
 
   return this;
-}
+};

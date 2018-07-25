@@ -4,15 +4,6 @@ module.exports = {
     "plugin:import/errors",
     "plugin:import/warnings"
   ],
-  "settings": {
-    "import/resolver": {
-      "webpack": {
-        "config": {
-          "resolve": require("./build/webpack.resolve")(__dirname)
-        }
-      }
-    }
-  },
   "globals": {
     "process": true,
     "require": true,
@@ -28,6 +19,7 @@ module.exports = {
     "sourceType": "module"
   },
   "rules": {
+    "import/no-unresolved": [2, { commonjs: true, amd: true }],
     "no-useless-constructor": 2,
     "no-console": [
       "off"

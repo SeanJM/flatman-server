@@ -1,6 +1,6 @@
-import el from "../index";
+const el = require("../index");
 
-export default function (test) {
+module.exports = function (test) {
   test("is() (.a + .b div)", function () {
     const a = el("table", {
       style: {
@@ -181,4 +181,4 @@ export default function (test) {
       c.is("#test"),
     ];
   }).isDeepEqual([true, true, true]);
-}
+};

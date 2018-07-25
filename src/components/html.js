@@ -1,7 +1,7 @@
-import { el } from "@tools";
-import fs from "fs";
-import Component from "@class/component";
-import { isDomNode } from "@predicates";
+const el = require("../create/create-element");
+const Component = require("../class/component");
+const fs = require("fs");
+const { isDomNode } = require("../predicates");
 
 function Head(props) {
   const children = [];
@@ -75,7 +75,7 @@ function Head(props) {
   );
 }
 
-export class Html extends Component {
+module.exports = class Html extends Component {
   /**
    * @param {object} props
    * @param {array} props.scripts
@@ -145,4 +145,4 @@ export class Html extends Component {
       ]
     );
   }
-}
+};

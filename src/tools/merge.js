@@ -1,3 +1,17 @@
+function merge(a) {
+  let i = 0;
+  const n = arguments.length;
+  if (a == null) {
+    a = {};
+  }
+  while (++i < n) {
+    if (arguments[i]) {
+      mergeRightToLeft(a, arguments[i]);
+    }
+  }
+  return a;
+}
+
 function mergeArray(left, right) {
   let i = -1;
   const n = right.length;
@@ -39,16 +53,4 @@ function mergeRightToLeft(left, right) {
   return right;
 }
 
-export function merge(a) {
-  let i = 0;
-  const n = arguments.length;
-  if (a == null) {
-    a = {};
-  }
-  while (++i < n) {
-    if (arguments[i]) {
-      mergeRightToLeft(a, arguments[i]);
-    }
-  }
-  return a;
-}
+module.exports = merge;

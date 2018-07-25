@@ -1,52 +1,11 @@
-import { isObject } from "@predicates";
-import Bus from "./bus";
-import addClass from "./el/add-class";
-import after from "./el/after";
-import appendTo from "./el/append-to";
-import append from "./el/append";
-import attr from "./el/attr";
-import before from "./el/before";
-import children from "./el/children";
-import clone from "./el/clone";
-import closest from "./el/closest";
-import contains from "./el/contains";
-import findAll from "./el/find-all";
-import find from "./el/find";
-import getNode from "./el/get-node";
-import html from "./el/html";
-import is from "./el/is";
-import parent from "./el/parent";
-import parents from "./el/parents";
-import prepend from "./el/prepend";
-import previousNodes from "./el/previous-nodes";
-import previous from "./el/previous";
-import removeChild from "./el/remove-child";
-import removeClass from "./el/remove-class";
-import remove from "./el/remove";
-import replaceWith from "./el/replace-with";
-import siblings from "./el/siblings";
-import style from "./el/style";
-import text from "./el/text";
-import toFile from "./el/to-file";
-import toHtml from "./el/to-html";
-import toJSON from "./el/to-json";
+const Bus = require("./bus");
 
-function El() {
-  const a = [arguments[0], arguments[1], arguments[2]];
-  let tagName = "div";
-  let childNodes = [];
-  let props = {};
-
-  for (var i = 0, n = a.length; i < n; i++) {
-    if (typeof a[i] === "string") {
-      tagName = a[i];
-    } else if (Array.isArray(a[i])) {
-      childNodes = a[i];
-    } else if (isObject(a[i])) {
-      props = a[i];
-    }
-  }
-
+/**
+ * @param {string} tagName - The nodes tagName
+ * @param {object} attributes - The nodes attributes
+ * @param {array} childNodes - An array of children, strings or elements
+ * */
+function El(tagName, attributes, childNodes) {
   this.attributes = {
     style: {},
     className: [],
@@ -54,7 +13,7 @@ function El() {
     name: null,
   };
 
-  this.ref = props.ref;
+  this.ref = attributes.ref;
   this.refs = {};
   this.tagName = tagName;
   this.node = this;
@@ -62,26 +21,26 @@ function El() {
   this.subscribers = { render: [] };
   this.childNodes = [];
 
-  if (props.data) {
-    for (var k in props.data) {
-      props["data" + k[0].toUpperCase() + k.substring(1)] = props.data[k];
+  if (attributes.data) {
+    for (var k in attributes.data) {
+      attributes["data" + k[0].toUpperCase() + k.substring(1)] = attributes.data[k];
     }
-    delete props.data;
+    delete attributes.data;
   }
 
-  for (k in props) {
+  for (k in attributes) {
     if (k.substr(0, 4) === "once") {
-      this.once(k.substr(4).toLowerCase(), props[k]);
+      this.once(k.substr(4).toLowerCase(), attributes[k]);
     } else if (k.substr(0, 2) === "on") {
-      this.on(k.substr(2).toLowerCase(), props[k]);
+      this.on(k.substr(2).toLowerCase(), attributes[k]);
     } else if (k !== "ref" && k !== "data") {
-      this.attr(k, props[k]);
+      this.attr(k, attributes[k]);
     }
   }
 
   this.append(childNodes);
 
-  for (i = 0, n = El.__onCreate.length; i < n; i++) {
+  for (var i = 0, n = El.__onCreate.length; i < n; i++) {
     El.__onCreate[i].call(this);
   }
 }
@@ -111,37 +70,37 @@ El.prototype.toString = function () {
   return "[object HTML" + tagName + "Element]";
 };
 
-El.prototype.clone = clone(El);
-El.prototype.html = html(El);
+El.prototype.clone = require("./el/clone")(El);
+El.prototype.append = require("./el/append")(El);
+El.prototype.html = require("./el/html")(El);
 
-El.prototype.addClass = addClass;
-El.prototype.after = after;
-El.prototype.append = append;
-El.prototype.appendTo = appendTo;
-El.prototype.attr = attr;
-El.prototype.before = before;
-El.prototype.children = children;
-El.prototype.closest = closest;
-El.prototype.contains = contains;
-El.prototype.find = find;
-El.prototype.findAll = findAll;
-El.prototype.getNode = getNode;
-El.prototype.is = is;
-El.prototype.parent = parent;
-El.prototype.parents = parents;
-El.prototype.prepend = prepend;
-El.prototype.previous = previous;
-El.prototype.previousNodes = previousNodes;
-El.prototype.remove = remove;
-El.prototype.removeChild = removeChild;
-El.prototype.removeClass = removeClass;
-El.prototype.replaceWith = replaceWith;
-El.prototype.siblings = siblings;
-El.prototype.style = style;
-El.prototype.text = text;
-El.prototype.toFile = toFile;
-El.prototype.toHtml = toHtml;
-El.prototype.toJSON = toJSON;
+El.prototype.addClass = require("./el/add-class");
+El.prototype.after = require("./el/after");
+El.prototype.appendTo = require("./el/append-to");
+El.prototype.attr = require("./el/attr");
+El.prototype.before = require("./el/before");
+El.prototype.children = require("./el/children");
+El.prototype.closest = require("./el/closest");
+El.prototype.contains = require("./el/contains");
+El.prototype.find = require("./el/find");
+El.prototype.findAll = require("./el/find-all");
+El.prototype.getNode = require("./el/get-node");
+El.prototype.is = require("./el/is");
+El.prototype.parent = require("./el/parent");
+El.prototype.parents = require("./el/parents");
+El.prototype.prepend = require("./el/prepend");
+El.prototype.previous = require("./el/previous");
+El.prototype.previousNodes = require("./el/previous-nodes");
+El.prototype.remove = require("./el/remove");
+El.prototype.removeChild = require("./el/remove-child");
+El.prototype.removeClass = require("./el/remove-class");
+El.prototype.replaceWith = require("./el/replace-with");
+El.prototype.siblings = require("./el/siblings");
+El.prototype.style = require("./el/style");
+El.prototype.text = require("./el/text");
+El.prototype.toFile = require("./el/to-file");
+El.prototype.toHtml = require("./el/to-html");
+El.prototype.toJSON = require("./el/to-json");
 
 El.__onCreate = [];
-export default El;
+module.exports = El;

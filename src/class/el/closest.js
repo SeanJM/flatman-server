@@ -1,4 +1,4 @@
-export default function closest(selector) {
+module.exports = function closest(selector) {
   let p = this.parentNode;
 
   while (p) {
@@ -9,4 +9,4 @@ export default function closest(selector) {
   }
 
   return false;
-}
+};

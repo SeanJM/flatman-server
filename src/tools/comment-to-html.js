@@ -1,4 +1,4 @@
-export function commentToHtml(element, depth) {
+module.exports = function commentToHtml(element, depth) {
   const tab = new Array(depth + 1).join("  ");
   const s = [];
   let c = element.childNodes;
@@ -31,4 +31,4 @@ export function commentToHtml(element, depth) {
   }
 
   return s.join("");
-}
+};

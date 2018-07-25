@@ -1,4 +1,4 @@
-import { kebabCase } from "@tools";
+const { kebabCase } = require("../../tools");
 
 function getClassName(value) {
   const classList = [].concat(value);
@@ -64,4 +64,4 @@ function attr(x, y) {
 }
 
 attr.onAttr = {};
-export default attr;
+module.exports = attr;

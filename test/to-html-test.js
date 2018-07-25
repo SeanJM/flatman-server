@@ -1,8 +1,9 @@
-import el, { Component } from "../index";
-import fs from "fs";
-import path from "path";
+const el = require("../index");
+const { Component } = require("../index");
+const fs = require("fs");
+const path = require("path");
 
-export default function (test) {
+module.exports = function (test) {
   test("toHtml() (fragment)", function () {
     var a = el([
       el("fragment", [
@@ -109,4 +110,4 @@ export default function (test) {
     var a = el("span");
     return a.toHtml();
   }).isEqual("<span></span>");
-}
+};

@@ -1,3 +1,3 @@
-export default function getNode() {
+module.exports = function getNode() {
   return this;
-}
+};

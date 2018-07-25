@@ -1,4 +1,4 @@
-export default function previousNodes() {
+module.exports = function previousNodes() {
   const previousNodes = [];
   let p = this.previous();
   while (p) {
@@ -6,4 +6,4 @@ export default function previousNodes() {
     p = p.previous();
   }
   return previousNodes;
-}
+};

@@ -1,13 +1,19 @@
-export * from "./comment-to-html";
-export * from "./create-component";
-export * from "./el";
-export * from "./get-selector-group";
-export * from "./get-selector-object";
-export * from "./get";
-export * from "./kebab-case";
-export * from "./camel-case";
-export * from "./merge";
-export * from "./mount";
-export * from "./set-refs";
-export * from "./set";
-export * from "./unmount";
+module.exports = {
+  commentToHtml: require("./comment-to-html"),
+
+  set: require("./set"),
+  get: require("./get"),
+
+  getCreateArguments: require("./get-create-arguments"),
+  getSelectorGroup: require("./get-selector-group"),
+  getSelectorObject: require("./get-selector-object"),
+
+  kebabCase: require("./kebab-case"),
+  camelCase: require("./camel-case"),
+
+  merge: require("./merge"),
+  mount: require("./mount"),
+  unmount: require("./unmount"),
+
+  setRefs: require("./set-refs"),
+};

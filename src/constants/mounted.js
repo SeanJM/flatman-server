@@ -1,1 +1,3 @@
-export var MOUNTED = [];
+module.exports = {
+  MOUNTED: []
+};

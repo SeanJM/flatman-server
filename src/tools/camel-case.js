@@ -71,7 +71,7 @@ const letter = {
   "9": true,
 };
 
-export function camelCase(str) {
+module.exports = function camelCase(str) {
   let kebabbed = "";
   let i = -1;
   const n = str.length;
@@ -85,4 +85,4 @@ export function camelCase(str) {
     }
   }
   return kebabbed;
-}
+};

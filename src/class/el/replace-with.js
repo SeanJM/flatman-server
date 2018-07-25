@@ -1,6 +1,6 @@
-import { mount, unmount } from "@tools";
+const { mount, unmount } = require("../../tools");
 
-export default function replaceWith(domNode) {
+module.exports = function replaceWith(domNode) {
   var index;
   if (this.parentNode) {
     unmount(this);
@@ -11,4 +11,4 @@ export default function replaceWith(domNode) {
     Object.assign(this, domNode, { parentNode: this.parentNode });
   }
   return domNode;
-}
+};

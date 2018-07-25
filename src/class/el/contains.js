@@ -1,3 +1,3 @@
-export default function contains(el) {
+module.exports = function contains(el) {
   return !!this.find(el);
-}
+};

@@ -1,6 +1,6 @@
-import { MOUNTED } from "@constants/mounted";
+const { MOUNTED } = require("../constants/mounted");
 
-export function unmount(node) {
+module.exports = function unmount(node) {
   const children = node.childNodes;
   const indexOf = MOUNTED.indexOf(node);
 
@@ -13,4 +13,4 @@ export function unmount(node) {
       unmount(children[i]);
     }
   }
-}
+};

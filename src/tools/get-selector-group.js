@@ -1,4 +1,4 @@
-export function getSelectorGroup(s) {
+module.exports = function getSelectorGroup(s) {
   var group = [];
   var open = false;
   var n = s.length;
@@ -25,4 +25,4 @@ export function getSelectorGroup(s) {
 
   group.push(cur);
   return group;
-}
+};

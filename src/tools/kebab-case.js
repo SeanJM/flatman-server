@@ -75,7 +75,7 @@ const number = {
   "9": true,
 };
 
-export function kebabCase(str) {
+module.exports = function kebabCase(str) {
   let kebabbed = "";
   let i = -1;
   const n = str.length;
@@ -89,4 +89,4 @@ export function kebabCase(str) {
     }
   }
   return kebabbed;
-}
+};

@@ -1,4 +1,4 @@
-export default function after(target) {
+module.exports = function after(target) {
   const targetNode = target.getNode();
   const parentNode = targetNode.parentNode;
   const index = parentNode && parentNode.childNodes.indexOf(targetNode);
@@ -11,4 +11,4 @@ export default function after(target) {
   }
 
   return this;
-}
+};

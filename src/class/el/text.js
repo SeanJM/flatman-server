@@ -13,7 +13,7 @@ function cleanText(string) {
   return string.split("\n").map(a => a.replace(exp, "")).join("\n");
 }
 
-export default function text(value) {
+module.exports = function text(value) {
   var text = [];
 
   function getText(element) {
@@ -31,4 +31,4 @@ export default function text(value) {
 
   getText(this);
   return text.join(" ");
-}
+};

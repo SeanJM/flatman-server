@@ -1,7 +1,7 @@
-import "source-map-support/register";
-import el, { Component } from "../index";
+const el = require("../index");
+const { Component } = require("../index");
 
-export default function (test) {
+module.exports = function (test) {
   test("find() (with string and undefined)", function () {
     const a = el();
     const b = el({ class: "test" });
@@ -109,4 +109,4 @@ export default function (test) {
     b.append(c);
     return a.contains(c);
   }).isEqual(true);
-}
+};

@@ -1,4 +1,4 @@
-export default function parents() {
+module.exports = function parents() {
   const parents = [];
   let parentNode = this.parentNode;
 
@@ -11,4 +11,4 @@ export default function parents() {
   }
 
   return parents;
-}
+};

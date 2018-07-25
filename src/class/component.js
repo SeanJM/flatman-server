@@ -1,5 +1,5 @@
-import El from "./el";
-import Bus from "./bus";
+const El = require("./el");
+const Bus = require("./bus");
 
 function extendPrototype(method) {
   return function () {
@@ -94,4 +94,4 @@ class Component {
   }
 }
 
-export default extendElement(Component);
+module.exports = extendElement(Component);

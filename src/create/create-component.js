@@ -1,4 +1,4 @@
-export function createComponent(maybeConstructor, props, children) {
+module.exports = function createComponent(maybeConstructor, props, children) {
   const isConstructor = !!maybeConstructor.prototype.toHtml;
 
   const component = isConstructor
@@ -49,4 +49,4 @@ export function createComponent(maybeConstructor, props, children) {
   } else {
     throw new Error("Invalid component, a component cannot return nothing.");
   }
-}
+};

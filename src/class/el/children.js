@@ -24,10 +24,10 @@ function queryChildren(a, b) {
   return childNodes;
 }
 
-export default function children(a, b) {
+module.exports = function children(a, b) {
   if (Array.isArray(a)) {
     this.childNodes = a;
     return this;
   }
   return queryChildren.call(this, a, b);
-}
+};

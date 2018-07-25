@@ -1,6 +1,6 @@
-import { merge } from "@tools";
+const { merge } = require("../../tools");
 
-export default function (El) {
+module.exports = function (El) {
   return function () {
     return new El(this.tagName, merge({}, this.attributes), this.childNodes.map(c => {
       if (typeof c === "string") {
@@ -10,4 +10,4 @@ export default function (El) {
       }
     }));
   };
-}
+};

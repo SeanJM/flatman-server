@@ -1,16 +1,19 @@
-import "source-map-support/register";
-import tinyTest from "tiny-test";
-import el, { Component, Html } from "../index";
-import fs from "fs";
-import path from "path";
-import toHtmlTest from "./to-html-test";
-import isTest from "./is-test";
-import containsFindTest from "./contains-find-test";
-import mountTest from "./mount-test";
-import htmlComponentTest from "./html-component-test";
-import higherOrderComponent from "./higher-order-component-test";
+require("source-map-support").install();
 
-module.exports = tinyTest(function (test, load) {
+const tinyTest = require("tiny-test");
+const el = require("../index");
+const { Component, Html } = require("../index");
+const fs = require("fs");
+const path = require("path");
+const toHtmlTest = require("./to-html-test");
+const isTest = require("./is-test");
+const containsFindTest = require("./contains-find-test");
+const mountTest = require("./mount-test");
+const htmlComponentTest = require("./html-component-test");
+const higherOrderComponent = require("./higher-order-component-test");
+const refsTest = require("./refs-test");
+
+tinyTest(function (test, load) {
   class MyComponent extends Component {
     render() {
       return el("div", { className: "a" });
@@ -311,37 +314,6 @@ module.exports = tinyTest(function (test, load) {
     "<!--line 1\n" +
     "      line 2-->\n"
   );
-
-  test("Component refs", function () {
-    class DE extends Component {
-      render() {
-        return el([
-          el({ ref: "x" }),
-          el({ ref: "y" }, [
-            el({ ref: "z" })
-          ])
-        ]);
-      }
-    }
-
-    class DA extends Component {
-      render() {
-        return el(DE);
-      }
-    }
-
-    let de = el(DE);
-    let da = el(DA);
-
-    return (
-      de.refs.x.ref === "x" &&
-      de.refs.y.ref === "y" &&
-      de.refs.z.ref === "z" &&
-      da.node.refs.x.ref === "x" &&
-      da.node.refs.y.ref === "y" &&
-      da.node.refs.z.ref === "z"
-    );
-  }).isEqual(true);
 
   test("data attribute", function () {
     const a = el({
@@ -672,6 +644,7 @@ module.exports = tinyTest(function (test, load) {
   mountTest(test);
   htmlComponentTest(test);
   higherOrderComponent(test);
+  refsTest(test);
 
   load();
 });

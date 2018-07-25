@@ -1,7 +1,7 @@
-import fs from "fs";
+const fs = require("fs");
 
-export default function toFile(filename) {
+module.exports = function toFile(filename) {
   const value = this.toHtml();
   fs.writeFileSync(filename, value);
   return value;
-}
+};

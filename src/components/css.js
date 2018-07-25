@@ -1,7 +1,7 @@
-import { el } from "@tools";
-import Component from "@class/component";
+const { el } = require("../tools");
+const Component = require("../class/component");
 
-export class Css extends Component {
+module.exports = class Css extends Component {
   render(props) {
     let file = /css$/.test(props.src)
       ? props.src
@@ -11,4 +11,4 @@ export class Css extends Component {
       href: file
     });
   }
-}
+};

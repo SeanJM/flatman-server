@@ -1,4 +1,4 @@
-export function set(obj, path, value) {
+module.exports = function set(obj, path, value) {
   let t = obj;
   let p = [].concat(path).join(".").split(".");
   let l = p.slice(-1)[0];
@@ -12,4 +12,4 @@ export function set(obj, path, value) {
 
   t[l] = value;
   return value;
-}
+};

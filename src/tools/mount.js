@@ -1,6 +1,6 @@
-import { MOUNTED } from "@constants/mounted";
+const { MOUNTED } = require("../constants/mounted");
 
-export function mount(node, shouldMount) {
+module.exports = function mount(node, shouldMount) {
   const children = node.childNodes;
   let p = node.parentNode;
 
@@ -18,4 +18,4 @@ export function mount(node, shouldMount) {
       mount(children[i], shouldMount);
     }
   }
-}
+};

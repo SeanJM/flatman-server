@@ -1,8 +1,8 @@
-import { mount } from "@tools";
+const { mount } = require("../../tools");
 
-export default function appendTo(parentNode) {
+module.exports = function appendTo(parentNode) {
   parentNode.childNodes.push(this);
   this.parentNode = parentNode;
   mount(this);
   return this;
-}
+};

@@ -1,4 +1,5 @@
-import el, { Component } from "../index";
+const el = require("../index");
+const { Component } = require("../index");
 
 function withProps(C) {
   return function (props) {
@@ -6,7 +7,7 @@ function withProps(C) {
   };
 }
 
-export default function (test) {
+module.exports = function (test) {
   test("HOC - pure function", function () {
     function Higher(props) {
       return el({ className: props.test });
@@ -26,4 +27,4 @@ export default function (test) {
     return el(T).attr("class") === "test";
   })
     .isEqual(true);
-}
+};

@@ -1,8 +1,9 @@
-import el, { Component, Html } from "../index";
-import fs from "fs";
-import path from "path";
+const el = require("../index");
+const { Component, Html } = require("../index");
+const fs = require("fs");
+const path = require("path");
 
-export default function (test) {
+module.exports = function (test) {
   test("HTML comments", function () {
     const c = el().html("<!--comment-->").children()[0];
     const a = el(Html, [c]);
@@ -134,4 +135,4 @@ export default function (test) {
       "  <body></body>",
       "</html>"
     ].join("\n"));
-}
+};

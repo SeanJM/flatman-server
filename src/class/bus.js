@@ -63,4 +63,4 @@ Bus.prototype.trigger = function (name, value) {
   return this.target;
 };
 
-export default Bus;
+module.exports = Bus;

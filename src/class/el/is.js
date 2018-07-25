@@ -1,4 +1,4 @@
-import { getSelectorObject } from "@tools";
+const { getSelectorObject } = require("../../tools");
 
 function isClassName(matchList) {
   const classList = [];
@@ -89,9 +89,9 @@ function isStringSelector(selector) {
   }
 }
 
-export default function is(selector) {
+module.exports = function is(selector) {
   if (typeof selector === "function") {
     return selector(this);
   }
   return isStringSelector.call(this, selector);
-}
+};

@@ -1,4 +1,4 @@
-export function getSelectorObject(selector) {
+module.exports = function getSelectorObject(selector) {
   let classes = selector.match(/\.[a-zA-Z0-9\-\_]+/g);
   let id = selector.match(/\#[a-zA-Z0-9\-\_]+/);
   let attr = selector.match(/\[[^\]]+?\]/g);
@@ -41,4 +41,4 @@ export function getSelectorObject(selector) {
   }
 
   return selectorObject;
-}
+};

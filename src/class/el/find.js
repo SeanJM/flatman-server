@@ -1,4 +1,4 @@
-import { isDomNode } from "@predicates";
+const { isDomNode } = require("../../predicates");
 
 function findPredicate(predicate) {
   function find(node) {
@@ -38,7 +38,7 @@ function findStringSelector(selector) {
   return find(this.node);
 }
 
-export default function find(selector) {
+module.exports = function find(selector) {
   if (typeof selector === "string") {
     return findStringSelector.call(this, selector);
   } else if (typeof selector === "function") {
@@ -49,4 +49,4 @@ export default function find(selector) {
     });
   }
   throw new Error("Invalid selector for 'find'");
-}
+};

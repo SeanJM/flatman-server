@@ -1,6 +1,7 @@
-import el, { Component, Html } from "../index";
+const el = require("../index");
+const { Component, Html } = require("../index");
 
-export default function (test) {
+module.exports = function (test) {
   test("el(Html) onMount", function () {
     let a = [false, false];
 
@@ -76,4 +77,4 @@ export default function (test) {
 
     return a[0] === a[1];
   }).isEqual(true);
-}
+};

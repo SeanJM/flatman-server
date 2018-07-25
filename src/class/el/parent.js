@@ -1,4 +1,4 @@
-export default function parent() {
+module.exports = function parent() {
   let parentNode = this.parentNode;
 
   while (parentNode && parentNode.tagName === "fragment") {
@@ -6,4 +6,4 @@ export default function parent() {
   }
 
   return parentNode;
-}
+};

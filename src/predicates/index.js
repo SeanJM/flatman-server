@@ -1,3 +1,5 @@
-export * from "./is-dom-node";
-export * from "./is-object";
-export * from "./is-html-string";
+module.exports = {
+  isDomNode: require("./is-dom-node"),
+  isObject: require("./is-object"),
+  isHtmlString: require("./is-html-string"),
+};

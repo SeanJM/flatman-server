@@ -1,2 +1,4 @@
-export * from "./html";
-export * from "./css";
+module.exports = {
+  Css: require("./css"),
+  Html: require("./html"),
+};

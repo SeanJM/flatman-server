@@ -1,4 +1,4 @@
-export function setRefs(child) {
+module.exports = function setRefs(child) {
   const cr = child && child.ref;
 
   if (cr && !this.refs[cr]) {
@@ -10,4 +10,4 @@ export function setRefs(child) {
       this.refs[k] = child.refs[k];
     }
   }
-}
+};

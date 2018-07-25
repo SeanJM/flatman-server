@@ -32,11 +32,11 @@ function findStringSelector(selector) {
   return found;
 }
 
-export default function find(selector) {
+module.exports = function find(selector) {
   if (typeof selector === "string") {
     return findStringSelector.call(this, selector);
   } else if (typeof selector === "function") {
     return findPredicate.call(this, selector);
   }
   throw new Error("Invalid selector for 'find'");
-}
+};

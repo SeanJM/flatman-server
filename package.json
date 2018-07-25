@@ -5,28 +5,17 @@
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "start": "NODE_ENV=development webpack --watch",
-    "test": "NODE_ENV=test webpack --watch"
+    "test": "nodemon test/index.js"
   },
   "main": "index.js",
   "devDependencies": {
-    "babel": "^6.23.0",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "eslint": "^3.19.0",
-    "eslint-import-resolver-webpack": "^0.10.1",
-    "eslint-plugin-dependencies": "^2.4.0",
     "eslint-plugin-import": "^2.13.0",
-    "match-file-utility": "^3.4.0",
+    "nodemon": "^1.18.3",
     "source-map-support": "^0.5.6",
-    "tiny-test": "^0.11.2",
-    "uglifyjs-webpack-plugin": "^1.2.7",
-    "webpack": "^4.16.1",
-    "webpack-cli": "^3.1.0",
-    "webpack-node-externals": "^1.7.2"
+    "tiny-test": "^0.11.2"
   },
   "dependencies": {
-    "babel-core": "^6.26.3",
     "flatman-parse": "^1.3.5"
   }
 }

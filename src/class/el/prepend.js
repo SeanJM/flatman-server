@@ -1,4 +1,4 @@
-export default function prepend(childNodes) {
+module.exports = function prepend(childNodes) {
   childNodes = []
     .concat(childNodes)
     .filter(a => a);
@@ -10,4 +10,4 @@ export default function prepend(childNodes) {
   [].unshift.apply(this.childNodes, childNodes);
 
   return this;
-}
+};
