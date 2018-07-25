@@ -1,3 +1,5 @@
+const { isDomNode } = require("../predicates");
+
 module.exports = function () {
   const args = ["div", {}, []];
   let i = -1;
@@ -8,6 +10,8 @@ module.exports = function () {
       args[0] = arguments[i];
     } else if (Array.isArray(arguments[i])) {
       args[2] = arguments[i];
+    } else if (isDomNode(arguments[i])) {
+      args[2].push(arguments[i]);
     } else if (typeof arguments[i] === "object" && arguments[i] != null) {
       args[1] = arguments[i];
     }

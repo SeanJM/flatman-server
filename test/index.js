@@ -13,6 +13,7 @@ const htmlComponentTest = require("./html-component-test");
 const higherOrderComponent = require("./higher-order-component-test");
 const refsTest = require("./refs-test");
 const removeTest = require("./remove-test");
+const createElementTest = require("./create-element-test");
 
 tinyTest(function (test, load) {
   class MyComponent extends Component {
@@ -24,32 +25,6 @@ tinyTest(function (test, load) {
   function PureComponent(props) {
     return el("div", { className: props.className });
   }
-
-  test("createNode", function () {
-    return el("div", { class: "a" }).toJSON();
-  }).isDeepEqual({
-    tagName: "div",
-    attributes: {
-      style: {},
-      className: ["a"],
-      disabled: null,
-      name: null
-    },
-    childNodes: []
-  });
-
-  test("Create element with null attributes", function () {
-    return el("div", null, []).toJSON();
-  }).isDeepEqual({
-    tagName: "div",
-    attributes: {
-      style: {},
-      className: [],
-      disabled: null,
-      name: null
-    },
-    childNodes: []
-  });
 
   test("Create component", function () {
     let result = el(MyComponent, { className: "a" }).toJSON();
@@ -85,7 +60,6 @@ tinyTest(function (test, load) {
   });
 
   test("Create component (pure function) - childNodes", function () {
-    console.log(el(PureComponent, { className: "a" }, [el("div")]).toJSON());
     let result = el(PureComponent, { className: "a" }, [el("div")]).toJSON();
     return result;
   }).isDeepEqual({
@@ -627,6 +601,7 @@ tinyTest(function (test, load) {
   higherOrderComponent(test);
   refsTest(test);
   removeTest(test);
+  createElementTest(test);
 
   load();
 });
