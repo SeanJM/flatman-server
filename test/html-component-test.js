@@ -1,7 +1,5 @@
 const el = require("../src/index");
 const { Component, Html } = require("../src/index");
-const fs = require("fs");
-const path = require("path");
 
 module.exports = function (test) {
   test("HTML comments", function () {
@@ -22,22 +20,6 @@ module.exports = function (test) {
       "  </body>",
       "</html>"
     ].join("\n"));
-
-  test("el(\'HTML\') refs", function () {
-    let html = el(Html, [
-      el("div", { ref: "div" }),
-      el("div", [el("div")]),
-      el("div")
-    ]);
-    html.refs.div.addClass("test");
-    return html.toHtml();
-  })
-    .isDeepEqual(function () {
-      return fs.readFileSync(
-        path.resolve("test/assets/el(HTML)_refs.html"),
-        "utf8"
-      );
-    });
 
   test("el(Html) - with component", function () {
     class X extends Component {

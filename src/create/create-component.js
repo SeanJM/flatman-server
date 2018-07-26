@@ -37,8 +37,14 @@ module.exports = function createComponent(maybeConstructor, props, children) {
       });
 
       for (var k in component.node.refs) {
-        if (!component.refs[k]) {
+        if (!component.refs[k])
           component.refs[k] = component.node.refs[k];
+      }
+
+      if (component.node.refs.slot) {
+        for (const k in component.node.refs.slot.refs) {
+          if (component.refs[k])
+            component.refs[k] = component.node.refs.slot.refs[k];
         }
       }
 
