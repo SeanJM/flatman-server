@@ -14,6 +14,7 @@ const higherOrderComponent = require("./higher-order-component-test");
 const refsTest = require("./refs-test");
 const removeTest = require("./remove-test");
 const createElementTest = require("./create-element-test");
+const appendTest = require("./append-test");
 
 tinyTest(function (test, load) {
   class MyComponent extends Component {
@@ -104,38 +105,6 @@ tinyTest(function (test, load) {
     const a = el(MyComponent);
     a.addClass("test");
     return a.node.attributes.className.indexOf("test") > -1;
-  }).isEqual(true);
-
-  test("Node: append()", function () {
-    const a = el();
-    const b = el();
-    const c = el();
-    a.append([b, c]);
-    return a.childNodes.length;
-  }).isEqual(2);
-
-  test("Component: append()", function () {
-    const a = el(MyComponent);
-    const b = el();
-    const c = el();
-    a.append([b, c]);
-    return a.node.childNodes.length;
-  }).isEqual(2);
-
-  test("Node: append text and node", function () {
-    const a = el(["text", el()]);
-    return (
-      a.childNodes[0] === "text" &&
-      a.childNodes[1].tagName === "div"
-    );
-  }).isEqual(true);
-
-  test("Component: append text and node", function () {
-    const a = el(MyComponent, ["text", el()]);
-    return (
-      a.children()[0] === "text" &&
-      a.children()[1].tagName === "div"
-    );
   }).isEqual(true);
 
   test("after()", function () {
@@ -592,6 +561,7 @@ tinyTest(function (test, load) {
     return a.toHtml();
   }).isEqual(fs.readFileSync(path.resolve("test/assets/toFile.html"), "utf8"));
 
+  appendTest(test);
   toHtmlTest(test);
   isTest(test);
   containsFindTest(test);
