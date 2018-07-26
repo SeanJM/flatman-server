@@ -69,16 +69,20 @@ class Component {
   }
 
   append(children) {
-    const slot = this.node.refs.slot || this.node;
+    const childNodes = [].concat(children);
+    let i = -1;
+    const n = childNodes.length;
+    const slot = this.refs.slot || this.node;
 
     if (this.beforeAppendChildren) {
       this.beforeAppendChildren(children);
     }
 
     slot.append(children);
-    for (const k in slot.refs) {
-      if (!this.refs[k]) {
-        this.refs[k] = slot.refs[k];
+    while (++i < n) {
+      for (const k in slot.refs) {
+        if (!this.refs[k])
+          this.refs[k] = slot.refs[k];
       }
     }
 
@@ -91,9 +95,8 @@ class Component {
 
   toJSON() {
     return {
-      tagName: this.tagName,
+      tagName: this.tagName.name,
       props: this.props,
-      refs: this.refs,
       node: this.node.toJSON()
     };
   }

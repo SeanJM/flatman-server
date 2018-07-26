@@ -30,9 +30,8 @@ tinyTest(function (test, load) {
     let result = el(MyComponent, { className: "a" }).toJSON();
     return result;
   }).isDeepEqual({
-    tagName: MyComponent,
+    tagName: "MyComponent",
     props: { className: "a" },
-    refs: {},
     node: {
       tagName: "div",
       attributes: {
