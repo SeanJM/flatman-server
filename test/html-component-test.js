@@ -92,11 +92,11 @@ module.exports = function (test) {
       "  <head>",
       "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
       "    <meta charset=\"UTF-8\">",
-      "    <script src=\"test.js\"></script>",
       "    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">",
       "  </head>",
       "  <body>",
       "    <div></div>",
+      "    <script src=\"test.js\"></script>",
       "  </body>",
       "</html>"
     ].join("\n"));

@@ -3,6 +3,11 @@ const Component = require("../class/component");
 const fs = require("fs");
 const { isDomNode } = require("../predicates");
 
+function getScripts(props) {
+  return props.scripts && [].concat(props.scripts)
+    .map(a => isDomNode(a) ? a : el("script", { src: a }));
+}
+
 function Head(props) {
   const children = [];
 
@@ -27,15 +32,6 @@ function Head(props) {
 
   if (props.favicon) {
     Array.prototype.push.apply(children, props.favicon);
-  }
-
-  if (props.scripts) {
-    [].concat(props.scripts).forEach(a => {
-      children.push(isDomNode(a)
-        ? a
-        : el("script", { src: a })
-      );
-    });
   }
 
   if (props.styles) {
@@ -91,6 +87,8 @@ module.exports = class Html extends Component {
   }
 
   onToHtml() {
+    this.refs.slot
+      .append(getScripts(this.props));
     this.trigger("tohtml");
   }
 
@@ -124,10 +122,9 @@ module.exports = class Html extends Component {
   }
 
   render(props) {
-    return el("html",
-      {
-        onToHtml: () => this.onToHtml()
-      },
+    return el("html", {
+      onToHtml: () => this.onToHtml()
+    },
       [
         el(Head, props),
         el("body", {
