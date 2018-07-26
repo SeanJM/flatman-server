@@ -4,7 +4,6 @@ module.exports = {
   set: require("./set"),
   get: require("./get"),
 
-  getCreateArguments: require("./get-create-arguments"),
   getSelectorGroup: require("./get-selector-group"),
   getSelectorObject: require("./get-selector-object"),
 
