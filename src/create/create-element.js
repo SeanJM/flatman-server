@@ -41,7 +41,7 @@ function createElement() {
     args[2].filter(element => (
       element != null &&
       typeof element !== "undefined" &&
-      element !== false
+      !(element === false && typeof element === "boolean")
     ));
   return new VNode(args[0], args[1], args[2]);
 }
