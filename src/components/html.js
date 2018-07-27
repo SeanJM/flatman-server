@@ -8,6 +8,23 @@ function getScripts(props) {
     .map(a => isDomNode(a) ? a : el("script", { src: a }));
 }
 
+function Body(props) {
+  const children = [].concat(props.children);
+
+  if (props.scripts) {
+    [].concat(props.scripts)
+      .forEach(a => isDomNode(a)
+        ? children.push(a)
+        : children.push(el("script", { src: a }))
+      );
+  }
+
+  return el("body", {
+    className: props.className,
+    ref: "slot"
+  }, children);
+}
+
 function Head(props) {
   const children = [];
 
@@ -83,26 +100,12 @@ module.exports = class Html extends Component {
     this.props.favicon = [];
     this.props.link = [];
     this.props.isMobile = props.isMobile;
-    this.on("tohtml", props.onToHtml);
   }
 
   onToHtml() {
     this.refs.slot
       .append(getScripts(this.props));
     this.trigger("tohtml");
-  }
-
-  getRefs(child) {
-    if (child.ref && !this.refs[child.ref]) {
-      this.refs[child.ref] = child;
-    }
-  }
-
-  toHtml() {
-    return (
-      "<!DOCTYPE HTML>\n" +
-      this.node.toHtml()
-    );
   }
 
   title(value) {
@@ -122,16 +125,15 @@ module.exports = class Html extends Component {
   }
 
   render(props) {
-    return el("html", {
-      onToHtml: () => this.onToHtml()
-    },
-      [
-        el(Head, props),
-        el("body", {
-          className: props.className,
-          ref: "slot"
-        })
-      ]
-    );
+    return el("fragment", [
+      el("doctype"),
+      el("html", {
+        onToHtml: () => this.onToHtml()
+      },
+        [
+          el(Head, props),
+          el(Body, props)
+        ]
+      )]);
   }
 };

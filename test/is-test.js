@@ -1,6 +1,17 @@
 const el = require("../src/index");
 
 module.exports = function (test) {
+  test("is()", function () {
+    var a = el({ className: "test", id: "my-id", dataTest: "my-test" });
+    var b = el({ className: "test" });
+    var c = el({ id: "test" });
+    return [
+      a.is(".test#my-id[data-test=\"my-test\"]"),
+      b.is(".test"),
+      c.is("#test"),
+    ];
+  }).isDeepEqual([true, true, true]);
+
   test("is() (.a + .b div)", function () {
     const a = el("table", {
       style: {
@@ -9,34 +20,32 @@ module.exports = function (test) {
       class: "t_p"
     });
 
+    const c = el("td");
+
     const b = el("table", {
       style: {
         fontFamily: "Arial"
       },
       class: "t_p"
-    });
-
-    const c = el("td");
+    }, el("tr", [c]));
 
     el([
       a,
-      b.append(
-        el("tr", [c])
-      ),
+      b,
       el()
     ]);
 
-    return (
-      c.is(".t_p + .t_p td") &&
-      !b.is(".t_p + .t_p td")
-    );
-  }).isEqual(true);
+    return [
+      c.is(".t_p + .t_p td"),
+      b.is(".t_p + .t_p td")
+    ];
+  }).isDeepEqual([true, false]);
 
   test("is() (.a div + div)", function () {
     const a = el();
-    const b = el();
     const c = el("table");
-    el({ class: "a" }, [a, b.append(c)]);
+    const b = el([c]);
+    el({ class: "a" }, [a, b]);
     return (
       b.is(".a div + div") &&
       !b.is(".a") &&
@@ -53,26 +62,31 @@ module.exports = function (test) {
 
   test("is() (.class1.class2)", function () {
     const a = el({ class: "class1 class2" });
-    return (
-      a.is(".class1.class2") &&
-      a.is(".class2.class1") &&
-      a.is(".class2") &&
+    return [
+      a.is(".class1.class2"),
+      a.is(".class2.class1"),
+      a.is(".class2"),
       a.is(".class1")
-    );
-  }).isEqual(true);
+    ];
+  }).isDeepEqual([
+    true,
+    true,
+    true,
+    true
+  ]);
 
   test("is() (.parent .child-2)", function () {
-    const a = el({ class: "parent" });
-    const b = el({ class: "child-1" });
     const c = el({ class: "child-2" });
-    a.append(b.append(c));
+    const b = el({ class: "child-1" }, c);
+    el({ class: "parent" }, b);
     return c.is(".parent .child-2");
   }).isEqual(() => true);
 
   test("is() (.parent .deep)", function () {
     const a = el({ class: "deep" });
-    const p = el({ class: "parent" });
-    p.append(el().append([el(), el().append(el().append(a))]));
+    el({ class: "parent" }, [
+      el([el([el([a])])])
+    ]);
     return a.is(".parent .deep");
   }).isEqual(true);
 
@@ -103,8 +117,7 @@ module.exports = function (test) {
     const a = el();
     const b = el();
     const c = el();
-    const d = el();
-    d.append([a, b, c]);
+    el([a, b, c]);
     return c.is("div + div + div");
   }).isEqual(true);
 
@@ -112,17 +125,6 @@ module.exports = function (test) {
     const a = el();
     const b = el();
     el([a, el("comment", ["a comment"]), b]);
-    return b.is("div + div");
-  }).isEqual(true);
-
-  test("is() (div + div) with fragment", function () {
-    const a = el();
-    const b = el();
-    const c = el("fragment", [a]);
-    const d = el("fragment", [b]);
-
-    el([c, el("comment", ["comment"]), d]);
-
     return b.is("div + div");
   }).isEqual(true);
 
@@ -150,9 +152,8 @@ module.exports = function (test) {
     .isEqual(false);
 
   test("is() (is string sibling)", function () {
-    const a = el();
     const b = el();
-    a.append([b, "string"]);
+    const a = el([b, "string"]);
     return [
       b.is("table + div"),
       b.is("table ~ div"),
@@ -167,18 +168,7 @@ module.exports = function (test) {
     return [
       a.is(a => a.attributes.className.indexOf("test-a") > -1),
       b.is(a => a.attributes.className.indexOf("test-b") > -1),
-      c.is(a => a.attr("id") === "test"),
-    ];
-  }).isDeepEqual([true, true, true]);
-
-  test("is()", function () {
-    var a = el({ className: "test", id: "my-id", dataTest: "my-test" });
-    var b = el({ className: "test" });
-    var c = el({ id: "test" });
-    return [
-      a.is(".test#my-id[data-test=\"my-test\"]"),
-      b.is(".test"),
-      c.is("#test"),
+      c.is(a => a.attributes.id === "test"),
     ];
   }).isDeepEqual([true, true, true]);
 };

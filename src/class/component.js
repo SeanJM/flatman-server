@@ -1,5 +1,4 @@
-const El = require("./el");
-const Bus = require("./bus");
+const VNode = require("./virtual-node");
 
 function extendPrototype(method) {
   return function () {
@@ -16,7 +15,7 @@ function extendPrototype(method) {
     if (this.node[method]) {
       res = this.node[method].apply(this.node, a);
     } else {
-      res = El.prototype[method].apply(node, a);
+      res = VNode.prototype[method].apply(node, a);
     }
 
     return res === node
@@ -26,7 +25,7 @@ function extendPrototype(method) {
 }
 
 function extendElement(C) {
-  for (var k in El.prototype) {
+  for (var k in VNode.prototype) {
     if (!C.prototype[k]) {
       C.prototype[k] = extendPrototype(k);
     }
@@ -39,58 +38,6 @@ class Component {
     this.props = props;
     this.ref = props.ref;
     this.refs = {};
-    this.bus = new Bus({
-      target: this
-    });
-  }
-
-  on(name, callback) {
-    this.bus.on(name, callback);
-    return this;
-  }
-
-  once(name, callback) {
-    this.bus.once(name, callback);
-    return this;
-  }
-
-  off(name, callback) {
-    this.bus.off(name, callback);
-    return this;
-  }
-
-  trigger(name, callback) {
-    this.bus.trigger(name, callback);
-    return this;
-  }
-
-  getNode() {
-    return this.node.getNode();
-  }
-
-  append(children) {
-    const childNodes = [].concat(children);
-    let i = -1;
-    const n = childNodes.length;
-    const slot = this.refs.slot || this.node;
-
-    if (this.beforeAppendChildren) {
-      this.beforeAppendChildren(children);
-    }
-
-    slot.append(children);
-    while (++i < n) {
-      for (const k in slot.refs) {
-        if (!this.refs[k])
-          this.refs[k] = slot.refs[k];
-      }
-    }
-
-    if (this.afterAppendChildren) {
-      this.afterAppendChildren(children);
-    }
-
-    return this;
   }
 
   toJSON() {

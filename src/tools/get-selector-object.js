@@ -11,7 +11,7 @@ module.exports = function getSelectorObject(selector) {
   };
 
   if (classes) {
-    selectorObject.attributes.class = classes.map(a => a.slice(1));
+    selectorObject.attributes.className = classes.map(a => a.slice(1));
   }
 
   if (id) {

@@ -2,25 +2,6 @@ const el = require("../src/index");
 const { Component, Html } = require("../src/index");
 
 module.exports = function (test) {
-  test("HTML comments", function () {
-    const c = el().html("<!--comment-->").children()[0];
-    const a = el(Html, [c]);
-    const str = a.toHtml();
-    return str;
-  })
-    .isEqual([
-      "<!DOCTYPE HTML>",
-      "<html>",
-      "  <head>",
-      "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
-      "    <meta charset=\"UTF-8\">",
-      "  </head>",
-      "  <body>",
-      "    <!--comment-->",
-      "  </body>",
-      "</html>"
-    ].join("\n"));
-
   test("el(Html) - with component", function () {
     class X extends Component {
       render() {
@@ -29,17 +10,16 @@ module.exports = function (test) {
     }
 
     class Y extends Component {
-      render() {
+      render(props) {
         return el(Html, [
           el(),
           el([el()]),
           el()
-        ]);
+        ].concat(props.children));
       }
     }
 
-    const a = el(Y);
-    a.append([el(X)]);
+    const a = el(Y, el(X));
     return a.toHtml();
   }).isEqual([
     "<!DOCTYPE HTML>",
@@ -49,14 +29,15 @@ module.exports = function (test) {
     "    <meta charset=\"UTF-8\">",
     "  </head>",
     "  <body>",
-    "    <div></div>",
+    "    <div/>",
     "    <div>",
-    "      <div></div>",
+    "      <div/>",
     "    </div>",
-    "    <div></div>",
-    "    <div class=\"component\"></div>",
+    "    <div/>",
+    "    <div class=\"component\"/>",
     "  </body>",
-    "</html>"
+    "</html>",
+    ""
   ].join("\n"));
 
   test("el(Html)", function () {
@@ -77,10 +58,11 @@ module.exports = function (test) {
       "    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">",
       "  </head>",
       "  <body>",
-      "    <div></div>",
-      "    <script src=\"test.js\"></script>",
+      "    <div/>",
+      "    <script src=\"test.js\"/>",
       "  </body>",
-      "</html>"
+      "</html>",
+      ""
     ].join("\n"));
 
   test("el(Html) - styles: null", function () {
@@ -96,8 +78,9 @@ module.exports = function (test) {
       "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
       "    <meta charset=\"UTF-8\">",
       "  </head>",
-      "  <body></body>",
-      "</html>"
+      "  <body/>",
+      "</html>",
+      "",
     ].join("\n"));
 
   test("el(Html) - title", function () {
@@ -112,15 +95,12 @@ module.exports = function (test) {
       "  <head>",
       "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
       "    <meta charset=\"UTF-8\">",
-      "    <title>test</title>",
+      "    <title>",
+      "      test",
+      "    </title>",
       "  </head>",
-      "  <body></body>",
-      "</html>"
+      "  <body/>",
+      "</html>",
+      ""
     ].join("\n"));
-
-  test("title()", function () {
-    const a = el(Html);
-    a.title("test");
-    return a.refs.head.find("title").childNodes[0] === "test";
-  }).isEqual(true);
 };

@@ -25,8 +25,8 @@ module.exports = function (test) {
     ]);
 
     return (
-      a.find(".test-2") === c.getNode() &&
-      a.find(".test-3") === false
+      a.find(".test-2") === c &&
+      a.find(".test-3") === null
     );
   }).isEqual(true);
 
@@ -57,7 +57,9 @@ module.exports = function (test) {
       b.append([c])
     ]);
 
-    return a.find(x => x.attributes.className[0] === "test-2") === c.getNode();
+    return a.find((x) => {
+      return x.attributes.className === "test-2";
+    }) === c;
   }).isEqual(true);
 
   test("find()", function () {

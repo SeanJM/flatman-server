@@ -1,59 +1,84 @@
 const el = require("../src/index");
-const { Component } = require("../src/index");
-const fs = require("fs");
-const path = require("path");
+const { Component, Html } = require("../src/index");
 
 module.exports = function (test) {
+  test("toHtml() (simple)", function () {
+    var a = el("span");
+    return a.toHtml();
+  }).isEqual("<span/>\n");
+
   test("toHtml() (fragment)", function () {
     var a = el([
       el("fragment", [
         "string",
-        el(),
-        el(),
         el()
       ])
     ]);
-    return a.toHtml();
-  }).isEqual("<div>\n  string<div></div><div></div><div></div>\n</div>");
+    const str = a.toHtml();
+    return str;
+  }).isEqual([
+    "<div>",
+    "  string",
+    "  <div/>",
+    "</div>",
+    ""
+  ].join("\n"));
 
   test("toHtml() input[type=\"text\"]", function () {
     return el("input", { type: "text" }).toHtml();
-  }).isEqual("<input type=\"text\">");
+  }).isEqual("<input type=\"text\">\n");
 
   test("toHtml() xml", function () {
     return el("xml", {
       version: "1.0",
       encoding: "utf-8"
     }).toHtml();
-  }).isEqual("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+  }).isEqual("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
 
   test("toHtml() multiline text", function () {
     var a = el("div", [
       "this is a line\nthis is another line\nthis is a last line",
     ]);
     return a.toHtml();
-  }).isEqual("<div>\n  this is a line\n  this is another line\n  this is a last line\n</div>");
+  }).isEqual("<div>\n  this is a line\n  this is another line\n  this is a last line\n</div>\n");
 
-  test("toHtml() text and node", function () {
+  test("toHtml() text and node (succeed)", function () {
     const a = el([
       el("strong", ["text"]),
       "text"
     ]);
-    const b = el([
+    return a.toHtml();
+  }).isDeepEqual([
+    "<div>",
+    "  <strong>",
+    "    text",
+    "  </strong>",
+    "  text",
+    "</div>",
+    "",
+  ].join("\n"));
+
+  test("toHtml() text and node (preceed)", function () {
+    const a = el([
       "text",
       el("strong", ["text"]),
     ]);
-    return [a.toHtml(), b.toHtml()];
+    return a.toHtml();
   }).isDeepEqual([
-    "<div>\n  <strong>text</strong>text\n</div>",
-    "<div>\n  text<strong>text</strong>\n</div>"
-  ]);
+    "<div>",
+    "  text",
+    "  <strong>",
+    "    text",
+    "  </strong>",
+    "</div>",
+    "",
+  ].join("\n"));
 
   test("toHtml() (xlink:href)", function () {
     return el("use", {
       "xlink:href": "#id"
     }).toHtml();
-  }).isEqual("<use xlink:href=\"#id\"></use>");
+  }).isEqual("<use xlink:href=\"#id\"/>\n");
 
   test("toHtml()", function () {
     var a = el([
@@ -74,40 +99,89 @@ module.exports = function (test) {
         el({ className: "div-3-2" })
       ])
     ]);
-
-    return a.toHtml();
-  }).isEqual(fs.readFileSync(path.resolve("test/assets/toHtml.html"), "utf8"));
-
-  test("toHtml() (Component)", function () {
-    class Splat extends Component {
-      render() {
-        return el({ className: "splat" });
-      }
-    }
-
-    const a = el([
-      el({ className: "div-1" }, [
-        el(Splat, [
-          el("span", {
-            className: "splat-child"
-          })
-        ])
-      ])
-    ]);
-
     return a.toHtml();
   }).isEqual([
     "<div>",
     "  <div class=\"div-1\">",
-    "    <div class=\"splat\">",
-    "      <span class=\"splat-child\"></span>",
+    "    <div class=\"div-1-1\">",
+    "      <span class=\"div-1-1-1\">",
+    "        <span class=\"div-1-1-1-1\"/>",
+    "      </span>",
     "    </div>",
+    "    <div class=\"div-1-2\"/>",
+    "  </div>",
+    "  <div class=\"div-2\">",
+    "    <div class=\"div-2-1\"/>",
+    "    <div class=\"div-2-2\"/>",
+    "  </div>",
+    "  <div class=\"div-3\">",
+    "    <div class=\"div-3-1\"/>",
+    "    <div class=\"div-3-2\"/>",
     "  </div>",
     "</div>",
+    ""
   ].join("\n"));
 
-  test("toHtml() (simple)", function () {
-    var a = el("span");
+  test("toHtml() (Simple component)", function () {
+    class Simple extends Component {
+      render() {
+        return el({ className: "splat" });
+      }
+    }
+    const a = el(Simple);
     return a.toHtml();
-  }).isEqual("<span></span>");
+  }).isEqual([
+    "<div class=\"splat\"/>\n",
+  ].join("\n"));
+
+  test("toHtml() (Simple nested div)", function () {
+    class Simple extends Component {
+      render(props) {
+        return el({ className: "splat" }, props.children);
+      }
+    }
+    const a = el(Simple, el());
+    return a.toHtml();
+  }).isEqual([
+    "<div class=\"splat\">",
+    "  <div/>",
+    "</div>",
+    "",
+  ].join("\n"));
+
+  test("toHtml() (lifecycle)", function () {
+    const events = [false, false];
+
+    class Simple extends Component {
+      beforeToHtml() {
+        events[0] = true;
+      }
+
+      afterToHtml() {
+        events[1] = true;
+      }
+
+      render(props) {
+        return el({ className: "splat" }, props.children);
+      }
+    }
+
+    const a = el(Simple, el());
+    a.toHtml();
+    return events;
+  }).isDeepEqual([true, true]);
+
+  test("toHtml() (custom element)", function () {
+    return el(Html).toHtml();
+  }).isDeepEqual([
+    "<!DOCTYPE HTML>",
+    "<html>",
+    "  <head>",
+    "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
+    "    <meta charset=\"UTF-8\">",
+    "  </head>",
+    "  <body/>",
+    "</html>",
+    "",
+  ].join("\n"));
 };

@@ -2,78 +2,53 @@ const el = require("../src/index");
 const Component = require("../src/class/component");
 
 module.exports = function (test) {
-  test("createElement", function () {
-    return el("div", { class: "a" }).toJSON();
+  class MyComponent extends Component {
+    render() {
+      return el("div");
+    }
+  }
+
+  test("createElement (VNode)", function () {
+    const node = el("div", { class: "a" });
+    return node.toJSON();
   }).isDeepEqual({
     tagName: "div",
     attributes: {
-      style: {},
-      className: ["a"],
-      disabled: null,
-      name: null
+      className: "a",
     },
-    childNodes: []
+    children: []
   });
 
   test("createElement - null attributes", function () {
     return el("div", null, []).toJSON();
   }).isDeepEqual({
     tagName: "div",
-    attributes: {
-      style: {},
-      className: [],
-      disabled: null,
-      name: null
-    },
-    childNodes: []
+    attributes: {},
+    children: []
   });
 
   test("createElement - one child", function () {
+    console.log(el("div", null, el("div")).toJSON());
     return el("div", null, el("div")).toJSON();
   }).isDeepEqual({
     tagName: "div",
-    attributes: {
-      style: {},
-      className: [],
-      disabled: null,
-      name: null
-    },
-    childNodes: [{
+    attributes: {},
+    children: [{
       tagName: "div",
-      attributes: {
-        style: {},
-        className: [],
-        disabled: null,
-        name: null
-      },
-      childNodes: []
+      attributes: {},
+      children: []
     }]
   });
 
   test("createElement - one child, component", function () {
-    class MyComponent extends Component {
-      render() {
-        return el("div");
-      }
-    }
     return el("div", null, el(MyComponent)).toJSON();
   }).isDeepEqual({
     tagName: "div",
-    attributes: {
-      style: {},
-      className: [],
-      disabled: null,
-      name: null
-    },
-    childNodes: [{
-      tagName: "div",
-      attributes: {
-        style: {},
-        className: [],
-        disabled: null,
-        name: null
-      },
-      childNodes: []
+    attributes: {},
+    children: [{
+      tagName: MyComponent,
+      attributes: {},
+      children: []
     }]
   });
 
@@ -81,12 +56,21 @@ module.exports = function (test) {
     return el("div", null, "text").toJSON();
   }).isDeepEqual({
     tagName: "div",
+    attributes: {},
+    children: ["text"]
+  });
+
+  test("createElement - data attributes", function () {
+    return el("div", {
+      data: {
+        id: "test"
+      }
+    }).toJSON();
+  }).isDeepEqual({
+    tagName: "div",
     attributes: {
-      style: {},
-      className: [],
-      disabled: null,
-      name: null
+      "data-id": "test"
     },
-    childNodes: ["text"]
+    children: []
   });
 };

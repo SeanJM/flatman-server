@@ -13,9 +13,9 @@ module.exports = function (test) {
       return el({ className: props.test });
     }
     const T = withProps(Higher);
-    return el(T).attr("class") === "test";
+    return el(T).toHtml();
   })
-    .isEqual(true);
+    .isEqual("<div class=\"test\"/>\n");
 
   test("HOC - component", function () {
     class Higher extends Component {
@@ -24,9 +24,9 @@ module.exports = function (test) {
       }
     }
     const T = withProps(Higher);
-    return el(T).attr("class") === "test";
+    return el(T).toHtml();
   })
-    .isEqual(true);
+    .isEqual("<div class=\"test\"/>\n");
 
   test("HOC - defaultProps", function () {
     function extendProps(C, defaultProps) {
@@ -37,12 +37,12 @@ module.exports = function (test) {
     }
 
     class T extends Component {
-      render() {
-        return el();
+      render(props) {
+        return el("div", { className: props.test });
       }
     }
 
     const ExtendedT = extendProps(T, { test: "test" });
-    return el(ExtendedT).props.test;
-  }).isDeepEqual("test");
+    return el(ExtendedT).toHtml();
+  }).isDeepEqual("<div class=\"test\"/>\n");
 };
