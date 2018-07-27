@@ -1,7 +1,7 @@
 {
   "name": "flatman-server",
   "description": "A script which generates HTML on the server or writes that HTML to a document.",
-  "version": "1.2.23",
+  "version": "2.0.0",
   "scripts": {
     "test": "nodemon test/index.js"
   },
