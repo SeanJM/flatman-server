@@ -37,6 +37,12 @@ function createElement() {
   }
 
   args[1] = filterCreatedAttributes(args[1]);
+  args[2] =
+    args[2].filter(element => (
+      element != null &&
+      typeof element !== "undefined" &&
+      element !== false
+    ));
   return new VNode(args[0], args[1], args[2]);
 }
 
