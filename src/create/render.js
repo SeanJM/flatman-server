@@ -161,9 +161,11 @@ function nodeToHtml(node, depth) {
       if (childVNode.tagName) {
         s.push(elementToHtml(childVNode, depth + 1));
       } else {
-        childVNode.split("\n").forEach(string => {
-          s.push(new Array(depth + 2).join("  "), string, "\n");
-        });
+        (typeof childVNode === "number" ? childVNode + "" : childVNode)
+          .split("\n")
+          .forEach(string => {
+            s.push(new Array(depth + 2).join("  "), string, "\n");
+          });
       }
     });
 
