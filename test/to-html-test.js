@@ -1,10 +1,10 @@
 const el = require("../src/index");
-const { Component, Html } = require("../src/index");
+const { Component, Html, render } = require("../src/index");
 
 module.exports = function (test) {
   test("toHtml() (simple)", function () {
     var a = el("span");
-    return a.toHtml();
+    return render(a);
   }).isEqual("<span/>\n");
 
   test("toHtml() (fragment)", function () {
@@ -14,7 +14,7 @@ module.exports = function (test) {
         el()
       ])
     ]);
-    const str = a.toHtml();
+    const str = render(a);
     return str;
   }).isEqual([
     "<div>",
@@ -25,29 +25,42 @@ module.exports = function (test) {
   ].join("\n"));
 
   test("toHtml() input[type=\"text\"]", function () {
-    return el("input", { type: "text" }).toHtml();
-  }).isEqual("<input type=\"text\">\n");
+    return render(
+      el("input", { type: "text" })
+    );
+  }).isEqual(
+    "<input type=\"text\">\n"
+  );
 
   test("toHtml() xml", function () {
-    return el("xml", {
+    return render(el("xml", {
       version: "1.0",
       encoding: "utf-8"
-    }).toHtml();
-  }).isEqual("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+    }));
+  }).isEqual(
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+  );
 
   test("toHtml() multiline text", function () {
     var a = el("div", [
       "this is a line\nthis is another line\nthis is a last line",
     ]);
-    return a.toHtml();
-  }).isEqual("<div>\n  this is a line\n  this is another line\n  this is a last line\n</div>\n");
+    return render(a);
+  }).isEqual([
+    "<div>",
+    "  this is a line",
+    "  this is another line",
+    "  this is a last line",
+    "</div>",
+    "",
+  ].join("\n"));
 
   test("toHtml() text and node (succeed)", function () {
     const a = el([
       el("strong", ["text"]),
       "text"
     ]);
-    return a.toHtml();
+    return render(a);
   }).isDeepEqual([
     "<div>",
     "  <strong>",
@@ -63,7 +76,7 @@ module.exports = function (test) {
       "text",
       el("strong", ["text"]),
     ]);
-    return a.toHtml();
+    return render(a);
   }).isDeepEqual([
     "<div>",
     "  text",
@@ -75,9 +88,7 @@ module.exports = function (test) {
   ].join("\n"));
 
   test("toHtml() (xlink:href)", function () {
-    return el("use", {
-      "xlink:href": "#id"
-    }).toHtml();
+    return render(el("use", { "xlink:href": "#id" }));
   }).isEqual("<use xlink:href=\"#id\"/>\n");
 
   test("toHtml()", function () {
@@ -99,7 +110,7 @@ module.exports = function (test) {
         el({ className: "div-3-2" })
       ])
     ]);
-    return a.toHtml();
+    return render(a);
   }).isEqual([
     "<div>",
     "  <div class=\"div-1\">",
@@ -129,7 +140,17 @@ module.exports = function (test) {
       }
     }
     const a = el(Simple);
-    return a.toHtml();
+    return render(a);
+  }).isEqual([
+    "<div class=\"splat\"/>\n",
+  ].join("\n"));
+
+  test("toHtml() (Pure component)", function () {
+    function Simple() {
+      return el({ className: "splat" });
+    }
+    const a = el(Simple);
+    return render(a);
   }).isEqual([
     "<div class=\"splat\"/>\n",
   ].join("\n"));
@@ -141,7 +162,7 @@ module.exports = function (test) {
       }
     }
     const a = el(Simple, el());
-    return a.toHtml();
+    return render(a);
   }).isEqual([
     "<div class=\"splat\">",
     "  <div/>",
@@ -153,11 +174,11 @@ module.exports = function (test) {
     const events = [false, false];
 
     class Simple extends Component {
-      beforeToHtml() {
+      beforeComponentToHtml() {
         events[0] = true;
       }
 
-      afterToHtml() {
+      afterComponentToHtml() {
         events[1] = true;
       }
 
@@ -167,12 +188,12 @@ module.exports = function (test) {
     }
 
     const a = el(Simple, el());
-    a.toHtml();
+    render(a);
     return events;
   }).isDeepEqual([true, true]);
 
   test("toHtml() (custom element)", function () {
-    return el(Html).toHtml();
+    return render(el(Html));
   }).isDeepEqual([
     "<!DOCTYPE HTML>",
     "<html>",

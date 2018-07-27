@@ -1,28 +1,19 @@
 const el = require("../create/create-element");
 const Component = require("../class/component");
-const fs = require("fs");
-const { isDomNode } = require("../predicates");
-
-function getScripts(props) {
-  return props.scripts && [].concat(props.scripts)
-    .map(a => isDomNode(a) ? a : el("script", { src: a }));
-}
+const VNode = require("../class/virtual-node");
 
 function Body(props) {
   const children = [].concat(props.children);
 
   if (props.scripts) {
     [].concat(props.scripts)
-      .forEach(a => isDomNode(a)
+      .forEach(a => a instanceof VNode
         ? children.push(a)
         : children.push(el("script", { src: a }))
       );
   }
 
-  return el("body", {
-    className: props.className,
-    ref: "slot"
-  }, children);
+  return el("body", { className: props.className, }, children);
 }
 
 function Head(props) {
@@ -53,7 +44,7 @@ function Head(props) {
 
   if (props.styles) {
     [].concat(props.styles).forEach(a => {
-      children.push(isDomNode(a)
+      children.push(a instanceof VNode
         ? a
         : el("link", {
           rel: "stylesheet",
@@ -97,42 +88,16 @@ module.exports = class Html extends Component {
   */
   constructor(props) {
     super(props);
-    this.props.favicon = [];
-    this.props.link = [];
-    this.props.isMobile = props.isMobile;
-  }
-
-  onToHtml() {
-    this.refs.slot
-      .append(getScripts(this.props));
-    this.trigger("tohtml");
-  }
-
-  title(value) {
-    if (!this.props.title) {
-      this.refs.head.append([
-        el("title", { ref: "title" }, [value])
-      ]);
-    } else {
-      this.refs.title.html(value);
-    }
-  }
-
-  toFile(filename) {
-    const value = this.toHtml();
-    fs.writeFileSync(filename, value);
-    return value;
+    this.state = {};
   }
 
   render(props) {
     return el("fragment", [
       el("doctype"),
-      el("html", {
-        onToHtml: () => this.onToHtml()
-      },
+      el("html",
         [
           el(Head, props),
-          el(Body, props)
+          el(Body, props, props.children)
         ]
       )]);
   }

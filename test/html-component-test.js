@@ -1,5 +1,5 @@
 const el = require("../src/index");
-const { Component, Html } = require("../src/index");
+const { Component, Html, render } = require("../src/index");
 
 module.exports = function (test) {
   test("el(Html) - with component", function () {
@@ -20,7 +20,7 @@ module.exports = function (test) {
     }
 
     const a = el(Y, el(X));
-    return a.toHtml();
+    return render(a);
   }).isEqual([
     "<!DOCTYPE HTML>",
     "<html>",
@@ -47,7 +47,7 @@ module.exports = function (test) {
     }, [
       el("div"),
     ]);
-    return a.toHtml();
+    return render(a);
   })
     .isEqual([
       "<!DOCTYPE HTML>",
@@ -69,7 +69,7 @@ module.exports = function (test) {
     const a = el(Html, {
       styles: null
     });
-    return a.toHtml();
+    return render(a);
   })
     .isEqual([
       "<!DOCTYPE HTML>",
@@ -87,7 +87,7 @@ module.exports = function (test) {
     const a = el(Html, {
       title: "test"
     });
-    return a.toHtml();
+    return render(a);
   })
     .isEqual([
       "<!DOCTYPE HTML>",

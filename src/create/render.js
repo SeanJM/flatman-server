@@ -1,4 +1,6 @@
-const { commentToHtml, kebabCase } = require("../../tools");
+const VDOM = require("../class/virtual-dom");
+const { commentToHtml, kebabCase } = require("../tools");
+const fs = require("fs");
 
 const isOpen = {
   "hr": true,
@@ -110,66 +112,54 @@ function getAttr(node) {
 }
 
 function fragmentToHtml(vnode, depth) {
-  return vnode.children.map((childVNode) => {
-    if (childVNode.toHtml) {
-      return childVNode.toHtml(depth);
-    }
-    return childVNode.split("\n").map((string, i) => {
-      let response = "";
-      if (i > 0) {
-        response += "\n";
-      }
-      response += new Array(depth + 1).join("  ");
-      response += string + "\n";
-      return response;
-    });
-  })
+  return vnode.children
+    .map((childVNode) => elementToHtml(childVNode, depth))
     .join("");
 }
 
 function doctypeToHtml(vnode) {
-  const s = [];
-  s.push("<!DOCTYPE");
-  s.push(" ");
-  s.push(getAttr(vnode));
-  if (!s[2].length) {
-    s[2] = "HTML";
-  }
-  s.push(">\n");
-  return s.join("");
+  let res = "<!DOCTYPE ";
+  const attr = getAttr(vnode);
+  res += attr || "HTML";
+  res += ">\n";
+  return res;
 }
 
-module.exports = function elementToHtml(vnode, depth) {
+function nodeToHtml(node, depth) {
   const tab = new Array(depth + 1).join("  ");
-  const s = [];
-  let children = vnode.children;
+  let s = [];
+  let children = node.children;
+
+  if (node.__factory && node.__factory.__emitBeforeComponentToHtml) {
+    node.__factory.__emitBeforeComponentToHtml(new VDOM(node));
+  }
 
   s.push(tab);
 
-  if (vnode.tagName === "xml") {
-    s.push("<?", vnode.tagName, getAttr(vnode));
+  if (node.tagName === "xml") {
+    s.push("<?", node.tagName, getAttr(node));
   } else {
-    s.push("<", vnode.tagName, getAttr(vnode));
+    s.push("<", node.tagName, getAttr(node));
   }
 
-  if (vnode.tagName === "comment") {
-    return commentToHtml(vnode, depth);
-  } else if (vnode.tagName === "doctype") {
-    return doctypeToHtml(vnode, depth);
-  } else if (vnode.tagName === "xml") {
-    s.push("?>");
-  } else if (vnode.tagName === "fragment") {
-    return fragmentToHtml(vnode, depth);
-  } else if (isOpen[vnode.tagName]) {
-    s.push(">");
-  } else if (isSelfClosing[vnode.tagName] || (children && !children.length)) {
-    s.push("/>");
+  if (node.tagName === "comment") {
+    s = [commentToHtml(node, depth)];
+  } else if (node.tagName === "doctype") {
+    s = [doctypeToHtml(node, depth)];
+  } else if (node.tagName === "xml") {
+    s.push("?>\n");
+  } else if (node.tagName === "fragment") {
+    s = [fragmentToHtml(node, depth)];
+  } else if (isOpen[node.tagName]) {
+    s.push(">\n");
+  } else if (isSelfClosing[node.tagName] || (children && !children.length)) {
+    s.push("/>\n");
   } else {
     s.push(">\n");
 
     children.forEach((childVNode) => {
       if (childVNode.tagName) {
-        s.push(childVNode.toHtml(depth + 1));
+        s.push(elementToHtml(childVNode, depth + 1));
       } else {
         childVNode.split("\n").forEach(string => {
           s.push(new Array(depth + 2).join("  "), string, "\n");
@@ -178,9 +168,50 @@ module.exports = function elementToHtml(vnode, depth) {
     });
 
     s.push(tab);
-    s.push("</" + vnode.tagName + ">");
+    s.push("</" + node.tagName + ">\n");
   }
 
-  s.push("\n");
+  if (node.__factory && node.__factory.__emitAfterComponentToHtml) {
+    node.__factory.__emitAfterComponentToHtml(s.join(""));
+  }
+
   return s.join("");
-};
+}
+
+function textToHtml(node, depth) {
+  const tab = new Array(depth + 1).join("  ");
+  return node.split("\n").map((string) => tab + string + "\n");
+}
+
+function elementToHtml(node, depth) {
+  if (node.tagName) {
+    return nodeToHtml(node, depth);
+  }
+  return textToHtml(node, depth);
+}
+
+function wrapLifecycle(vnode) {
+  const vdom = vnode.expand();
+  return elementToHtml(vdom, 0);
+}
+
+function render(vnode, filename) {
+  let initialRender;
+  let finalRender;
+
+  if (vnode.__factory) {
+    vnode.__factory.__subscribeComponentDidUpdate(() => {
+      finalRender = wrapLifecycle(vnode);
+    });
+  }
+
+  initialRender = wrapLifecycle(vnode);
+
+  if (filename) {
+    fs.writeFileSync(filename, (finalRender || initialRender), "utf8");
+  }
+
+  return finalRender || initialRender;
+}
+
+module.exports = render;

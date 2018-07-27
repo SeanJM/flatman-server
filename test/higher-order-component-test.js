@@ -1,5 +1,5 @@
 const el = require("../src/index");
-const { Component } = require("../src/index");
+const { Component, render } = require("../src/index");
 
 function withProps(C) {
   return function (props) {
@@ -13,7 +13,7 @@ module.exports = function (test) {
       return el({ className: props.test });
     }
     const T = withProps(Higher);
-    return el(T).toHtml();
+    return render(el(T));
   })
     .isEqual("<div class=\"test\"/>\n");
 
@@ -24,7 +24,7 @@ module.exports = function (test) {
       }
     }
     const T = withProps(Higher);
-    return el(T).toHtml();
+    return render(el(T));
   })
     .isEqual("<div class=\"test\"/>\n");
 
@@ -43,6 +43,6 @@ module.exports = function (test) {
     }
 
     const ExtendedT = extendProps(T, { test: "test" });
-    return el(ExtendedT).toHtml();
+    return render(el(ExtendedT));
   }).isDeepEqual("<div class=\"test\"/>\n");
 };

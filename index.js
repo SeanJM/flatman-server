@@ -95,7 +95,19 @@ module.exports =
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nconst VNode = __webpack_require__(/*! ./virtual-node */ \"./src/class/virtual-node.js\");\n\nfunction extendPrototype(method) {\n  return function () {\n    const n = arguments.length;\n    const a = new Array(n);\n    const node = this.getNode();\n    let i = -1;\n    let res;\n\n    while (++i < n) {\n      a[i] = arguments[i];\n    }\n\n    if (this.node[method]) {\n      res = this.node[method].apply(this.node, a);\n    } else {\n      res = VNode.prototype[method].apply(node, a);\n    }\n\n    return res === node ? this : res;\n  };\n}\n\nfunction extendElement(C) {\n  for (var k in VNode.prototype) {\n    if (!C.prototype[k]) {\n      C.prototype[k] = extendPrototype(k);\n    }\n  }\n  return C;\n}\n\nclass Component {\n  constructor(props = {}) {\n    this.props = props;\n    this.ref = props.ref;\n    this.refs = {};\n  }\n\n  toJSON() {\n    return {\n      tagName: this.tagName.name,\n      props: this.props,\n      node: this.node.toJSON()\n    };\n  }\n}\n\nmodule.exports = extendElement(Component);\n\n//# sourceURL=webpack:///./src/class/component.js?");
+eval("\n\nmodule.exports = class Component {\n  /**\n   * @param {object} props - The component properties\n  */\n  constructor(props = {}) {\n    this.props = props;\n    this.ref = props.ref;\n    this.refs = {};\n    this.state = {};\n    this.__subscribers = {\n      onComponentDidUpdate: [],\n      onComponentWillUpdate: []\n    };\n  }\n\n  /**\n   * @param {object} state - The new component state\n  */\n  setState(state) {\n    const prevProps = this.props;\n    const prevState = this.state;\n    this.state = state;\n    this.__emitComponentDidUpdate(prevProps, prevState);\n  }\n\n  __subscribeComponentDidUpdate(callback) {\n    this.__subscribers.onComponentDidUpdate.push(callback);\n  }\n\n  __emitBeforeComponentToHtml(node) {\n    if (typeof this.beforeComponentToHtml === \"function\") {\n      this.beforeComponentToHtml(node);\n    }\n  }\n\n  __emitAfterComponentToHtml(node) {\n    if (typeof this.afterComponentToHtml === \"function\") {\n      this.afterComponentToHtml(node);\n    }\n  }\n\n  __emitComponentDidUpdate(state, prevState) {\n    let i = -1;\n    const n = this.__subscribers.onComponentDidUpdate.length;\n    while (++i < n) {\n      this.__subscribers.onComponentDidUpdate[i](state, prevState);\n    }\n  }\n\n  __isComponent() {\n    return true;\n  }\n};\n\n//# sourceURL=webpack:///./src/class/component.js?");
+
+/***/ }),
+
+/***/ "./src/class/virtual-dom.js":
+/*!**********************************!*\
+  !*** ./src/class/virtual-dom.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nconst is = __webpack_require__(/*! ../tools/is */ \"./src/tools/is.js\");\nconst VNode = __webpack_require__(/*! ./virtual-node */ \"./src/class/virtual-node.js\");\n\nfunction indexDocument(vnode, parentNode) {\n  return vnode instanceof VNode ? {\n    vnode: vnode,\n    tagName: vnode.tagName,\n    attributes: vnode.attributes,\n    parentNode,\n    children: vnode.children.map(childNode => indexDocument(childNode, vnode))\n  } : vnode;\n}\n\nmodule.exports = class VDOM {\n  /**\n   * @param {VNode} document - The nodes tagName\n   * @param {object} attributes - The nodes attributes\n   * @param {array} children - An array of children, strings or elements\n   * */\n  constructor(document) {\n    this.document = indexDocument(document);\n  }\n\n  find(selector) {\n    function findElement(element, predicate) {\n      if (predicate(element)) {\n        return element;\n      } else if (element.children) {\n        let res;\n        let i = -1;\n        const n = element.children;\n\n        while (++i < n) {\n          res = findElement(element.children[i], predicate);\n          if (res) {\n            return res;\n          }\n        }\n      }\n\n      return null;\n    }\n\n    if (typeof selector === \"function\") {\n      return findElement(this.document, selector);\n    }\n\n    return findElement(this.document, element => is(element, selector));\n  }\n};\n\n//# sourceURL=webpack:///./src/class/virtual-dom.js?");
 
 /***/ }),
 
@@ -107,67 +119,7 @@ eval("\n\nconst VNode = __webpack_require__(/*! ./virtual-node */ \"./src/class/
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nconst is = __webpack_require__(/*! ./virtual-node/is */ \"./src/class/virtual-node/is.js\");\nconst elementToHtml = __webpack_require__(/*! ./virtual-node/element-to-html */ \"./src/class/virtual-node/element-to-html.js\");\nconst elementToVNodeTree = __webpack_require__(/*! ./virtual-node/element-to-vnode-tree */ \"./src/class/virtual-node/element-to-vnode-tree.js\");\n\nmodule.exports = class VNode {\n  /**\n   * @param {string} tagName - The nodes tagName\n   * @param {object} attributes - The nodes attributes\n   * @param {array} children - An array of children, strings or elements\n   * */\n  constructor(tagName, attributes, children) {\n    this.tagName = tagName;\n    this.attributes = {};\n    this.children = children;\n    this.refs = {};\n\n    children.forEach(childNode => {\n      if (typeof childNode === \"object\") {\n        childNode.parentNode = this;\n      }\n    });\n\n    for (var k in attributes) {\n      if (k === \"ref\") {\n        this.ref = attributes[k];\n      } else {\n        this.attributes[k] = attributes[k];\n      }\n    }\n  }\n\n  is(selector) {\n    return is(this, selector);\n  }\n\n  toJSON() {\n    return {\n      tagName: this.tagName,\n      attributes: this.attributes,\n      children: this.children.map(child => child.toJSON ? child.toJSON() : child)\n    };\n  }\n\n  expandTree(depth = 0) {\n    return elementToVNodeTree(this, depth);\n  }\n\n  toHtml(depth = 0) {\n    // expandVNodeTree\n    const tree = this.expandTree();\n    // renderVNodeTree\n    return elementToHtml(tree, depth);\n  }\n\n  previous() {\n    const siblings = this.siblings();\n    return siblings[siblings.indexOf(this) - 1];\n  }\n\n  siblings() {\n    return this.parentNode ? this.parentNode.children : [];\n  }\n};\n\n//# sourceURL=webpack:///./src/class/virtual-node.js?");
-
-/***/ }),
-
-/***/ "./src/class/virtual-node/component-to-html.js":
-/*!*****************************************************!*\
-  !*** ./src/class/virtual-node/component-to-html.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nfunction componentClassToHtml(vnode, depth) {\n  const props = Object.assign({}, {\n    children: vnode.children\n  }, vnode.attributes);\n\n  const component = new vnode.tagName(props);\n  const vnodeElement = component.render(props);\n  let html;\n\n  vnodeElement.parentNode = vnode.parentNode;\n\n  if (component.beforeToHtml) {\n    component.beforeToHtml();\n  }\n\n  html = vnodeElement.toHtml(depth);\n\n  if (component.afterToHtml) {\n    component.afterToHtml();\n  }\n\n  return html;\n}\n\nfunction pureComponentToHtml(vnode, depth) {\n  const props = Object.assign({}, {\n    children: vnode.children\n  }, vnode.attributes);\n  const vnodeElement = vnode.tagName(props);\n\n  vnodeElement.parentNode = vnode.parentNode;\n  return vnodeElement.toHtml(depth);\n}\n\nmodule.exports = function componentToHtml(vnode, depth) {\n  if (vnode.tagName.prototype.render) {\n    return componentClassToHtml(vnode, depth);\n  }\n  return pureComponentToHtml(vnode, depth);\n};\n\n//# sourceURL=webpack:///./src/class/virtual-node/component-to-html.js?");
-
-/***/ }),
-
-/***/ "./src/class/virtual-node/element-to-html.js":
-/*!***************************************************!*\
-  !*** ./src/class/virtual-node/element-to-html.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nconst componentToHtml = __webpack_require__(/*! ./component-to-html */ \"./src/class/virtual-node/component-to-html.js\");\nconst htmlToHtml = __webpack_require__(/*! ./html-to-html */ \"./src/class/virtual-node/html-to-html.js\");\n\nmodule.exports = function elementToHtml(vnode, depth = 0) {\n  // Is component\n  if (typeof vnode.tagName === \"function\") {\n    return componentToHtml(vnode, depth);\n  }\n  return htmlToHtml(vnode, depth);\n};\n\n//# sourceURL=webpack:///./src/class/virtual-node/element-to-html.js?");
-
-/***/ }),
-
-/***/ "./src/class/virtual-node/element-to-vnode-tree.js":
-/*!*********************************************************!*\
-  !*** ./src/class/virtual-node/element-to-vnode-tree.js ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nfunction componentClassToVNodeTree(vnode, depth) {\n  const props = Object.assign({}, {\n    children: vnode.children\n  }, vnode.attributes);\n\n  const component = new vnode.tagName(props);\n  const vnodeElement = component.render(props);\n  vnodeElement.depth = depth;\n  return vnodeElement;\n}\n\nfunction pureComponentToHtml(vnode, depth) {\n  const props = Object.assign({}, {\n    children: vnode.children\n  }, vnode.attributes);\n  const vnodeElement = vnode.tagName(props);\n  vnodeElement.depth = depth;\n  return vnodeElement;\n}\n\nfunction componentToVNodeTree(vnode, depth) {\n  if (vnode.tagName.prototype.render) {\n    return componentClassToVNodeTree(vnode, depth);\n  }\n  return pureComponentToHtml(vnode, depth);\n}\n\nmodule.exports = function elementToHtml(vnode, depth = 0) {\n  // Is component\n  if (typeof vnode.tagName === \"function\") {\n    return componentToVNodeTree(vnode, depth);\n  }\n  vnode.depth = depth;\n  return vnode;\n};\n\n//# sourceURL=webpack:///./src/class/virtual-node/element-to-vnode-tree.js?");
-
-/***/ }),
-
-/***/ "./src/class/virtual-node/html-to-html.js":
-/*!************************************************!*\
-  !*** ./src/class/virtual-node/html-to-html.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nconst { commentToHtml, kebabCase } = __webpack_require__(/*! ../../tools */ \"./src/tools/index.js\");\n\nconst isOpen = {\n  \"hr\": true,\n  \"img\": true,\n  \"input\": true,\n  \"link\": true,\n  \"meta\": true,\n  \"doctype\": true\n};\n\nconst isSelfClosing = {\n  \"circle\": true,\n  \"line\": true,\n  \"ellipsis\": true,\n  \"path\": true,\n  \"polygon\": true,\n  \"rect\": true\n};\n\nconst attrList = [\"id\", \"className\", \"name\", \"title\", \"style\"];\n\nfunction sortAttributes(a, b) {\n  const aI = attrList.indexOf(a);\n  const bI = attrList.indexOf(b);\n\n  if (aI > -1 && bI > -1) {\n    return aI - bI;\n  } else if (aI > -1) {\n    return -1;\n  } else if (bI > -1) {\n    return 1;\n  }\n  return 0;\n}\n\nfunction toHtmlStyle(value) {\n  var styles = [];\n  for (var k in value) {\n    if (typeof value[k] === \"string\" || typeof value[k] === \"number\") {\n      styles.push(kebabCase(k) + \": \" + value[k]);\n    }\n  }\n  return styles.join(\";\");\n}\n\nfunction toHtmlAttribute(name, value) {\n  value = typeof value === \"number\" ? value.toString() : value;\n\n  if (typeof value === \"string\") {\n    value = value.trim();\n  }\n\n  if (name === \"style\") {\n    if (typeof value === \"object\" && Object.keys(value).length) {\n      return `${name}=\"${toHtmlStyle(value)}\"`;\n    }\n    return \"\";\n  } else if (name === \"className\") {\n    if (value.length) {\n      value = value.split(\" \").map(a => a.trim()).sort().join(\" \");\n      return `class=\"${value}\"`;\n    }\n    return \"\";\n  } else if (name === \"tabindex\") {\n    return `tabIndex=\"${value}\"`;\n  } else if (name.substr(0, 4) === \"data\") {\n    return `${kebabCase(name)}=\"${value}\"`;\n  } else if (name === \"viewBox\") {\n    return `viewBox=\"${value}\"`;\n  } else if (name.indexOf(\":\") !== -1) {\n    return `${name}=\"${value}\"`;\n  }\n  if (value && value.length) {\n    return `${kebabCase(name)}=\"${value}\"`;\n  }\n  return \"\";\n}\n\nfunction getAttr(node) {\n  const attributes = node.attributes;\n  const list = attributes ? Object.keys(attributes).sort(sortAttributes) : [];\n  let a = [];\n\n  list.forEach(function (attribute) {\n    if (typeof attributes[attribute] !== \"undefined\") {\n      a.push(toHtmlAttribute(attribute, attributes[attribute]));\n    }\n  });\n\n  a = a.filter(a => a.length);\n\n  if (a.length) {\n    return \" \" + a.join(\" \");\n  }\n\n  return \"\";\n}\n\nfunction fragmentToHtml(vnode, depth) {\n  return vnode.children.map(childVNode => {\n    if (childVNode.toHtml) {\n      return childVNode.toHtml(depth);\n    }\n    return childVNode.split(\"\\n\").map((string, i) => {\n      let response = \"\";\n      if (i > 0) {\n        response += \"\\n\";\n      }\n      response += new Array(depth + 1).join(\"  \");\n      response += string + \"\\n\";\n      return response;\n    });\n  }).join(\"\");\n}\n\nfunction doctypeToHtml(vnode) {\n  const s = [];\n  s.push(\"<!DOCTYPE\");\n  s.push(\" \");\n  s.push(getAttr(vnode));\n  if (!s[2].length) {\n    s[2] = \"HTML\";\n  }\n  s.push(\">\\n\");\n  return s.join(\"\");\n}\n\nmodule.exports = function elementToHtml(vnode, depth) {\n  const tab = new Array(depth + 1).join(\"  \");\n  const s = [];\n  let children = vnode.children;\n\n  s.push(tab);\n\n  if (vnode.tagName === \"xml\") {\n    s.push(\"<?\", vnode.tagName, getAttr(vnode));\n  } else {\n    s.push(\"<\", vnode.tagName, getAttr(vnode));\n  }\n\n  if (vnode.tagName === \"comment\") {\n    return commentToHtml(vnode, depth);\n  } else if (vnode.tagName === \"doctype\") {\n    return doctypeToHtml(vnode, depth);\n  } else if (vnode.tagName === \"xml\") {\n    s.push(\"?>\");\n  } else if (vnode.tagName === \"fragment\") {\n    return fragmentToHtml(vnode, depth);\n  } else if (isOpen[vnode.tagName]) {\n    s.push(\">\");\n  } else if (isSelfClosing[vnode.tagName] || children && !children.length) {\n    s.push(\"/>\");\n  } else {\n    s.push(\">\\n\");\n\n    children.forEach(childVNode => {\n      if (childVNode.tagName) {\n        s.push(childVNode.toHtml(depth + 1));\n      } else {\n        childVNode.split(\"\\n\").forEach(string => {\n          s.push(new Array(depth + 2).join(\"  \"), string, \"\\n\");\n        });\n      }\n    });\n\n    s.push(tab);\n    s.push(\"</\" + vnode.tagName + \">\");\n  }\n\n  s.push(\"\\n\");\n  return s.join(\"\");\n};\n\n//# sourceURL=webpack:///./src/class/virtual-node/html-to-html.js?");
-
-/***/ }),
-
-/***/ "./src/class/virtual-node/is.js":
-/*!**************************************!*\
-  !*** ./src/class/virtual-node/is.js ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nconst { getSelectorObject } = __webpack_require__(/*! ../../tools */ \"./src/tools/index.js\");\n\nfunction isClassName(vnode, matchList) {\n  const className = vnode.attributes.className;\n  const classList = className ? className.split(\" \") : [];\n  const classMatch = [];\n\n  let i = -1;\n  const n = classList.length;\n\n  while (++i < n) {\n    if (matchList.indexOf(classList[i]) > -1) {\n      classMatch.push(classList[i]);\n    }\n  }\n\n  return classMatch.length === matchList.length;\n}\n\nfunction elementIs(vnode, selectorAttributes) {\n  if (!vnode || typeof vnode === \"string\") {\n    return false;\n  }\n\n  if (selectorAttributes.tagName) {\n    if (selectorAttributes.tagName !== vnode.tagName) {\n      return false;\n    }\n  }\n\n  for (var k in selectorAttributes.attributes) {\n    if (k === \"className\") {\n      if (!isClassName(vnode, selectorAttributes.attributes[k])) {\n        return false;\n      }\n    } else if (selectorAttributes.attributes[k]) {\n      if (typeof selectorAttributes.attributes[k] === \"string\") {\n        if (selectorAttributes.attributes[k] !== vnode.attributes[k]) {\n          return false;\n        }\n      } else if (!selectorAttributes.attributes[k].test(vnode.attributes[k])) {\n        return false;\n      }\n    }\n  }\n\n  if (selectorAttributes.selector === \"+\") {\n    return false;\n  } else if (selectorAttributes.selector === \"~\") {\n    return false;\n  }\n\n  return true;\n}\n\nfunction elementPathIs(vnode, selectors) {\n  const n = selectors.length - 1;\n\n  for (var i = n; i >= 0; i--) {\n    if (selectors[i].selector === \"+\") {\n      selectors.pop();\n      vnode = vnode && vnode.previous();\n    } else if (selectors[i].selector === \"~\") {\n      selectors.pop();\n      vnode = vnode && vnode.siblings().filter(x => elementIs(x, selectors[i - 1]))[0];\n    } else if (selectors[i].selector === \">\") {\n      selectors.pop();\n      vnode = vnode && vnode.parentNode;\n    } else if (elementIs(vnode, selectors[i])) {\n      selectors.pop();\n    } else if (vnode && i < n) {\n      vnode = vnode.parentNode;\n      i += 1;\n    } else if (i === n) {\n      return false;\n    }\n  }\n\n  return selectors.length === 0;\n}\n\n/**\n * @param {object} vnode - Virtual node\n * @param {string} selector - The selector to query\n*/\nfunction is(vnode, selector) {\n  const selectors = selector.split(\" \").map(a => getSelectorObject(a.trim()));\n  if (selectors.length === 1) {\n    return elementIs(vnode, selectors[0]);\n  } else {\n    return elementPathIs(vnode, selectors);\n  }\n}\n\nmodule.exports = is;\n\n//# sourceURL=webpack:///./src/class/virtual-node/is.js?");
+eval("\n\nmodule.exports = class VNode {\n  /**\n   * @param {string} tagName - The nodes tagName\n   * @param {object} attributes - The nodes attributes\n   * @param {array} children - An array of children, strings or elements\n   * */\n  constructor(tagName, attributes, children) {\n    this.props = Object.assign({}, attributes, { children });\n    this.tagName = tagName;\n    this.attributes = {};\n    this.children = children;\n    this.refs = {};\n\n    if (typeof tagName === \"function\" && tagName.prototype.__isComponent) {\n      this.__factory = new tagName(this.props);\n    }\n\n    for (var k in attributes) {\n      if (k === \"ref\") {\n        this.ref = attributes[k];\n      } else {\n        this.attributes[k] = attributes[k];\n      }\n    }\n  }\n\n  expandComponent() {\n    const vnode = this.__factory ? this.__factory.render(this.props).expand() : this.tagName(this.props).expand();\n\n    if (this.__factory) {\n      vnode.__factory = this.__factory;\n    }\n\n    return vnode;\n  }\n\n  expandElement() {\n    this.children = this.children.map(vnode => {\n      const vnodeElement = vnode.expand ? vnode.expand() : vnode;\n      return vnodeElement;\n    });\n    return this;\n  }\n\n  expand() {\n    return typeof this.tagName === \"function\" ? this.expandComponent() : this.expandElement();\n  }\n\n  toJSON() {\n    return {\n      tagName: this.tagName,\n      attributes: this.attributes,\n      children: this.children.map(child => child.toJSON ? child.toJSON() : child)\n    };\n  }\n};\n\n//# sourceURL=webpack:///./src/class/virtual-node.js?");
 
 /***/ }),
 
@@ -191,7 +143,7 @@ eval("\n\nconst { el } = __webpack_require__(/*! ../tools */ \"./src/tools/index
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nconst el = __webpack_require__(/*! ../create/create-element */ \"./src/create/create-element.js\");\nconst Component = __webpack_require__(/*! ../class/component */ \"./src/class/component.js\");\nconst fs = __webpack_require__(/*! fs */ \"fs\");\nconst { isDomNode } = __webpack_require__(/*! ../predicates */ \"./src/predicates/index.js\");\n\nfunction getScripts(props) {\n  return props.scripts && [].concat(props.scripts).map(a => isDomNode(a) ? a : el(\"script\", { src: a }));\n}\n\nfunction Body(props) {\n  const children = [].concat(props.children);\n\n  if (props.scripts) {\n    [].concat(props.scripts).forEach(a => isDomNode(a) ? children.push(a) : children.push(el(\"script\", { src: a })));\n  }\n\n  return el(\"body\", {\n    className: props.className,\n    ref: \"slot\"\n  }, children);\n}\n\nfunction Head(props) {\n  const children = [];\n\n  children.push(el(\"meta\", { httpEquiv: \"X-UX-Compatible\", content: \"IE=edge,chrome=1\" }), el(\"meta\", { charset: \"UTF-8\" }));\n\n  if (props.supportMobile) {\n    children.push(el(\"meta\", {\n      name: \"viewport\",\n      content: [\"width=device-width\", \"initial-scale=1\", \"maximum-scale=1\", \"user-scalable=0\"].join(\", \")\n    }));\n  }\n\n  if (props.favicon) {\n    Array.prototype.push.apply(children, props.favicon);\n  }\n\n  if (props.styles) {\n    [].concat(props.styles).forEach(a => {\n      children.push(isDomNode(a) ? a : el(\"link\", {\n        rel: \"stylesheet\",\n        type: \"text/css\",\n        href: a\n      }));\n    });\n  }\n\n  if (props.meta) {\n    [].concat(props.meta).forEach(a => {\n      children.push(a);\n    });\n  }\n\n  if (props.head) {\n    Array.prototype.push.apply(children, props.head);\n  }\n\n  if (props.title) {\n    children.push(el(\"title\", [props.title]));\n  }\n\n  return el(\"head\", {\n    ref: \"head\"\n  }, children);\n}\n\nmodule.exports = class Html extends Component {\n  /**\n   * @param {object} props\n   * @param {array} props.scripts\n   * @param {array} props.styles\n   * @param {boolean} props.supportMobile\n  */\n  constructor(props) {\n    super(props);\n    this.props.favicon = [];\n    this.props.link = [];\n    this.props.isMobile = props.isMobile;\n  }\n\n  onToHtml() {\n    this.refs.slot.append(getScripts(this.props));\n    this.trigger(\"tohtml\");\n  }\n\n  title(value) {\n    if (!this.props.title) {\n      this.refs.head.append([el(\"title\", { ref: \"title\" }, [value])]);\n    } else {\n      this.refs.title.html(value);\n    }\n  }\n\n  toFile(filename) {\n    const value = this.toHtml();\n    fs.writeFileSync(filename, value);\n    return value;\n  }\n\n  render(props) {\n    return el(\"fragment\", [el(\"doctype\"), el(\"html\", {\n      onToHtml: () => this.onToHtml()\n    }, [el(Head, props), el(Body, props)])]);\n  }\n};\n\n//# sourceURL=webpack:///./src/components/html.js?");
+eval("\n\nconst el = __webpack_require__(/*! ../create/create-element */ \"./src/create/create-element.js\");\nconst Component = __webpack_require__(/*! ../class/component */ \"./src/class/component.js\");\nconst VNode = __webpack_require__(/*! ../class/virtual-node */ \"./src/class/virtual-node.js\");\n\nfunction Body(props) {\n  const children = [].concat(props.children);\n\n  if (props.scripts) {\n    [].concat(props.scripts).forEach(a => a instanceof VNode ? children.push(a) : children.push(el(\"script\", { src: a })));\n  }\n\n  return el(\"body\", { className: props.className }, children);\n}\n\nfunction Head(props) {\n  const children = [];\n\n  children.push(el(\"meta\", { httpEquiv: \"X-UX-Compatible\", content: \"IE=edge,chrome=1\" }), el(\"meta\", { charset: \"UTF-8\" }));\n\n  if (props.supportMobile) {\n    children.push(el(\"meta\", {\n      name: \"viewport\",\n      content: [\"width=device-width\", \"initial-scale=1\", \"maximum-scale=1\", \"user-scalable=0\"].join(\", \")\n    }));\n  }\n\n  if (props.favicon) {\n    Array.prototype.push.apply(children, props.favicon);\n  }\n\n  if (props.styles) {\n    [].concat(props.styles).forEach(a => {\n      children.push(a instanceof VNode ? a : el(\"link\", {\n        rel: \"stylesheet\",\n        type: \"text/css\",\n        href: a\n      }));\n    });\n  }\n\n  if (props.meta) {\n    [].concat(props.meta).forEach(a => {\n      children.push(a);\n    });\n  }\n\n  if (props.head) {\n    Array.prototype.push.apply(children, props.head);\n  }\n\n  if (props.title) {\n    children.push(el(\"title\", [props.title]));\n  }\n\n  return el(\"head\", {\n    ref: \"head\"\n  }, children);\n}\n\nmodule.exports = class Html extends Component {\n  /**\n   * @param {object} props\n   * @param {array} props.scripts\n   * @param {array} props.styles\n   * @param {boolean} props.supportMobile\n  */\n  constructor(props) {\n    super(props);\n    this.state = {};\n  }\n\n  render(props) {\n    return el(\"fragment\", [el(\"doctype\"), el(\"html\", [el(Head, props), el(Body, props, props.children)])]);\n  }\n};\n\n//# sourceURL=webpack:///./src/components/html.js?");
 
 /***/ }),
 
@@ -207,6 +159,18 @@ eval("\n\nconst VNode = __webpack_require__(/*! ../class/virtual-node */ \"./src
 
 /***/ }),
 
+/***/ "./src/create/render.js":
+/*!******************************!*\
+  !*** ./src/create/render.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nconst VDOM = __webpack_require__(/*! ../class/virtual-dom */ \"./src/class/virtual-dom.js\");\nconst { commentToHtml, kebabCase } = __webpack_require__(/*! ../tools */ \"./src/tools/index.js\");\nconst fs = __webpack_require__(/*! fs */ \"fs\");\n\nconst isOpen = {\n  \"hr\": true,\n  \"img\": true,\n  \"input\": true,\n  \"link\": true,\n  \"meta\": true,\n  \"doctype\": true\n};\n\nconst isSelfClosing = {\n  \"circle\": true,\n  \"line\": true,\n  \"ellipsis\": true,\n  \"path\": true,\n  \"polygon\": true,\n  \"rect\": true\n};\n\nconst attrList = [\"id\", \"className\", \"name\", \"title\", \"style\"];\n\nfunction sortAttributes(a, b) {\n  const aI = attrList.indexOf(a);\n  const bI = attrList.indexOf(b);\n\n  if (aI > -1 && bI > -1) {\n    return aI - bI;\n  } else if (aI > -1) {\n    return -1;\n  } else if (bI > -1) {\n    return 1;\n  }\n  return 0;\n}\n\nfunction toHtmlStyle(value) {\n  var styles = [];\n  for (var k in value) {\n    if (typeof value[k] === \"string\" || typeof value[k] === \"number\") {\n      styles.push(kebabCase(k) + \": \" + value[k]);\n    }\n  }\n  return styles.join(\";\");\n}\n\nfunction toHtmlAttribute(name, value) {\n  value = typeof value === \"number\" ? value.toString() : value;\n\n  if (typeof value === \"string\") {\n    value = value.trim();\n  }\n\n  if (name === \"style\") {\n    if (typeof value === \"object\" && Object.keys(value).length) {\n      return `${name}=\"${toHtmlStyle(value)}\"`;\n    }\n    return \"\";\n  } else if (name === \"className\") {\n    if (value.length) {\n      value = value.split(\" \").map(a => a.trim()).sort().join(\" \");\n      return `class=\"${value}\"`;\n    }\n    return \"\";\n  } else if (name === \"tabindex\") {\n    return `tabIndex=\"${value}\"`;\n  } else if (name.substr(0, 4) === \"data\") {\n    return `${kebabCase(name)}=\"${value}\"`;\n  } else if (name === \"viewBox\") {\n    return `viewBox=\"${value}\"`;\n  } else if (name.indexOf(\":\") !== -1) {\n    return `${name}=\"${value}\"`;\n  }\n  if (value && value.length) {\n    return `${kebabCase(name)}=\"${value}\"`;\n  }\n  return \"\";\n}\n\nfunction getAttr(node) {\n  const attributes = node.attributes;\n  const list = attributes ? Object.keys(attributes).sort(sortAttributes) : [];\n  let a = [];\n\n  list.forEach(function (attribute) {\n    if (typeof attributes[attribute] !== \"undefined\") {\n      a.push(toHtmlAttribute(attribute, attributes[attribute]));\n    }\n  });\n\n  a = a.filter(a => a.length);\n\n  if (a.length) {\n    return \" \" + a.join(\" \");\n  }\n\n  return \"\";\n}\n\nfunction fragmentToHtml(vnode, depth) {\n  return vnode.children.map(childVNode => elementToHtml(childVNode, depth)).join(\"\");\n}\n\nfunction doctypeToHtml(vnode) {\n  let res = \"<!DOCTYPE \";\n  const attr = getAttr(vnode);\n  res += attr || \"HTML\";\n  res += \">\\n\";\n  return res;\n}\n\nfunction nodeToHtml(node, depth) {\n  const tab = new Array(depth + 1).join(\"  \");\n  let s = [];\n  let children = node.children;\n\n  if (node.__factory && node.__factory.__emitBeforeComponentToHtml) {\n    node.__factory.__emitBeforeComponentToHtml(new VDOM(node));\n  }\n\n  s.push(tab);\n\n  if (node.tagName === \"xml\") {\n    s.push(\"<?\", node.tagName, getAttr(node));\n  } else {\n    s.push(\"<\", node.tagName, getAttr(node));\n  }\n\n  if (node.tagName === \"comment\") {\n    s = [commentToHtml(node, depth)];\n  } else if (node.tagName === \"doctype\") {\n    s = [doctypeToHtml(node, depth)];\n  } else if (node.tagName === \"xml\") {\n    s.push(\"?>\\n\");\n  } else if (node.tagName === \"fragment\") {\n    s = [fragmentToHtml(node, depth)];\n  } else if (isOpen[node.tagName]) {\n    s.push(\">\\n\");\n  } else if (isSelfClosing[node.tagName] || children && !children.length) {\n    s.push(\"/>\\n\");\n  } else {\n    s.push(\">\\n\");\n\n    children.forEach(childVNode => {\n      if (childVNode.tagName) {\n        s.push(elementToHtml(childVNode, depth + 1));\n      } else {\n        childVNode.split(\"\\n\").forEach(string => {\n          s.push(new Array(depth + 2).join(\"  \"), string, \"\\n\");\n        });\n      }\n    });\n\n    s.push(tab);\n    s.push(\"</\" + node.tagName + \">\\n\");\n  }\n\n  if (node.__factory && node.__factory.__emitAfterComponentToHtml) {\n    node.__factory.__emitAfterComponentToHtml(s.join(\"\"));\n  }\n\n  return s.join(\"\");\n}\n\nfunction textToHtml(node, depth) {\n  const tab = new Array(depth + 1).join(\"  \");\n  return node.split(\"\\n\").map(string => tab + string + \"\\n\");\n}\n\nfunction elementToHtml(node, depth) {\n  if (node.tagName) {\n    return nodeToHtml(node, depth);\n  }\n  return textToHtml(node, depth);\n}\n\nfunction wrapLifecycle(vnode) {\n  const vdom = vnode.expand();\n  return elementToHtml(vdom, 0);\n}\n\nfunction render(vnode, filename) {\n  let initialRender;\n  let finalRender;\n\n  if (vnode.__factory) {\n    vnode.__factory.__subscribeComponentDidUpdate(() => {\n      finalRender = wrapLifecycle(vnode);\n    });\n  }\n\n  initialRender = wrapLifecycle(vnode);\n\n  if (filename) {\n    fs.writeFileSync(filename, finalRender || initialRender, \"utf8\");\n  }\n\n  return finalRender || initialRender;\n}\n\nmodule.exports = render;\n\n//# sourceURL=webpack:///./src/create/render.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -215,55 +179,7 @@ eval("\n\nconst VNode = __webpack_require__(/*! ../class/virtual-node */ \"./src
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nconst Component = __webpack_require__(/*! ./class/component */ \"./src/class/component.js\");\nconst el = __webpack_require__(/*! ./create/create-element */ \"./src/create/create-element.js\");\n\nel.Component = Component;\nel.Html = __webpack_require__(/*! ./components/html */ \"./src/components/html.js\");\nel.Css = __webpack_require__(/*! ./components/css */ \"./src/components/css.js\");\nel.VNode = __webpack_require__(/*! ./class/virtual-node */ \"./src/class/virtual-node.js\");\n\nmodule.exports = el;\n\n//# sourceURL=webpack:///./src/index.js?");
-
-/***/ }),
-
-/***/ "./src/predicates/index.js":
-/*!*********************************!*\
-  !*** ./src/predicates/index.js ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nmodule.exports = {\n  isDomNode: __webpack_require__(/*! ./is-dom-node */ \"./src/predicates/is-dom-node.js\"),\n  isObject: __webpack_require__(/*! ./is-object */ \"./src/predicates/is-object.js\"),\n  isHtmlString: __webpack_require__(/*! ./is-html-string */ \"./src/predicates/is-html-string.js\")\n};\n\n//# sourceURL=webpack:///./src/predicates/index.js?");
-
-/***/ }),
-
-/***/ "./src/predicates/is-dom-node.js":
-/*!***************************************!*\
-  !*** ./src/predicates/is-dom-node.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nmodule.exports = function isDomNode(x) {\n  return !!(x && typeof x.toHtml === \"function\");\n};\n\n//# sourceURL=webpack:///./src/predicates/is-dom-node.js?");
-
-/***/ }),
-
-/***/ "./src/predicates/is-html-string.js":
-/*!******************************************!*\
-  !*** ./src/predicates/is-html-string.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nmodule.exports = function isHtmlString(value) {\n  return (/<[^>]+?>/.test(value)\n  );\n};\n\n//# sourceURL=webpack:///./src/predicates/is-html-string.js?");
-
-/***/ }),
-
-/***/ "./src/predicates/is-object.js":
-/*!*************************************!*\
-  !*** ./src/predicates/is-object.js ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nmodule.exports = function isObject(a) {\n  return Object.prototype.toString.call(a) === \"[object Object]\";\n};\n\n//# sourceURL=webpack:///./src/predicates/is-object.js?");
+eval("\n\nconst Component = __webpack_require__(/*! ./class/component */ \"./src/class/component.js\");\nconst el = __webpack_require__(/*! ./create/create-element */ \"./src/create/create-element.js\");\n\nel.Component = Component;\nel.Html = __webpack_require__(/*! ./components/html */ \"./src/components/html.js\");\nel.Css = __webpack_require__(/*! ./components/css */ \"./src/components/css.js\");\nel.VNode = __webpack_require__(/*! ./class/virtual-node */ \"./src/class/virtual-node.js\");\nel.render = __webpack_require__(/*! ./create/render */ \"./src/create/render.js\");\n\nmodule.exports = el;\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -324,6 +240,18 @@ eval("\n\nmodule.exports = function getSelectorObject(selector) {\n  let classes
 
 "use strict";
 eval("\n\nmodule.exports = {\n  commentToHtml: __webpack_require__(/*! ./comment-to-html */ \"./src/tools/comment-to-html.js\"),\n\n  getSelectorGroup: __webpack_require__(/*! ./get-selector-group */ \"./src/tools/get-selector-group.js\"),\n  getSelectorObject: __webpack_require__(/*! ./get-selector-object */ \"./src/tools/get-selector-object.js\"),\n\n  kebabCase: __webpack_require__(/*! ./kebab-case */ \"./src/tools/kebab-case.js\"),\n  camelCase: __webpack_require__(/*! ./camel-case */ \"./src/tools/camel-case.js\"),\n  setRefs: __webpack_require__(/*! ./set-refs */ \"./src/tools/set-refs.js\")\n};\n\n//# sourceURL=webpack:///./src/tools/index.js?");
+
+/***/ }),
+
+/***/ "./src/tools/is.js":
+/*!*************************!*\
+  !*** ./src/tools/is.js ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nconst getSelectorObject = __webpack_require__(/*! ./get-selector-object */ \"./src/tools/get-selector-object.js\");\n\nfunction getSiblings(node) {\n  return node && node.parentNode ? node.parentNode.children : [];\n}\n\nfunction previous(node) {\n  const siblings = getSiblings(node);\n  const indexOf = siblings.indexOf(node);\n  return siblings[indexOf - 1];\n}\n\nfunction isClassName(node, matchList) {\n  const className = node.attributes.className;\n  const classList = className ? className.split(\" \") : [];\n  const classMatch = [];\n\n  let i = -1;\n  const n = classList.length;\n\n  while (++i < n) {\n    if (matchList.indexOf(classList[i]) > -1) {\n      classMatch.push(classList[i]);\n    }\n  }\n\n  return classMatch.length === matchList.length;\n}\n\nfunction elementIs(node, selectorAttributes) {\n  if (!node || typeof node === \"string\") {\n    return false;\n  }\n\n  if (selectorAttributes.tagName) {\n    if (selectorAttributes.tagName !== node.tagName) {\n      return false;\n    }\n  }\n\n  for (var k in selectorAttributes.attributes) {\n    if (k === \"className\") {\n      if (!isClassName(node, selectorAttributes.attributes[k])) {\n        return false;\n      }\n    } else if (selectorAttributes.attributes[k]) {\n      if (typeof selectorAttributes.attributes[k] === \"string\") {\n        if (selectorAttributes.attributes[k] !== node.attributes[k]) {\n          return false;\n        }\n      } else if (!selectorAttributes.attributes[k].test(node.attributes[k])) {\n        return false;\n      }\n    }\n  }\n\n  if (selectorAttributes.selector === \"+\") {\n    return false;\n  } else if (selectorAttributes.selector === \"~\") {\n    return false;\n  }\n\n  return true;\n}\n\nfunction elementPathIs(node, selectors) {\n  const n = selectors.length - 1;\n\n  for (var i = n; i >= 0; i--) {\n    if (selectors[i].selector === \"+\") {\n      selectors.pop();\n      node = previous(node);\n    } else if (selectors[i].selector === \"~\") {\n      selectors.pop();\n      node = node && getSiblings(node).filter(x => elementIs(x, selectors[i - 1]))[0];\n    } else if (selectors[i].selector === \">\") {\n      selectors.pop();\n      node = node && node.parentNode;\n    } else if (elementIs(node, selectors[i])) {\n      selectors.pop();\n    } else if (node && i < n) {\n      node = node.parentNode;\n      i += 1;\n    } else if (i === n) {\n      return false;\n    }\n  }\n\n  return selectors.length === 0;\n}\n\n/**\n * @param {object} node - Virtual node\n * @param {string} selector - The selector to query\n*/\nfunction is(node, selector) {\n  const selectors = selector.split(\" \").map(a => getSelectorObject(a.trim()));\n  if (selectors.length === 1) {\n    return elementIs(node, selectors[0]);\n  } else {\n    return elementPathIs(node, selectors);\n  }\n}\n\nmodule.exports = is;\n\n//# sourceURL=webpack:///./src/tools/is.js?");
 
 /***/ }),
 

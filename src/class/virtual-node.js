@@ -1,7 +1,3 @@
-const is = require("./virtual-node/is");
-const elementToHtml = require("./virtual-node/element-to-html");
-const elementToVNodeTree = require("./virtual-node/element-to-vnode-tree");
-
 module.exports = class VNode {
   /**
    * @param {string} tagName - The nodes tagName
@@ -9,16 +5,15 @@ module.exports = class VNode {
    * @param {array} children - An array of children, strings or elements
    * */
   constructor(tagName, attributes, children) {
+    this.props = Object.assign({}, attributes, { children });
     this.tagName = tagName;
     this.attributes = {};
     this.children = children;
     this.refs = {};
 
-    children.forEach(childNode => {
-      if (typeof childNode === "object") {
-        childNode.parentNode = this;
-      }
-    });
+    if (typeof tagName === "function" && tagName.prototype.__isComponent) {
+      this.__factory = new tagName(this.props);
+    }
 
     for (var k in attributes) {
       if (k === "ref") {
@@ -29,13 +24,32 @@ module.exports = class VNode {
     }
   }
 
-  is(selector) {
-    if (selector instanceof VNode) {
-      return this === selector;
-    } else if (typeof selector === "function") {
-      return selector(this);
+  expandComponent() {
+    const vnode = this.__factory
+      ? this.__factory.render(this.props).expand()
+      : this.tagName(this.props).expand();
+
+    if (this.__factory) {
+      vnode.__factory = this.__factory;
     }
-    return is(this, selector);
+
+    return vnode;
+  }
+
+  expandElement() {
+    this.children = this.children.map((vnode) => {
+      const vnodeElement = vnode.expand
+        ? vnode.expand()
+        : vnode;
+      return vnodeElement;
+    });
+    return this;
+  }
+
+  expand() {
+    return typeof this.tagName === "function"
+      ? this.expandComponent()
+      : this.expandElement();
   }
 
   toJSON() {
@@ -45,25 +59,5 @@ module.exports = class VNode {
       children: this.children.map((child) =>
         child.toJSON ? child.toJSON() : child)
     };
-  }
-
-  expandTree(depth = 0) {
-    return elementToVNodeTree(this, depth);
-  }
-
-  toHtml(depth = 0) {
-    // expandVNodeTree
-    const tree = this.expandTree();
-    // renderVNodeTree
-    return elementToHtml(tree, depth);
-  }
-
-  previous() {
-    const siblings = this.siblings();
-    return siblings[siblings.indexOf(this) - 1];
-  }
-
-  siblings() {
-    return this.parentNode ? this.parentNode.children : [];
   }
 };

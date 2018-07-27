@@ -1,52 +1,53 @@
-const VNode = require("./virtual-node");
-
-function extendPrototype(method) {
-  return function () {
-    const n = arguments.length;
-    const a = new Array(n);
-    const node = this.getNode();
-    let i = -1;
-    let res;
-
-    while (++i < n) {
-      a[i] = arguments[i];
-    }
-
-    if (this.node[method]) {
-      res = this.node[method].apply(this.node, a);
-    } else {
-      res = VNode.prototype[method].apply(node, a);
-    }
-
-    return res === node
-      ? this
-      : res;
-  };
-}
-
-function extendElement(C) {
-  for (var k in VNode.prototype) {
-    if (!C.prototype[k]) {
-      C.prototype[k] = extendPrototype(k);
-    }
-  }
-  return C;
-}
-
-class Component {
+module.exports = class Component {
+  /**
+   * @param {object} props - The component properties
+  */
   constructor(props = {}) {
     this.props = props;
     this.ref = props.ref;
     this.refs = {};
-  }
-
-  toJSON() {
-    return {
-      tagName: this.tagName.name,
-      props: this.props,
-      node: this.node.toJSON()
+    this.state = {};
+    this.__subscribers = {
+      onComponentDidUpdate: [],
+      onComponentWillUpdate: [],
     };
   }
-}
 
-module.exports = extendElement(Component);
+  /**
+   * @param {object} state - The new component state
+  */
+  setState(state) {
+    const prevProps = this.props;
+    const prevState = this.state;
+    this.state = state;
+    this.__emitComponentDidUpdate(prevProps, prevState);
+  }
+
+  __subscribeComponentDidUpdate(callback) {
+    this.__subscribers.onComponentDidUpdate.push(callback);
+  }
+
+  __emitBeforeComponentToHtml(node) {
+    if (typeof this.beforeComponentToHtml === "function") {
+      this.beforeComponentToHtml(node);
+    }
+  }
+
+  __emitAfterComponentToHtml(node) {
+    if (typeof this.afterComponentToHtml === "function") {
+      this.afterComponentToHtml(node);
+    }
+  }
+
+  __emitComponentDidUpdate(state, prevState) {
+    let i = -1;
+    const n = this.__subscribers.onComponentDidUpdate.length;
+    while (++i < n) {
+      this.__subscribers.onComponentDidUpdate[i](state, prevState);
+    }
+  }
+
+  __isComponent() {
+    return true;
+  }
+};

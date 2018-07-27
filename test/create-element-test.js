@@ -28,7 +28,6 @@ module.exports = function (test) {
   });
 
   test("createElement - one child", function () {
-    console.log(el("div", null, el("div")).toJSON());
     return el("div", null, el("div")).toJSON();
   }).isDeepEqual({
     tagName: "div",

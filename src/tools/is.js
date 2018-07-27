@@ -1,7 +1,19 @@
-const { getSelectorObject } = require("../../tools");
+const getSelectorObject = require("./get-selector-object");
 
-function isClassName(vnode, matchList) {
-  const className = vnode.attributes.className;
+function getSiblings(node) {
+  return (node && node.parentNode)
+    ? node.parentNode.children
+    : [];
+}
+
+function previous(node) {
+  const siblings = getSiblings(node);
+  const indexOf = siblings.indexOf(node);
+  return siblings[indexOf - 1];
+}
+
+function isClassName(node, matchList) {
+  const className = node.attributes.className;
   const classList = className ? className.split(" ") : [];
   const classMatch = [];
 
@@ -17,28 +29,28 @@ function isClassName(vnode, matchList) {
   return classMatch.length === matchList.length;
 }
 
-function elementIs(vnode, selectorAttributes) {
-  if (!vnode || typeof vnode === "string") {
+function elementIs(node, selectorAttributes) {
+  if (!node || typeof node === "string") {
     return false;
   }
 
   if (selectorAttributes.tagName) {
-    if (selectorAttributes.tagName !== vnode.tagName) {
+    if (selectorAttributes.tagName !== node.tagName) {
       return false;
     }
   }
 
   for (var k in selectorAttributes.attributes) {
     if (k === "className") {
-      if (!isClassName(vnode, selectorAttributes.attributes[k])) {
+      if (!isClassName(node, selectorAttributes.attributes[k])) {
         return false;
       }
     } else if (selectorAttributes.attributes[k]) {
       if (typeof selectorAttributes.attributes[k] === "string") {
-        if (selectorAttributes.attributes[k] !== vnode.attributes[k]) {
+        if (selectorAttributes.attributes[k] !== node.attributes[k]) {
           return false;
         }
-      } else if (!selectorAttributes.attributes[k].test(vnode.attributes[k])) {
+      } else if (!selectorAttributes.attributes[k].test(node.attributes[k])) {
         return false;
       }
     }
@@ -53,25 +65,23 @@ function elementIs(vnode, selectorAttributes) {
   return true;
 }
 
-function elementPathIs(vnode, selectors) {
+function elementPathIs(node, selectors) {
   const n = selectors.length - 1;
 
   for (var i = n; i >= 0; i--) {
     if (selectors[i].selector === "+") {
       selectors.pop();
-      vnode = vnode && vnode.previous();
+      node = previous(node);
     } else if (selectors[i].selector === "~") {
       selectors.pop();
-      vnode = vnode && vnode
-        .siblings()
-        .filter(x => elementIs(x, selectors[i - 1]))[0];
+      node = node && getSiblings(node).filter(x => elementIs(x, selectors[i - 1]))[0];
     } else if (selectors[i].selector === ">") {
       selectors.pop();
-      vnode = vnode && vnode.parentNode;
-    } else if (elementIs(vnode, selectors[i])) {
+      node = node && node.parentNode;
+    } else if (elementIs(node, selectors[i])) {
       selectors.pop();
-    } else if (vnode && i < n) {
-      vnode = vnode.parentNode;
+    } else if (node && i < n) {
+      node = node.parentNode;
       i += 1;
     } else if (i === n) {
       return false;
@@ -82,17 +92,17 @@ function elementPathIs(vnode, selectors) {
 }
 
 /**
- * @param {object} vnode - Virtual node
+ * @param {object} node - Virtual node
  * @param {string} selector - The selector to query
 */
-function is(vnode, selector) {
+function is(node, selector) {
   const selectors = selector
     .split(" ")
     .map(a => getSelectorObject(a.trim()));
   if (selectors.length === 1) {
-    return elementIs(vnode, selectors[0]);
+    return elementIs(node, selectors[0]);
   } else {
-    return elementPathIs(vnode, selectors);
+    return elementPathIs(node, selectors);
   }
 }
 

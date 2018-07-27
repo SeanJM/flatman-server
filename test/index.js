@@ -6,14 +6,18 @@ const htmlComponentTest = require("./html-component-test");
 const higherOrderComponent = require("./higher-order-component-test");
 const createElementTest = require("./create-element-test");
 const appendTest = require("./append-test");
+const setStateTest = require("./set-state-test");
 const isTest = require("./is-test");
+const expandVNodeTest = require("./expand-vnode");
 
 tinyTest(function (test, load) {
   createElementTest(test);
   appendTest(test);
+  expandVNodeTest(test);
+  setStateTest(test);
   toHtmlTest(test);
   htmlComponentTest(test);
   higherOrderComponent(test);
-  isTest(test);
+  // isTest(test);
   load();
 });
