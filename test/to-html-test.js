@@ -212,4 +212,21 @@ module.exports = function (test) {
     "<div/>",
     "",
   ].join("\n"));
+
+  test("toHtml() (numbers)", function () {
+    return render(el("div", [1, 2]));
+  }).isDeepEqual([
+    "<div>",
+    "  1",
+    "  2",
+    "</div>",
+    "",
+  ].join("\n"));
+
+  test("toHtml() (false)", function () {
+    return render(el("div", [false]));
+  }).isDeepEqual([
+    "<div/>",
+    "",
+  ].join("\n"));
 };
