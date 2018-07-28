@@ -13,6 +13,17 @@ module.exports = function (test) {
       ""
     ].join("\n"));
 
+  test("Invalid attributes - className = Array", function () {
+    const a = el("div", {
+      className: ["className"],
+    });
+    return render(a);
+  })
+    .isEqual([
+      "<div/>",
+      ""
+    ].join("\n"));
+
   test("Invalid attributes - style = null", function () {
     const a = el("div", {
       style: null,
