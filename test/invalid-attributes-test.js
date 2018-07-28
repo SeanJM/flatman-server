@@ -20,13 +20,24 @@ module.exports = function (test) {
     return render(a);
   })
     .isEqual([
-      "<div/>",
+      "<div class=\"className\"/>",
       ""
     ].join("\n"));
 
   test("Invalid attributes - style = null", function () {
     const a = el("div", {
       style: null,
+    });
+    return render(a);
+  })
+    .isEqual([
+      "<div/>",
+      ""
+    ].join("\n"));
+
+  test("Invalid attributes - className = object", function () {
+    const a = el("div", {
+      className: {},
     });
     return render(a);
   })

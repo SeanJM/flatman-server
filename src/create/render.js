@@ -54,6 +54,8 @@ function toHtmlStyle(value) {
 
 function toHtmlAttribute(name, value) {
   const isString = typeof value === "string";
+  const isArray = Array.isArray(value);
+
   value = (
     typeof value === "number"
       ? value.toString()
@@ -70,11 +72,12 @@ function toHtmlAttribute(name, value) {
     }
     return "";
   } else if (name === "className") {
-    if (isString && value.length) {
-      value = value.split(" ").map(a => a.trim()).sort().join(" ");
-      return `class="${value}"`;
+    if (isString) {
+      value = value.split(" ");
     }
-    return "";
+    return ((isString || isArray) && value.length)
+      ? `class="${value.map(a => a.trim()).sort().join(" ")}"`
+      : "";
   } else if (name === "tabindex") {
     return `tabIndex="${value}"`;
   } else if (name.substr(0, 4) === "data") {
