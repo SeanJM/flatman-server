@@ -19,6 +19,14 @@ function filterCreatedAttributes(attr) {
   return result;
 }
 
+function isValidChild(element) {
+  return (
+    element instanceof VNode ||
+    typeof element === "string" ||
+    typeof element === "number"
+  );
+}
+
 function createElement() {
   const args = ["div", {}, []];
   const n = arguments.length;
@@ -28,8 +36,12 @@ function createElement() {
     if ((typeof arguments[i] === "string" && i === 0) || typeof arguments[i] === "function") {
       args[0] = arguments[i];
     } else if (Array.isArray(arguments[i])) {
-      args[2] = args[2].concat(arguments[i]);
-    } else if (arguments[i] instanceof VNode || typeof arguments[i] === "string") {
+      arguments[i].forEach((childNode) => {
+        if (isValidChild(childNode)) {
+          args[2].push(childNode);
+        }
+      });
+    } else if (isValidChild(arguments[i])) {
       args[2].push(arguments[i]);
     } else if (typeof arguments[i] === "object" && arguments[i] != null) {
       args[1] = arguments[i];
@@ -37,12 +49,6 @@ function createElement() {
   }
 
   args[1] = filterCreatedAttributes(args[1]);
-  args[2] =
-    args[2].filter(element => (
-      element != null &&
-      typeof element !== "undefined" &&
-      !(element === false && typeof element === "boolean")
-    ));
   return new VNode(args[0], args[1], args[2]);
 }
 
