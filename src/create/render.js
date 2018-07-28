@@ -95,7 +95,7 @@ function getAttr(node) {
   let a = [];
 
   list.forEach(function (attribute) {
-    if (typeof attributes[attribute] !== "undefined") {
+    if (typeof attributes[attribute] !== "undefined" && attributes[attribute] != null) {
       a.push(
         toHtmlAttribute(attribute, attributes[attribute])
       );
