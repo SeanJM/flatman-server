@@ -9,6 +9,7 @@ const appendTest = require("./append-test");
 const setStateTest = require("./set-state-test");
 const isTest = require("./is-test");
 const expandVNodeTest = require("./expand-vnode");
+const invalidAttributesTest = require("./invalid-attributes-test");
 
 tinyTest(function (test, load) {
   createElementTest(test);
@@ -18,6 +19,7 @@ tinyTest(function (test, load) {
   toHtmlTest(test);
   htmlComponentTest(test);
   higherOrderComponent(test);
+  invalidAttributesTest(test);
   // isTest(test);
   load();
 });
