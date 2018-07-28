@@ -53,13 +53,14 @@ function toHtmlStyle(value) {
 }
 
 function toHtmlAttribute(name, value) {
+  const isString = typeof value === "string";
   value = (
     typeof value === "number"
       ? value.toString()
       : value
   );
 
-  if (typeof value === "string") {
+  if (isString) {
     value = value.trim();
   }
 
@@ -69,7 +70,7 @@ function toHtmlAttribute(name, value) {
     }
     return "";
   } else if (name === "className") {
-    if (value.length) {
+    if (isString && value.length) {
       value = value.split(" ").map(a => a.trim()).sort().join(" ");
       return `class="${value}"`;
     }
