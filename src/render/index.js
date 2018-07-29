@@ -167,7 +167,13 @@ function render(vnode, filename) {
   initialRender = wrapLifecycle(vnode);
 
   if (filename) {
-    fs.writeFileSync(filename, (finalRender || initialRender), "utf8");
+    fs.writeFileSync(
+      /\.html$/.test(filename)
+        ? filename
+        : filename + ".html",
+      (finalRender || initialRender),
+      "utf8"
+    );
   }
 
   return finalRender || initialRender;
