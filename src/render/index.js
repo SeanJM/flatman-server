@@ -1,6 +1,7 @@
 const VDOM = require("../class/virtual-dom");
-const { commentToHtml, kebabCase } = require("../tools");
+const { commentToHtml } = require("../tools");
 const fs = require("fs");
+const attributesToString = require("./attributes-to-string");
 
 const isOpen = {
   "hr": true,
@@ -42,57 +43,6 @@ function sortAttributes(a, b) {
   return 0;
 }
 
-function toHtmlStyle(value) {
-  var styles = [];
-  for (var k in value) {
-    if (typeof value[k] === "string" || typeof value[k] === "number") {
-      styles.push(kebabCase(k) + ": " + value[k]);
-    }
-  }
-  return styles.join(";");
-}
-
-function toHtmlAttribute(name, value) {
-  const isString = typeof value === "string";
-  const isArray = Array.isArray(value);
-
-  value = (
-    typeof value === "number"
-      ? value.toString()
-      : value
-  );
-
-  if (isString) {
-    value = value.trim();
-  }
-
-  if (name === "style") {
-    if (typeof value === "object" && Object.keys(value).length) {
-      return `${name}="${toHtmlStyle(value)}"`;
-    }
-    return "";
-  } else if (name === "className") {
-    if (isString) {
-      value = value.split(" ");
-    }
-    return ((isString || isArray) && value.length)
-      ? `class="${value.map(a => a.trim()).sort().join(" ")}"`
-      : "";
-  } else if (name === "tabindex") {
-    return `tabIndex="${value}"`;
-  } else if (name.substr(0, 4) === "data") {
-    return `${kebabCase(name)}="${value}"`;
-  } else if (name === "viewBox") {
-    return `viewBox="${value}"`;
-  } else if (name.indexOf(":") !== -1) {
-    return `${name}="${value}"`;
-  }
-  if (value && value.length) {
-    return `${kebabCase(name)}="${value}"`;
-  }
-  return "";
-}
-
 function getAttr(node) {
   const attributes = node.attributes;
   const list = attributes ? Object.keys(attributes).sort(sortAttributes) : [];
@@ -101,7 +51,7 @@ function getAttr(node) {
   list.forEach(function (attribute) {
     if (typeof attributes[attribute] !== "undefined" && attributes[attribute] != null) {
       a.push(
-        toHtmlAttribute(attribute, attributes[attribute])
+        attributesToString(attribute, attributes[attribute])
       );
     }
   });

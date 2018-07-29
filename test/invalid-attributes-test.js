@@ -45,4 +45,18 @@ module.exports = function (test) {
       "<div/>",
       ""
     ].join("\n"));
+
+  test("Invalid attributes - style = object", function () {
+    const a = el("div", {
+      style: {
+        display: "block",
+        marginLeft: 15,
+      },
+    });
+    return render(a);
+  })
+    .isEqual([
+      "<div style=\"display: block; margin-left: 15px\"/>",
+      ""
+    ].join("\n"));
 };

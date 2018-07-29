@@ -5,6 +5,6 @@ el.Component = Component;
 el.Html = require("./components/html");
 el.Css = require("./components/css");
 el.VNode = require("./class/virtual-node");
-el.render = require("./create/render");
+el.render = require("./render");
 
 module.exports = el;
