@@ -55,7 +55,7 @@ module.exports = function (test) {
       "  <head>",
       "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
       "    <meta charset=\"UTF-8\">",
-      "    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">",
+      "    <link href=\"style.css\" rel=\"stylesheet\" type=\"text/css\">",
       "  </head>",
       "  <body>",
       "    <div/>",

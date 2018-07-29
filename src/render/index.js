@@ -23,10 +23,13 @@ const isSelfClosing = {
 
 const attrList = [
   "id",
-  "className",
   "name",
+  "href",
+  "rel",
+  "className",
   "title",
-  "style"
+  "style",
+  "tabIndex"
 ];
 
 function sortAttributes(a, b) {
