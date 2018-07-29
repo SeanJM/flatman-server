@@ -24,6 +24,17 @@ module.exports = function (test) {
       ""
     ].join("\n"));
 
+  test("Invalid attributes - className with null, string, undefined", function () {
+    const a = el("div", {
+      className: ["className", null, undefined],
+    });
+    return render(a);
+  })
+    .isEqual([
+      "<div class=\"className\"/>",
+      ""
+    ].join("\n"));
+
   test("Invalid attributes - style = null", function () {
     const a = el("div", {
       style: null,

@@ -14,7 +14,7 @@ const attributeToString = {
     }
 
     return ((isString || isArray) && value.length)
-      ? `class="${value.map(a => a.trim()).sort().join(" ")}"`
+      ? `class="${value.filter(a => a).map(a => a.trim()).sort().join(" ")}"`
       : "";
   },
 
