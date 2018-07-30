@@ -81,4 +81,15 @@ module.exports = function (test) {
       "<svg viewBox=\"0 0 48 48\"></svg>",
       ""
     ].join("\n"));
+
+  test("Invalid attributes - xlink:href", function () {
+    const a = el("use", {
+      "xlink:href": "#icon_menu"
+    });
+    return render(a);
+  })
+    .isEqual([
+      "<use xlink:href=\"#icon_menu\"></use>",
+      ""
+    ].join("\n"));
 };
