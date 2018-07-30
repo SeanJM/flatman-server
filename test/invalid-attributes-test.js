@@ -70,4 +70,15 @@ module.exports = function (test) {
       "<div style=\"display: block; margin-left: 15px\"></div>",
       ""
     ].join("\n"));
+
+  test("Invalid attributes - viewBox", function () {
+    const a = el("svg", {
+      viewBox: "0 0 48 48"
+    });
+    return render(a);
+  })
+    .isEqual([
+      "<svg viewBox=\"0 0 48 48\"></svg>",
+      ""
+    ].join("\n"));
 };

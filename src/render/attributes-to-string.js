@@ -38,7 +38,7 @@ const attributeToString = {
     return `tabIndex="${value}"`;
   },
 
-  viewBox(value) {
+  "view-box": function (value) {
     return `viewBox="${value}"`;
   }
 };
