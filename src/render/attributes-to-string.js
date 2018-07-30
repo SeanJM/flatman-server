@@ -40,6 +40,10 @@ const attributeToString = {
 
   "view-box": function (value) {
     return `viewBox="${value}"`;
+  },
+
+  "xlink-href": function (value) {
+    return `xlink:href="${value}"`;
   }
 };
 
