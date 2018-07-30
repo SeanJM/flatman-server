@@ -109,10 +109,13 @@ function nodeToHtml(node, depth) {
     s = [fragmentToHtml(node, depth)];
   } else if (isOpen[node.tagName]) {
     s.push(">\n");
-  } else if (isSelfClosing[node.tagName] || (children && !children.length)) {
+  } else if (isSelfClosing[node.tagName]) {
     s.push("/>\n");
   } else {
-    s.push(">\n");
+    s.push(">");
+    if (children.length) {
+      s.push("\n");
+    }
 
     children.forEach((childVNode) => {
       if (childVNode.tagName) {
@@ -126,7 +129,9 @@ function nodeToHtml(node, depth) {
       }
     });
 
-    s.push(tab);
+    if (children.length) {
+      s.push(tab);
+    }
     s.push("</" + node.tagName + ">\n");
   }
 

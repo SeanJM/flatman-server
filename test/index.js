@@ -7,7 +7,6 @@ const higherOrderComponent = require("./higher-order-component-test");
 const createElementTest = require("./create-element-test");
 const appendTest = require("./append-test");
 const setStateTest = require("./set-state-test");
-const isTest = require("./is-test");
 const expandVNodeTest = require("./expand-vnode");
 const invalidAttributesTest = require("./invalid-attributes-test");
 
@@ -20,6 +19,5 @@ tinyTest(function (test, load) {
   htmlComponentTest(test);
   higherOrderComponent(test);
   invalidAttributesTest(test);
-  // isTest(test);
   load();
 });
