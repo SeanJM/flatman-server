@@ -5,7 +5,7 @@ module.exports = function (test) {
   test("toHtml() (simple)", function () {
     var a = el("span");
     return render(a);
-  }).isEqual("<span/>\n");
+  }).isEqual("<span></span>\n");
 
   test("toHtml() (fragment)", function () {
     var a = el([
@@ -19,7 +19,7 @@ module.exports = function (test) {
   }).isEqual([
     "<div>",
     "  string",
-    "  <div/>",
+    "  <div></div>",
     "</div>",
     ""
   ].join("\n"));
@@ -89,7 +89,7 @@ module.exports = function (test) {
 
   test("toHtml() (xlink:href)", function () {
     return render(el("use", { "xlink:href": "#id" }));
-  }).isEqual("<use xlink:href=\"#id\"/>\n");
+  }).isEqual("<use xlink:href=\"#id\"></use>\n");
 
   test("toHtml()", function () {
     var a = el([
@@ -116,18 +116,18 @@ module.exports = function (test) {
     "  <div class=\"div-1\">",
     "    <div class=\"div-1-1\">",
     "      <span class=\"div-1-1-1\">",
-    "        <span class=\"div-1-1-1-1\"/>",
+    "        <span class=\"div-1-1-1-1\"></span>",
     "      </span>",
     "    </div>",
-    "    <div class=\"div-1-2\"/>",
+    "    <div class=\"div-1-2\"></div>",
     "  </div>",
     "  <div class=\"div-2\">",
-    "    <div class=\"div-2-1\"/>",
-    "    <div class=\"div-2-2\"/>",
+    "    <div class=\"div-2-1\"></div>",
+    "    <div class=\"div-2-2\"></div>",
     "  </div>",
     "  <div class=\"div-3\">",
-    "    <div class=\"div-3-1\"/>",
-    "    <div class=\"div-3-2\"/>",
+    "    <div class=\"div-3-1\"></div>",
+    "    <div class=\"div-3-2\"></div>",
     "  </div>",
     "</div>",
     ""
@@ -142,7 +142,7 @@ module.exports = function (test) {
     const a = el(Simple);
     return render(a);
   }).isEqual([
-    "<div class=\"splat\"/>\n",
+    "<div class=\"splat\"></div>\n",
   ].join("\n"));
 
   test("toHtml() (Pure component)", function () {
@@ -152,7 +152,7 @@ module.exports = function (test) {
     const a = el(Simple);
     return render(a);
   }).isEqual([
-    "<div class=\"splat\"/>\n",
+    "<div class=\"splat\"></div>\n",
   ].join("\n"));
 
   test("toHtml() (Simple nested div)", function () {
@@ -165,7 +165,7 @@ module.exports = function (test) {
     return render(a);
   }).isEqual([
     "<div class=\"splat\">",
-    "  <div/>",
+    "  <div></div>",
     "</div>",
     "",
   ].join("\n"));
@@ -201,7 +201,7 @@ module.exports = function (test) {
     "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
     "    <meta charset=\"UTF-8\">",
     "  </head>",
-    "  <body/>",
+    "  <body></body>",
     "</html>",
     "",
   ].join("\n"));
@@ -209,7 +209,7 @@ module.exports = function (test) {
   test("toHtml() (null)", function () {
     return render(el("div", [null]));
   }).isDeepEqual([
-    "<div/>",
+    "<div></div>",
     "",
   ].join("\n"));
 
@@ -226,14 +226,14 @@ module.exports = function (test) {
   test("toHtml() (false)", function () {
     return render(el("div", [false]));
   }).isDeepEqual([
-    "<div/>",
+    "<div></div>",
     "",
   ].join("\n"));
 
   test("toHtml() (Empty object)", function () {
     return render(el("div", [{}]));
   }).isDeepEqual([
-    "<div/>",
+    "<div></div>",
     "",
   ].join("\n"));
 };

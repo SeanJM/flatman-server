@@ -9,7 +9,7 @@ module.exports = function (test) {
     return render(a);
   })
     .isEqual([
-      "<div/>",
+      "<div></div>",
       ""
     ].join("\n"));
 
@@ -20,7 +20,7 @@ module.exports = function (test) {
     return render(a);
   })
     .isEqual([
-      "<div class=\"className\"/>",
+      "<div class=\"className\"></div>",
       ""
     ].join("\n"));
 
@@ -31,7 +31,7 @@ module.exports = function (test) {
     return render(a);
   })
     .isEqual([
-      "<div class=\"className\"/>",
+      "<div class=\"className\"></div>",
       ""
     ].join("\n"));
 
@@ -42,7 +42,7 @@ module.exports = function (test) {
     return render(a);
   })
     .isEqual([
-      "<div/>",
+      "<div></div>",
       ""
     ].join("\n"));
 
@@ -53,7 +53,7 @@ module.exports = function (test) {
     return render(a);
   })
     .isEqual([
-      "<div/>",
+      "<div></div>",
       ""
     ].join("\n"));
 
@@ -67,7 +67,7 @@ module.exports = function (test) {
     return render(a);
   })
     .isEqual([
-      "<div style=\"display: block; margin-left: 15px\"/>",
+      "<div style=\"display: block; margin-left: 15px\"></div>",
       ""
     ].join("\n"));
 };

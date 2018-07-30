@@ -29,12 +29,12 @@ module.exports = function (test) {
     "    <meta charset=\"UTF-8\">",
     "  </head>",
     "  <body>",
-    "    <div/>",
+    "    <div></div>",
     "    <div>",
-    "      <div/>",
+    "      <div></div>",
     "    </div>",
-    "    <div/>",
-    "    <div class=\"component\"/>",
+    "    <div></div>",
+    "    <div class=\"component\"></div>",
     "  </body>",
     "</html>",
     ""
@@ -58,8 +58,8 @@ module.exports = function (test) {
       "    <link href=\"style.css\" rel=\"stylesheet\" type=\"text/css\">",
       "  </head>",
       "  <body>",
-      "    <div/>",
-      "    <script src=\"test.js\"/>",
+      "    <div></div>",
+      "    <script src=\"test.js\"></script>",
       "  </body>",
       "</html>",
       ""
@@ -78,7 +78,7 @@ module.exports = function (test) {
       "    <meta http-equiv=\"X-UX-Compatible\" content=\"IE=edge,chrome=1\">",
       "    <meta charset=\"UTF-8\">",
       "  </head>",
-      "  <body/>",
+      "  <body></body>",
       "</html>",
       "",
     ].join("\n"));
@@ -99,7 +99,7 @@ module.exports = function (test) {
       "      test",
       "    </title>",
       "  </head>",
-      "  <body/>",
+      "  <body></body>",
       "</html>",
       ""
     ].join("\n"));
